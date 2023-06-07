@@ -15,4 +15,14 @@ html {
 
 body {
   margin-bottom: 60px;
+} 
+.navbar-brand img{
+  width: 30px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
 }
