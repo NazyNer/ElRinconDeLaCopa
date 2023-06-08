@@ -1,0 +1,52 @@
+.navbar-custom{
+  background-color: #2d1a16;
+}
+.navbar-nav.navbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translatex(-50%);
+}
+@media (hover: hover) {
+.casa:hover{
+  color: #ce996f;
+  background-color: #ce996f;
+  transform: scale(1.5);
+}
+.Isologo:hover .logo{
+  transform: scale(1.5);
+  filter: drop-shadow(0 0 35px #ce996f); 
+}
+}
+.limaq{
+  position: relative;
+  list-style: none;
+}
+.Isologo{
+  display: flex;
+  align-items: center
+}
+
+.lia{
+  font-size: 2em;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: transparent;
+  -webkit-text-stroke: 2px #92716a;
+  line-height: 1em;
+}
+.lia::before{
+  content: attr(data-text);
+  position: absolute;
+  color:#ce996f;
+  width: 0;
+  overflow: hidden;
+  border-right: 7px solid #ce996f;
+  -webkit-text-stroke: #ce996f;
+  transition: 1s;
+}
+.Isologo:hover .lia::before{
+  width: 100%;
+  filter: drop-shadow(0 0 35px #ce996f); 
+}
