@@ -26,3 +26,53 @@ body {
   white-space: nowrap;
   line-height: 60px;
 }
+
+.navbar-custom{
+  background-color: #2d1a16;
+}
+.navbar-nav.navbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translatex(-50%);
+}
+@media (hover: hover) {
+.casa:hover{
+  color: #ce996f;
+  background-color: #ce996f;
+  transform: scale(1.5);
+}
+.logo:hover{
+  transform: scale(1.5);
+   filter: drop-shadow(0 0 35px var(--clr)); 
+}
+}
+.limaq{
+  position: relative;
+  list-style: none;
+}
+
+.lia{
+  font-size: 2em;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: transparent;
+  -webkit-text-stroke: 2px #92716a;
+  line-height: 1em;
+}
+.lia::before{
+  content: attr(data-text);
+  position: absolute;
+  color: var(--clr);
+  width: 0;
+  overflow: hidden;
+  border-right: 7px solid var(--clr);
+  -webkit-text-stroke: var(--clr);
+  transition: 1s;
+}
+.lia:hover::before{
+  width: 100%;
+   filter: drop-shadow(0 0 35px var(--clr)); 
+
+}
