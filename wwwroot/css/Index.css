@@ -1,0 +1,20 @@
+html{
+  background-color: rgb(99, 39, 38);
+}
+body{
+  background-color: rgb(99, 39, 38);
+}
+.footer{
+  background-color: rgb(222, 226, 230);
+}
+.cards{
+  margin: 5rem;
+  display: flex;
+  justify-content: space-between;
+}
+.card{
+  background-color: #af936e;
+  border: 1px solid rgb(97 48 41);
+  width: 15rem;
+}
+
