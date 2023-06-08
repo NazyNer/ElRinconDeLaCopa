@@ -25,4 +25,5 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
+  display: none;
 }
