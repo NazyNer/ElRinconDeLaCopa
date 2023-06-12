@@ -1,3 +1,5 @@
+
+// Algoritmos de Animacion
 document.getElementById("btn__iniciar-sesion").addEventListener("click", login);
 document.getElementById("btn__registrarse").addEventListener("click", register);
 window.addEventListener("resize" , anchopagina);
@@ -58,7 +60,29 @@ function register () {
         caja_trasera_login.style.opacity = "1";
     }
 }
+// /Algoritmos de Animacion
 
+// $(document).ready(function () {
+//     $('#registerForm').submit(function (e) {
+//         e.preventDefault(); // Evita el envío normal del formulario
 
+//         // Serializa los datos del formulario en formato JSON
+//         var formData = $(this).serialize();
 
+//         // Realiza una solicitud Ajax al controlador de registro
+//         $.ajax({
+//             url: '/Account/Register',
+//             type: 'POST',
+//             data: formData,
+//             success: function (response) {
+//                 // Aquí puedes manejar la respuesta del servidor después de un registro exitoso
+//                 console.log(response);
+//             },
+//             error: function (xhr, status, error) {
+//                 // Aquí puedes manejar el error en caso de que ocurra
+//                 console.error(error);
+//             }
+//         });
+//     });
+// });
      

@@ -1,24 +1,8 @@
-*{
-    margin: o;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-}
-
-body{
-    background-image: url(../images/copas.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-}
-
-main{
+.main-login{
     width: 100%;
     padding: 20px;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .contenedor__todo{

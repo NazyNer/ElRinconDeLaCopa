@@ -5,6 +5,48 @@
     ViewData["Title"] = "Log in";
 }
 
+
+<!--CONTENEDOR GENERAL DE TODO -->
+<main class="main-login">
+ <div class="contenedor__todo">
+            <div class="caja__trasera">
+                <!--Cajas traseras-->
+                <div class="caja__trasera-login">
+                    <h3>¿Ya tenés una Cuenta?</h3>
+                    <p>Iniciá Sesión para utilizar "El Rincón de la Copa"</p>
+                    <button id="btn__iniciar-sesion">Iniciar Sesión</button>
+                </div>
+                <div class="caja__trasera-register">
+                    <h3>¿Todavía no tenés una Cuenta?</h3>
+                    <p>Registrate para utilizar "El Rincón de la Copa"</p>
+                    <button id="btn__registrarse">Registrarse</button>
+                </div>
+            </div>
+            <!--Formulario de Login y Register-->
+            <div class="contenedor__login-register">
+                <!--Login-->
+                <form action="" class="formulario__login">
+                    <h2>Iniciar Sesión</h2>
+                    <input type="text" placeholder="Correo Electrónico">
+                    <input type="password" placeholder="Contraseña">
+                    <button>Entrar</button>
+                </form>
+                <!--Register-->
+                <form id="registerForm" class="formulario__register" method="post">
+                    <h2>Registrarse</h2>
+                    <input type="email" placeholder="Correo Electrónico">
+                    <input type="password" placeholder="Contraseña">
+                    <input type="password" placeholder="Confirmar contraseña">
+                    <input type="submit" placeholder="Registrarse">
+                </form>
+            </div>
+        </div>
+
+</main>
+       
+
+
+@* 
 <h1>@ViewData["Title"]</h1>
 <div class="row">
     <div class="col-md-4">
@@ -78,8 +120,9 @@
             }
         </section>
     </div>
-</div>
+</div> *@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+<script src="~/js/loginyregister.js"></script>
