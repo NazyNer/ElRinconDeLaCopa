@@ -26,10 +26,25 @@
   </div>
 </div>
 
-<h1 class="text-white">Categorias</h1>
+@* DISEÑO DEGRADE DE FONDO *@
+@* <style>
+    body{
+        background: #ffe259;
+        background: linear-gradient(to right, #ffa751, #ffe259);
+    }
+         .bg{
+        background-image: url('https://browsecat.art/sites/default/files/yellow-black-wallpapers-48447-682434-2200006.png');
+        background-position: center center; 
+    }
+</style> *@
 
-<p class="text-white">
-    @* <a asp-action="Create">Crear Nueva</a> *@
+<div class="container w-75 bg-dark mt-5 rounded shadow"> 
+
+    <div class="row align-items-stretch justify-content-center">
+        <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded">
+<h1 class="text-white text-center">Categorias</h1>
+
+<p class="text-white"> 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Nueva</button>
 </p>
 <table class="table text-white">
@@ -45,7 +60,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
+                @* @Html.DisplayFor(modelItem => item.Nombre) *@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
