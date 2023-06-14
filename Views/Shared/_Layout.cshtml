@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/categoria.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/catalogo.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @ViewData["LinkCss"]
 </head>
@@ -42,6 +43,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="casa nav-link text-white" asp-area="" asp-controller="Producto" asp-action="Index"><i class="fa-solid fa-wine-bottle"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="casa nav-link text-white" asp-area="" asp-controller="Producto" asp-action="Catalogo"><i class="fa fa-wine-bottle"></i></a>
                         </li>
                         <partial name="_LoginPartial" />
                     </ul>

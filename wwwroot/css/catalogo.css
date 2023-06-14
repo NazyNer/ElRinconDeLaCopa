@@ -1,0 +1,29 @@
+.catalogo{
+    flex-wrap: wrap;
+}
+.list-group-item{
+    background-color: #2d1a16;
+    color: white;
+}
+.btn-marron{
+    background-color: #7a5938;
+    transition: all .5s ease-in-out;
+    color: #2d1a16;
+}
+
+.btn-marron:hover{
+    color: white;
+    box-shadow: #caa075;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    border-radius: 20px;
+}
+.card{
+    padding: .2rem;
+}
+.card-title{
+    text-align: center;
+}
+.card-img-top{
+    border-radius: 0px 25px;
+}
