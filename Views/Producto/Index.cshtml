@@ -3,11 +3,43 @@
 @{
     ViewData["Title"] = "Index";
 }
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Categoria</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <div class="form-group">
+                <label class="control-label"></label>
+                <input  class="form-control" placeholder="Nombre"/>
+                <span class="text-danger"></span>
+                <select name="" id="" class="form-control">
+                    <option value="">categorias</option>
+                    <option value="Fermentados">Fermentados</option>
+                    <option value="Fermentados">destilados</option>
+                    <option value="Fermentados">Fortificada</option>
+                </select>
+                <input type="number" placeholder="Precio" class="form-control">
+                <input type="number" placeholder="Cantidad" class="form-control">
+                <input type="file" accept=".JPG" class="form-control">
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-crear">Crear</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h1>Index</h1>
+<h1>Productos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @* <a asp-action="Create">Create New</a> *@
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Nueva</button>
 </p>
 <table class="table">
     <thead>
