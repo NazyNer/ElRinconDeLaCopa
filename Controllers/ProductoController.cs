@@ -24,6 +24,10 @@ namespace ElRinconDeLaCopa.Controllers
         {
             return View(await _context.Productos.ToListAsync());
         }
+        public IActionResult Catalogo()
+        {
+            return View();
+        }
 
         // GET: Producto/Details/5
         public async Task<IActionResult> Details(int? id)
