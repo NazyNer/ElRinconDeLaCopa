@@ -26,62 +26,39 @@
   </div>
 </div>
 
-@* DISEÑO DEGRADE DE FONDO *@
-@* <style>
-    body{
-        background: #ffe259;
-        background: linear-gradient(to right, #ffa751, #ffe259);
-    }
-         .bg{
-        background-image: url('https://browsecat.art/sites/default/files/yellow-black-wallpapers-48447-682434-2200006.png');
-        background-position: center center; 
-    }
-</style> *@
-
 <h1 class="text-center categoriah1">Categorias</h1>
 <div class="divcolor container w-90  mt-5 rounded shadow"> 
 
-    <div class="row align-items-stretch justify-content-center">
+<div class="row align-items-stretch justify-content-center box-shadowTable rounded">
         
 
-<p class="text-white"> 
-    <button type="button" class="colorh2" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Nueva</button>
-</p>
-<div class="divtable col bg d-none d-lg-block rounded">
-<table class="table text-white">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                @* @Html.DisplayFor(modelItem => item.Nombre) *@
-                <p>Fermentadas</p>
-            </td>
-            <td>
-                <a>Edit</a>
-                <a>Details</a> 
-                <a>Delete</a>
-
-            </td>
-        </tr>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @* @Html.DisplayFor(modelItem => item.Nombre) *@
-                <p>Fermentadas</p>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p class="text-white"> 
+        <button type="button" class="colorh2 box-shadowBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Nueva</button>
+    </p>
+    <div class="divtable col bg d-none d-lg-block rounded">
+        <table class="table text-white">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Nombre) 
+                    </td>
+                    <td class="text-end">
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
+</div>
