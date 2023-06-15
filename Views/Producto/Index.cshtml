@@ -5,99 +5,99 @@
 }
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Categoria</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-         <div class="form-group">
-                <label class="control-label"></label>
-                <input  class="form-control" placeholder="Nombre"/>
-                <span class="text-danger"></span>
-                <select name="" id="" class="form-control">
-                    <option value="">categorias</option>
-                    <option value="Fermentados">Fermentados</option>
-                    <option value="Fermentados">destilados</option>
-                    <option value="Fermentados">Fortificada</option>
-                </select>
-                <input type="number" placeholder="Precio" class="form-control">
-                <input type="number" placeholder="Cantidad" class="form-control">
-                <input type="file" accept=".JPG" class="form-control">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Producto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-crear">Crear</button>
-      </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <input class="form-control" placeholder="Nombre" />
+                    <span class="text-danger"></span>
+                    <select name="" id="" class="form-control"></select>
+                    <input type="number" placeholder="Precio" class="form-control">
+                    <input type="number" placeholder="Cantidad" class="form-control">
+                    <input type="file" accept=".JPG" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-crear">Crear</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
-<h1>Productos</h1>
-
-<p>
-    @* <a asp-action="Create">Create New</a> *@
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Nueva</button>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IDCategoria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Precio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cantidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Imagen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreImagen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoImagen)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDCategoria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cantidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Imagen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreImagen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoImagen)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<h1 class="text-center categoriah1">Productos</h1>
+<div class="divcolor container w-90  mt-5 rounded shadow"> 
+    <div class="row align-items-stretch justify-content-center box-shadowTable rounded">
+        <p class="text-white">
+            <button type="button" class="colorh2 box-shadowBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Nuevo</button>
+        </p>
+        <div class="divtable col bg d-none d-lg-block rounded">
+            <table class="table text-white">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IDCategoria)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Precio)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cantidad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Imagen)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NombreImagen)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TipoImagen)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IDCategoria)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Precio)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cantidad)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Imagen)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NombreImagen)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TipoImagen)
+                            </td>
+                            <td class="text-end">
+                                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
