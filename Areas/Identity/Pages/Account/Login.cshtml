@@ -25,25 +25,24 @@
             <!--Formulario de Login y Register-->
             <div class="contenedor__login-register">
                 <!--Login-->
-                <form action="" class="formulario__login">
+                <form id="login-form" method="POST" class="formulario__login">
                     <h2>Iniciar Sesión</h2>
                     <input type="text" placeholder="Correo Electrónico">
                     <input type="password" placeholder="Contraseña">
-                    <button>Entrar</button>
+                    <input id="btn-login" type="submit">
                 </form>
                 <!--Register-->
-                <form id="registerForm" class="formulario__register" method="post">
+                <form id="register-form" class="formulario__register" method="POST">
                     <h2>Registrarse</h2>
-                    <input type="email" placeholder="Correo Electrónico">
-                    <input type="password" placeholder="Contraseña">
-                    <input type="password" placeholder="Confirmar contraseña">
-                    <input type="submit" placeholder="Registrarse">
+                    <input type="email" name="email" placeholder="Correo Electrónico">
+                    <input type="password" name="password" placeholder="Contraseña">
+                    <input type="password" name="retryPassword" placeholder="Confirmar contraseña">
+                    <input id="btn-register" type="submit">
                 </form>
             </div>
         </div>
 
 </main>
-       
 
 
 @* 

@@ -62,27 +62,34 @@ function register () {
 }
 // /Algoritmos de Animacion
 
-// $(document).ready(function () {
-//     $('#registerForm').submit(function (e) {
-//         e.preventDefault(); // Evita el envío normal del formulario
-
-//         // Serializa los datos del formulario en formato JSON
-//         var formData = $(this).serialize();
-
-//         // Realiza una solicitud Ajax al controlador de registro
-//         $.ajax({
-//             url: '/Account/Register',
-//             type: 'POST',
-//             data: formData,
-//             success: function (response) {
-//                 // Aquí puedes manejar la respuesta del servidor después de un registro exitoso
-//                 console.log(response);
-//             },
-//             error: function (xhr, status, error) {
-//                 // Aquí puedes manejar el error en caso de que ocurra
-//                 console.error(error);
-//             }
-//         });
-//     });
-// });
-     
+// funcion para registrarse en la pagina...
+let btn_register = $("#btn-register");
+btn_register.addEventListener("click", (e) => {
+    e.preventDefault()
+    let email = $("#register-form input[name='email']").val();
+    let password = $("#register-form input[name='password']").val();
+    let retryPassword = $("#register-form input[name='retryPassword']").val();
+    let url = window.location.href
+    $.ajax({
+          // la URL para la petición
+            url: '../../Identity/Account/Register/OnPostAsync',
+          // la información a enviar
+          // (también es posible utilizar una cadena de datos)
+            data:{
+            Email: email,
+            Password: password,
+            RetryPassword: retryPassword, 
+            returnUrl: url,
+        },
+          // especifica si será una petición POST o GET
+          type: 'POST',
+          // el tipo de información que se espera de respuesta
+          dataType: 'json',
+          // código a ejecutar si la petición es satisfactoria;
+          // la respuesta es pasada como argumento a la función
+          success: function name(params) {
+            
+          },
+          error:function (xhr, status){}
+    })
+});
