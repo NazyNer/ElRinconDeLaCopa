@@ -64,32 +64,47 @@ function register () {
 
 // funcion para registrarse en la pagina...
 let btn_register = $("#btn-register");
-btn_register.addEventListener("click", (e) => {
+btn_register.click(function(e) {
     e.preventDefault()
+    console.log("Entre en la funcion");
     let email = $("#register-form input[name='email']").val();
     let password = $("#register-form input[name='password']").val();
     let retryPassword = $("#register-form input[name='retryPassword']").val();
-    let url = window.location.href
-    $.ajax({
-          // la URL para la petición
-            url: '../../Identity/Account/Register/OnPostAsync',
-          // la información a enviar
-          // (también es posible utilizar una cadena de datos)
-            data:{
-            Email: email,
-            Password: password,
-            RetryPassword: retryPassword, 
-            returnUrl: url,
-        },
-          // especifica si será una petición POST o GET
-          type: 'POST',
-          // el tipo de información que se espera de respuesta
-          dataType: 'json',
-          // código a ejecutar si la petición es satisfactoria;
-          // la respuesta es pasada como argumento a la función
-          success: function name(params) {
-            
-          },
-          error:function (xhr, status){}
-    })
+    console.log("tome los valores ", email, password, retryPassword );
+    if (password === retryPassword) {
+        console.log("Adentro del if");
+        var formData = {
+            email: email,
+            password: password
+        }
+        console.log("parceamos la data ", formData);
+        console.log(JSON.stringify(formData))
+        $.ajax({
+              // la URL para la petición
+                url: '/Account/Register',
+              // la información a enviar
+              // (también es posible utilizar una cadena de datos)
+              contentType: 'application/json',
+              // especifica si será una petición POST o GET
+              method: 'POST',
+              data: JSON.stringify(formData),
+              // código a ejecutar si la petición es satisfactoria;
+              // la respuesta es pasada como argumento a la función
+              success: function(data) {
+                if (data.success) {
+                    // El usuario se registró correctamente
+                    alert('Registro exitoso');
+                    // Aquí puedes redirigir al usuario a otra página si lo deseas
+                } else {
+                    // Hubo errores durante el registro
+                    alert('Error durante el registro: ' + data.errors.join(', '));
+                }
+              },
+            //   error:function (xhr, status){}
+            error: function(error) {
+                // Manejar errores de la solicitud
+                console.log(error);
+            }
+        })
+    }
 });
