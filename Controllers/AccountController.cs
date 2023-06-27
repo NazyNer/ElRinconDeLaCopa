@@ -17,21 +17,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
-namespace ElRinconDeLaCopa.Controllers{
+namespace ElRinconDeLaCopa.Controllers
+{
     public class RegisterViewModel
     {
         public string Email { get; set; }
         public string Password { get; set; }
 
     }
-    public class RegisterController : Controller{
+    public class AccountController : Controller
+    {
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        
-        public RegisterController(UserManager<IdentityUser> userManager)
+
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
-
+        
         [HttpPost]
         [Route("/Account/Register")]
         public async Task<JsonResult> Register(RegisterViewModel model)
@@ -40,7 +44,7 @@ namespace ElRinconDeLaCopa.Controllers{
             {
                 var user = new IdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                
+
                 if (result.Succeeded)
                 {
                     // Usuario registrado correctamente
@@ -53,9 +57,26 @@ namespace ElRinconDeLaCopa.Controllers{
                     return Json(new { success = false, errors = errors });
                 }
             }
-            
+
             // El modelo no es válido
             return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
+        }
+        [HttpPost]
+        [Route("/Account/Login")]
+        public async Task<JsonResult> Login(RegisterViewModel model)
+        {
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
+
+            if (result.Succeeded)
+            {
+                // Inicio de sesión exitoso
+                return Json(new { success = true });
+            }
+            else
+            {
+                // Error durante el inicio de sesión
+                return Json(new { success = false, error = "Credenciales inválidas" });
+            }
         }
     }
 }
