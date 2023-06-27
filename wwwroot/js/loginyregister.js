@@ -84,10 +84,10 @@ btn_register.click(function(e) {
                 url: '/Account/Register',
               // la información a enviar
               // (también es posible utilizar una cadena de datos)
-              contentType: 'application/json',
+              contentType: 'application/x-www-form-urlencoded',
               // especifica si será una petición POST o GET
               method: 'POST',
-              data: JSON.stringify(formData),
+              data: formData,
               // código a ejecutar si la petición es satisfactoria;
               // la respuesta es pasada como argumento a la función
               success: function(data) {
