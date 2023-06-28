@@ -6,6 +6,9 @@ html {
   html {
     font-size: 16px;
   }
+  .container, .container-md, .container-sm {
+    max-width: 800px;
+  }
 }
 
 html {
