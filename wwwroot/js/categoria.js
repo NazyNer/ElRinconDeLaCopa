@@ -44,6 +44,7 @@ function BuscarCategorias() {
     })
 }
 function BuscarCategoria(Id) {
+    $("#lbl-error").text("");
     console.log(Id)
     $.ajax({
         // la URL para la petición

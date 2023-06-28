@@ -1,4 +1,3 @@
-@model IEnumerable<ElRinconDeLaCopa.Models.Producto>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,14 +11,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
+                <div id="form-producto" class="form-group">
                     <label class="control-label"></label>
-                    <input class="form-control" placeholder="Nombre" />
+                    <input class="form-control" placeholder="Nombre" name="Nombre"/>
                     <span class="text-danger"></span>
-                    <select name="" id="" class="form-control"></select>
-                    <input type="number" placeholder="Precio" class="form-control">
-                    <input type="number" placeholder="Cantidad" class="form-control">
-                    <input type="file" accept=".JPG" class="form-control">
+                    @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control", @id = "Categoria" })
+                    <input type="number" placeholder="Precio" class="form-control" name="Precio">
+                    <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad">
+                    <input type="file" accept=".JPG" class="form-control" placeholder="Imagen" name="Imagen">
                 </div>
             </div>
             <div class="modal-footer">
@@ -41,63 +40,30 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.IDCategoria)
+                            Categoria
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Nombre)
+                            Nombre
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Precio)
+                            Precio($ars)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Cantidad)
+                            Stock
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Imagen)
+                            Imagen
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.NombreImagen)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.TipoImagen)
-                        </th>
-                        <th></th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IDCategoria)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nombre)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Precio)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Cantidad)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Imagen)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NombreImagen)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TipoImagen)
-                            </td>
-                            <td class="text-end">
-                                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                            </td>
-                        </tr>
-                    }
+                <tbody id="tbody-productos">
+                    <h1 id="errorTable"></h1>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/producto.js"></script>
+}
