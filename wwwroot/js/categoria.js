@@ -7,8 +7,8 @@ function CrearNueva() {
     $("#lbl-error").text("");
     $("#btnEliminar").hide();
     $("#btnHabilitar").hide();
-    $("#btn-crear").show();
-}
+    $("btn-crear").show();
+}   
 function BuscarCategorias() {
     $("#btnEliminar").hide();
     let TablaCategoria = $("#tbody-categorias");    console.log(TablaCategoria)
@@ -62,19 +62,17 @@ function BuscarCategoria(Id) {
             console.log(Categoria)
             if (Categoria.length == 1) {
                 let categoria = Categoria[0];
+                $("#lbl-error").text("");
                 $("#h1Categoria").text("Editar Categoria");
                 $("#Id").val(`${Categoria[0].id}`);
-                $("#btn-crear").text("Editar");
                 $("#form-categoria input[name='Nombre']").val(`${categoria.nombre}`);
                 if (!categoria.eliminado) {
                     $("#btnEliminar").show();
                     $("#btnHabilitar").hide();
-                    $("#btn-crear").show();
                 }
             else{
                 $("#btnEliminar").hide();
                 $("#btnHabilitar").show();
-                $("#btn-crear").hide();
             }
 
             $("#ModalCategoria").modal("show");
