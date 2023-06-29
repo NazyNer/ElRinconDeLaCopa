@@ -164,5 +164,35 @@ namespace ElRinconDeLaCopa.Controllers
             }
             return Json(resultado);
         }
+
+
+        public JsonResult EliminarProducto(int Id){
+        var resultado = new ValidacionError();
+        resultado.nonError = false;
+        resultado.MsjError = "No se selecciono ningun producto";
+        // bool resultado = false;
+            //SI ES DISTINTO A 0 QUIERE DECIR QUE ESTA ELIMINANDO LA CATEGORIA
+            if(Id != 0)
+            {
+                //BUSCAMOS EN LA TABLA SI EXISTE UNA CON EL MISMO ID
+                var productoOriginal = _context.Productos.Find(Id);
+                    //SI LA CATEGORIA NO ESTE ELIMINADA PROCEDEMOS A HACERLO
+                    if(productoOriginal?.Eliminado == false)
+                    {
+                        productoOriginal.Eliminado = true;
+                        _context.SaveChanges();
+                        resultado.nonError = true;
+                    }
+                    else{
+                        productoOriginal.Eliminado = false;
+                        _context.SaveChanges();
+                        resultado.nonError= true;
+                    }
+            }
+            return Json(resultado);
+            }
+
     }
+
+
 }
