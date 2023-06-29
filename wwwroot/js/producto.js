@@ -8,9 +8,10 @@ function CrearNuevo() {
   $("#lbl-error").text("");
   $("#btnEliminarProducto").hide();
   $("#btnHabilitarProducto").hide();
-  $("btnCrear").hide();
-  $("#form-producto input[name='Cantidad']").val(`0`);
-  $("#form-producto input[name='Precio']").val(`0`);
+  $("#btnCrear").show();
+  $("#btnCrear").text("Crear");
+  $("#form-producto input[name='Cantidad']").val(``);
+  $("#form-producto input[name='Precio']").val(``);
 }
 
 function BuscarProductos() {
@@ -109,7 +110,7 @@ function BuscarProducto(ID) {
         $("#lbl-error").text("");
         $("#h1Producto").text("Editar producto")
         $("#form-producto input[name='Productoid']").val(producto.id);
-        $("btn-crear").show();
+        $("#btnCrear").show();
         $("#ModalProducto").modal("show");
         $("#form-producto input[name='Nombre']").val(producto.nombre);
         $("#form-producto select[name='CategoriaID']").val(producto.idcategoria);
@@ -118,10 +119,13 @@ function BuscarProducto(ID) {
         if(!producto.eliminado){
             $("#btnEliminarProducto").show();
             $("#btnHabilitarProducto").hide();
+            $("#btnCrear").show();
+            $("#btnCrear").text("Editar");
         }
         else{
           $("#btnHabilitarProducto").show();
           $("#btnEliminarProducto").hide();
+          $("#btnCrear").hide();
         }
       }
     },

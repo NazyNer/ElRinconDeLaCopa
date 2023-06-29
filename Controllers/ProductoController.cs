@@ -40,7 +40,7 @@ namespace ElRinconDeLaCopa.Controllers
             {
                 productos = productos?.Where(c => c.ID == Id).OrderBy(c => c.Nombre).ToList();
             }
-            foreach (var producto in productos)
+            foreach(var producto in productos)
             {
                 if (producto.Imagen != null && producto.Imagen?.Length > 0)
                 {
