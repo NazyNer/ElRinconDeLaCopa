@@ -40,7 +40,7 @@ function BuscarProductos() {
                             <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
                             <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
                             <td>
-                            <img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 0px;"/>
+                            <img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 50px;"/>
                             </td>
                         </tr>`);
         }
@@ -74,14 +74,14 @@ function GuardarProducto() {
     processData: false
   });
 }
-function BuscarProducto(ID){
+function BuscarProducto(ID) {
   console.log(ID)
   $.ajax({
     // la URL para la petición
     url: '../../Producto/BuscarProductos',
     // la información a enviar
     // (también es posible utilizar una cadena de datos)
-    data: {Id: ID},
+    data: { Id: ID },
     // especifica si será una petición POST o GET
     type: 'GET',
     // el tipo de información que se espera de respuesta
@@ -93,8 +93,13 @@ function BuscarProducto(ID){
       if (productos.length = 1) {
         let producto = productos[0];
         $("#h1Producto").text("Editar producto")
-        $("#ID").val(producto.id);
+        $("#form-producto input[name='Productoid']").val(producto.id);
         $("#btnCrear").text("Editar");
+        $("#ModalProducto").modal("show");
+        $("#form-producto input[name='Nombre']").val(producto.nombre);
+        $("#form-producto select[name='CategoriaID']").val(producto.idcategoria);
+        $("#form-producto input[name='Precio']").val(producto.precio);
+        $("#form-producto input[name='Cantidad']").val(producto.cantidad);
       }
     },
   })

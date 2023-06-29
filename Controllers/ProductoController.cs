@@ -49,8 +49,7 @@ namespace ElRinconDeLaCopa.Controllers
             }
             return Json(productos);
         }
-
-        public JsonResult GuardarProducto(int CategoriaID, decimal Precio, int Cantidad, IFormFile imagen, string Nombre, int ID)
+        public JsonResult GuardarProducto(int CategoriaID, decimal Precio, int Cantidad, IFormFile imagen, string Nombre, int Productoid)
         {
             var resultado = new ValidacionError();
             //El nombre del producto no se encuentra
@@ -83,7 +82,7 @@ namespace ElRinconDeLaCopa.Controllers
             }
             Nombre = Nombre.ToUpper();
             //Se esta creando el producto
-            if (ID == 0)
+            if (Productoid == 0)
             {
                 //BUSCAMOS EN LA TABLA SI EXISTE UNO CON EL MISMO NOMBRE
                 var productoOriginal = _context.Productos?.Where(P => P.Nombre == Nombre).FirstOrDefault();
@@ -121,7 +120,7 @@ namespace ElRinconDeLaCopa.Controllers
                 }
             }
             else{
-                var ProductoOriginal = _context.Categorias?.Where(p => p.Nombre == Nombre && p.ID != ID).FirstOrDefault();
+                var ProductoOriginal = _context.Categorias?.Where(p => p.Nombre == Nombre && p.ID != Productoid).FirstOrDefault();
                     if(ProductoOriginal == null){
                         //BUSCAMOS LA CATEGORIA SELECCIONADA
                         var categoriaSeleccionada = _context.Categorias?.Where(c => c.ID == CategoriaID).FirstOrDefault();
@@ -134,7 +133,7 @@ namespace ElRinconDeLaCopa.Controllers
                                 imagenBinaria = ms1.ToArray();
                             }
                             //BUSCAMOS EL PRODUCTO A EDITAR
-                            var productoEditar = _context.Productos?.Find(ID);
+                            var productoEditar = _context.Productos?.Find(Productoid);
                             if(productoEditar != null){
                                 productoEditar.Nombre = Nombre;
                                 productoEditar.IDCategoria = CategoriaID;
@@ -147,7 +146,7 @@ namespace ElRinconDeLaCopa.Controllers
                                 productoEditar.NombreImagen = imagen?.FileName;
                                 _context.SaveChanges();
                                 resultado.nonError = true;
-                                 resultado.MsjError = "";
+                                resultado.MsjError = "";
                                 return Json(resultado);
 
                             }
