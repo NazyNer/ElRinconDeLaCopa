@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElRinconDeLaCopa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230605230444_MigracionInicial")]
-    partial class MigracionInicial
+    [Migration("20230628225330_Producto")]
+    partial class Producto
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,9 @@ namespace ElRinconDeLaCopa.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -54,6 +57,9 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<int?>("CategoriaID")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
+
                     b.Property<int>("IDCategoria")
                         .HasColumnType("int");
 
@@ -61,6 +67,9 @@ namespace ElRinconDeLaCopa.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreCategoria")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NombreImagen")

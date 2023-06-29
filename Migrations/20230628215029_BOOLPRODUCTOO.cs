@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElRinconDeLaCopa.Migrations
 {
-    public partial class MigracionInicial : Migration
+    public partial class BOOLPRODUCTOO : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,7 +54,8 @@ namespace ElRinconDeLaCopa.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Eliminado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -180,6 +181,7 @@ namespace ElRinconDeLaCopa.Migrations
                     Imagen = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     NombreImagen = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TipoImagen = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Eliminado = table.Column<bool>(type: "bit", nullable: false),
                     CategoriaID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
