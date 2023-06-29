@@ -53,6 +53,10 @@ namespace ElRinconDeLaCopa.Controllers
                         _context.SaveChanges();
                         resultado.nonError = true;
                     }
+                    else{
+                        resultado.nonError = false;
+                        resultado.MsjError = "Ya existe una categoría con el nombre " +  categoriaOriginal.Nombre;
+                    }
                     //SI ES DISTINTO A 0 QUIERE DECIR QUE ESTA EDITANDO LA CATEGORIA
                 }else{
                     var categoriaOriginal = _context.Categorias?.Where(c => c.Nombre == nombre && c.ID != id).FirstOrDefault();
@@ -64,6 +68,10 @@ namespace ElRinconDeLaCopa.Controllers
                             _context.SaveChanges();
                             resultado.nonError = true;
                         }
+                    }
+                    else{
+                        resultado.nonError = false;
+                        resultado.MsjError = " Ha sido imposible editar, ya que ya existe una categoría con el nombre " +  categoriaOriginal.Nombre;
                     }
                 }
             }
