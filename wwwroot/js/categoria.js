@@ -7,7 +7,8 @@ function CrearNueva() {
     $("#lbl-error").text("");
     $("#btnEliminar").hide();
     $("#btnHabilitar").hide();
-    $("btn-crear").show();
+    $("#btn-crear").show();
+    $("#btn-crear").text("Crear");
 }   
 function BuscarCategorias() {
     $("#btnEliminar").hide();
@@ -70,10 +71,13 @@ function BuscarCategoria(Id) {
                 if (!categoria.eliminado) {
                     $("#btnEliminar").show();
                     $("#btnHabilitar").hide();
+                    $("#btn-crear").show();
+                    $("#btn-crear").text("Editar");
                 }
             else{
                 $("#btnEliminar").hide();
                 $("#btnHabilitar").show();
+                $("#btn-crear").hide();
             }
 
             $("#ModalCategoria").modal("show");
