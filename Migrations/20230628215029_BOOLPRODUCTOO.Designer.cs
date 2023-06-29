@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElRinconDeLaCopa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230628175610_CategoriaEliminado")]
-    partial class CategoriaEliminado
+    [Migration("20230628215029_BOOLPRODUCTOO")]
+    partial class BOOLPRODUCTOO
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,6 +56,9 @@ namespace ElRinconDeLaCopa.Migrations
 
                     b.Property<int?>("CategoriaID")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
 
                     b.Property<int>("IDCategoria")
                         .HasColumnType("int");

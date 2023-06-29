@@ -55,6 +55,9 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<int?>("CategoriaID")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
+
                     b.Property<int>("IDCategoria")
                         .HasColumnType("int");
 
