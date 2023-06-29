@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "Catalogo";
 }
-<div class="cards catalogo m-0">
-    <div class="card m-1">
+<div id="catalogo" class="cards catalogo m-0">
+    @* <div class="card m-1">
         <img src="~/img/productos/cerveza.jfif" class="card-img-top" alt="Cerveza Bramia">
         <div class="card-body">
             <h5 class="card-title">Cerveza Bramia</h5>
@@ -93,5 +93,8 @@
             <li class="list-group-item">Destiladas</li>
             <li class="list-group-item text-center"><a class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
         </ul>
-    </div>
+    </div> *@
 </div>
+@section Scripts {
+    <script src="~/js/catalogo.js"></script>
+}

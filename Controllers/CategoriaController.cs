@@ -39,6 +39,7 @@ namespace ElRinconDeLaCopa.Controllers
             resultado.nonError = false;
             resultado.MsjError = "No se agrego una nombre a la categoria";
             if(!string.IsNullOrEmpty(nombre)){
+                nombre = nombre.ToUpper();
                 //SI ES 0 QUIERE DECIR QUE ESTA CREANDO LA CATEGORIA
                 if(id == 0)
                 {
