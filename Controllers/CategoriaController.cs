@@ -54,6 +54,10 @@ namespace ElRinconDeLaCopa.Controllers
                         _context.SaveChanges();
                         resultado.nonError = true;
                     }
+                    else{
+                        resultado.nonError = false;
+                        resultado.MsjError = "Ya existe una categoría con el nombre " +  categoriaOriginal.Nombre;
+                    }
                     //SI ES DISTINTO A 0 QUIERE DECIR QUE ESTA EDITANDO LA CATEGORIA
                 }else{
                     var categoriaOriginal = _context.Categorias?.Where(c => c.Nombre == nombre && c.ID != id).FirstOrDefault();
@@ -66,10 +70,48 @@ namespace ElRinconDeLaCopa.Controllers
                             resultado.nonError = true;
                         }
                     }
+                    else{
+                        resultado.nonError = false;
+                        resultado.MsjError = " Ha sido imposible editar, ya que ya existe una categoría con el nombre " +  categoriaOriginal.Nombre;
+                    }
                 }
             }
             return Json(resultado);
         }
+
+
+    public JsonResult eliminarCategoria(int Id){
+        var resultado = new ValidacionError();
+        resultado.nonError = false;
+        resultado.MsjError = "No se selecciono ninguna categoria";
+        // bool resultado = false;
+            //SI ES DISTINTO A 0 QUIERE DECIR QUE ESTA ELIMINANDO LA CATEGORIA
+            if(Id != 0)
+            {
+                //BUSCAMOS EN LA TABLA SI EXISTE UNA CON EL MISMO ID
+                var categoriaOriginal = _context.Categorias.Find(Id);
+                var producto = _context.Productos.Where(P => P.ID == Id && P.Eliminado == false).Count();
+                //SI TIENE SUBCATEGORIAS HABILITAS NO PRODECER
+                if (producto == 0)
+                {
+                    //SI LA CATEGORIA NO ESTE ELIMINADA PROCEDEMOS A HACERLO
+                    if(categoriaOriginal?.Eliminado == false)
+                    {
+                        categoriaOriginal.Eliminado = true;
+                        _context.SaveChanges();
+                        resultado.nonError = true;
+                    }else{
+                        categoriaOriginal.Eliminado = false;
+                        _context.SaveChanges();
+                        resultado.nonError= true;
+                    }
+                }else{
+                    resultado.nonError= false;
+                    resultado.MsjError = "Tiene productos habilitados relacionados a esta categoria. *primero deshabilítelos y despues vuelva a intentar*";
+                }
+            }
+            return Json(resultado);
+            }
     }
     
 }

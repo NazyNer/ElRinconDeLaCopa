@@ -14,7 +14,6 @@ public class Producto
     public byte[]? Imagen { get; set; }
     public string? NombreImagen { get; set; }
     public string? TipoImagen { get; set; }
-
     public bool Eliminado { get; set; }
     
     [NotMapped]
