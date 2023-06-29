@@ -184,6 +184,7 @@ namespace ElRinconDeLaCopa.Controllers
                         resultado.nonError = true;
                     }
                     else{
+                        //Preguntar por categoria, para activarla de ser necesario (?
                         productoOriginal.Eliminado = false;
                         _context.SaveChanges();
                         resultado.nonError= true;

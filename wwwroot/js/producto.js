@@ -218,3 +218,7 @@ function eliminarProducto() {
       }
   });
 }
+
+function EditarNombre(id) {
+  // EditarNombre(${producto.id})
+}
