@@ -3,27 +3,28 @@
     ViewData["Title"] = "Index";
 }
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ModalProducto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Producto</h1>
+                <h1 id="h1Producto" class="modal-title fs-5" >Crear Producto</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="form-producto" class="form-group">
+                <form id="form-producto" class="form-group" method="post" enctype="multipart/form-data">
+                    <input type="Hidden" id="ID" type="number" value="0" disabled/>
                     <label class="control-label"></label>
-                    <input class="form-control" placeholder="Nombre" name="Nombre"/>
+                    <input class="form-control" placeholder="Nombre" name="Nombre" onkeyup="this.value = this.value.toUpperCase()"/>
                     <span class="text-danger"></span>
-                    @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control", @id = "Categoria" })
+                    @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control"})
                     <input type="number" placeholder="Precio" class="form-control" name="Precio">
                     <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad">
-                    <input type="file" accept=".JPG" class="form-control" placeholder="Imagen" name="Imagen">
-                </div>
+                    <input type="file" accept="image/jpeg" class="form-control" placeholder="Imagen" name="Imagen">
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-crear">Crear</button>
+                <button id="btnCrear" type="button" class="btn btn-crear" onclick="GuardarProducto()">Crear</button>
             </div>
         </div>
     </div>
@@ -33,7 +34,7 @@
 <div class="divcolor container w-90  mt-5 rounded shadow"> 
     <div class="row align-items-stretch justify-content-center box-shadowTable rounded">
         <p class="text-white">
-            <button type="button" class="colorh2 box-shadowBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Nuevo</button>
+            <button type="button" class="colorh2 box-shadowBtn" data-bs-toggle="modal" data-bs-target="#ModalProducto">Crear Nuevo</button>
         </p>
         <div class="divtable col bg d-none d-lg-block rounded">
             <table class="table text-white">
