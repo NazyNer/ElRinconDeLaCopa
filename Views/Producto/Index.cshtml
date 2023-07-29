@@ -15,15 +15,15 @@
                     <input type="Hidden" name="Productoid" type="number" value="0"/>
                     <label class="control-label">Nombre</label>
                     <input class="form-control" placeholder="Nombre" name="Nombre" onkeyup="this.value = this.value.toUpperCase()"/>
-                    <span class="text-danger"></span>
                     <label class="control-label">Categoría del Producto</label>
                     @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control"})
                     <label class="control-label">Precio</label>
                     <input type="number" placeholder="Precio" class="form-control" name="Precio">
                     <label class="control-label">Cantidad</label>
-                    <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad">
-                    <label class="control-label">Imágen</label>
-                    <input type="file" accept="image/jpeg" class="form-control" placeholder="Imagen" name="Imagen">
+                    <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
+                    <label>Cargar imagen</label>
+                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen">
+                    <span id="texto-error" class="text-danger"></span>
                 </form>
             </div>
             <div class="modal-footer">
