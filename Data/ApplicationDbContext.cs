@@ -11,4 +11,6 @@ public class ApplicationDbContext : IdentityDbContext
     {}
     public DbSet<Categoria>? Categorias { get; set; }
     public DbSet<Producto>? Productos { get; set; }
+    public DbSet<CarritoCompra>? CarritoCompra { get; set; }
+    public DbSet<DetalleCompra>? DetalleCompra { get; set; }
 }
