@@ -2,10 +2,11 @@ window.onload = BuscarProductos();
 
 function CrearNuevo() {
   $("#form-producto input[name='Productoid']").val(`0`);
+  $(`#CategoriaID`).val('0');
   $("#ModalProducto").modal("show");
   $("#h1Producto").text("Crear Producto");
   $("#form-producto input[name='Nombre']").val("");
-  $("#lbl-error").text("");
+  $("#texto-error").text("");
   $("#btnEliminarProducto").hide();
   $("#btnHabilitarProducto").hide();
   $("#btnCrear").show();
@@ -41,7 +42,7 @@ function BuscarProductos() {
                             <td> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
                             <td> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
                             <td> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
-                            <td> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
+                            <td><b>${producto.cantidad}</b></td>
                             <td>
                             <img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>
                             </td> 
@@ -52,7 +53,7 @@ function BuscarProductos() {
                             <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
                             <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
                             <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
-                            <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
+                            <td><b>${producto.cantidad}</b></td>
                             <td>
                             <img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 50px;"/>
                             </td>
@@ -75,12 +76,13 @@ function GuardarProducto() {
     data: formData,
     async: false,
     success: function (resultado) {
-      if (resultado) {
+      console.log(resultado);
+      if (resultado.nonError) {
         $("#ModalProducto").modal("hide");
         BuscarProductos();
       }
       else {
-        $("#texto-error").text("Existe una Categoría con la misma descripción.");
+        $("#texto-error").text(resultado.msjError);
       }
     },
     cache: false,
@@ -107,13 +109,12 @@ function BuscarProducto(ID) {
       console.log(productos);
       if (productos.length = 1) {
         let producto = productos[0];
-        $("#lbl-error").text("");
+        $("#texto-error").text("");
         $("#h1Producto").text("Editar producto")
         $("#form-producto input[name='Productoid']").val(producto.id);
         $("#btnCrear").show();
-        $("#ModalProducto").modal("show");
         $("#form-producto input[name='Nombre']").val(producto.nombre);
-        $("#form-producto select[name='CategoriaID']").val(producto.idcategoria);
+        $(`#CategoriaID`).val(producto.idCategoria);
         $("#form-producto input[name='Precio']").val(producto.precio);
         $("#form-producto input[name='Cantidad']").val(producto.cantidad);
         if(!producto.eliminado){
@@ -127,6 +128,7 @@ function BuscarProducto(ID) {
           $("#btnEliminarProducto").hide();
           $("#btnCrear").hide();
         }
+        $("#ModalProducto").modal("show");
       }
     },
   })

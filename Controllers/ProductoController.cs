@@ -74,7 +74,7 @@ namespace ElRinconDeLaCopa.Controllers
                 return Json(resultado);
             }
             //Si no es mayor a 0 y es null no se agrego una imagen
-            if (imagen == null && imagen?.Length <= 0)
+            if (imagen == null || imagen?.Length <= 0)
             {
                 resultado.nonError = false;
                 resultado.MsjError = "No se agrego una imagen a la producto";
@@ -121,6 +121,12 @@ namespace ElRinconDeLaCopa.Controllers
             }
             else{
                 var ProductoOriginal = _context.Categorias?.Where(p => p.Nombre == Nombre && p.ID != Productoid).FirstOrDefault();
+                if (ProductoOriginal.Eliminado = true)
+                {
+                    resultado.nonError = false;
+                    resultado.MsjError = "El producto esta eliminado";
+                    return Json(resultado);
+                }else{
                     if(ProductoOriginal == null){
                         //BUSCAMOS LA CATEGORIA SELECCIONADA
                         var categoriaSeleccionada = _context.Categorias?.Where(c => c.ID == CategoriaID).FirstOrDefault();
@@ -161,6 +167,7 @@ namespace ElRinconDeLaCopa.Controllers
                     resultado.nonError = false;
                     resultado.MsjError = "Hay un producto con el mismo nombre";
                     return Json(resultado);
+                }
             }
             return Json(resultado);
         }
@@ -184,10 +191,18 @@ namespace ElRinconDeLaCopa.Controllers
                         resultado.nonError = true;
                     }
                     else{
-                        //Preguntar por categoria, para activarla de ser necesario (?
-                        productoOriginal.Eliminado = false;
-                        _context.SaveChanges();
-                        resultado.nonError= true;
+                        var categoriaRelacionada = _context.Categorias?.Find(productoOriginal?.IDCategoria);
+                        if(categoriaRelacionada.Eliminado == false)
+                        {
+                            productoOriginal.Eliminado = false;
+                            _context.SaveChanges();
+                            resultado.nonError= true;
+                        }else{
+                            categoriaRelacionada.Eliminado = false;
+                            productoOriginal.Eliminado = false;
+                            _context.SaveChanges();
+                            resultado.nonError= true;
+                        }
                     }
             }
             return Json(resultado);

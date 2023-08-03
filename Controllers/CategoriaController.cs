@@ -78,6 +78,12 @@ namespace ElRinconDeLaCopa.Controllers
                             _context.SaveChanges();
                             resultado.nonError = true;
                         }
+                        var productosRelacionados = _context.Productos?.Where(p => p.IDCategoria == id).ToList();
+                        if (productosRelacionados != null)
+                        {
+                            productosRelacionados?.ForEach(p => p.NombreCategoria = nombre);
+                            _context.SaveChanges();
+                        }
                     }
                     else
                     {
