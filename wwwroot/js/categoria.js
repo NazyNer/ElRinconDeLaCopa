@@ -35,11 +35,13 @@ function BuscarCategorias() {
                     TablaCategoria.append(`
                             <tr class="">
                                 <td> <a class="btn btn-warning btn-sm" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
+                                <td> <button onClick="RemoveCategoria(${categoria.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                             </tr>`);
                 } else {
                     TablaCategoria.append(`
                             <tr class="">
                                 <td> <a class="btn btn-primary btn-sm" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
+                                <td> <button onClick="RemoveCategoria(${categoria.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                             </tr>`);
                 }
             })
@@ -165,3 +167,36 @@ function eliminarCategoria() {
         }
     });
 }
+
+function RemoveCategoria(Id){
+    $.ajax({
+        // la URL para la petición
+        url: '../../Categoria/removeCategoria',
+        // la información a enviar
+        // (también es posible utilizar una cadena de datos)
+        data: { Id: Id },
+        // especifica si será una petición POST o GET
+        type: 'POST',
+        // el tipo de información que se espera de respuesta
+        dataType: 'json',
+        // código a ejecutar si la petición es satisfactoria;
+        // la respuesta es pasada como argumento a la función
+        success: function (resultado) {
+            if (resultado.nonError) {
+                alert(resultado.msjError)
+                BuscarCategorias();
+            }
+            else {
+                alert(resultado.msjError);
+            }
+        },
+        // código a ejecutar si la petición falla;
+        // son pasados como argumentos a la función
+        // el objeto de la petición en crudo y código de estatus de la petición
+        error: function (xhr, status) {
+            alert('Disculpe, existió un problema');
+            $("#ModalCategoria").modal("hide");
+            BuscarCategorias();
+        }
+    });
+};

@@ -46,6 +46,7 @@ function BuscarProductos() {
                             <td>
                             <img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>
                             </td> 
+                            <td><button onClick="RemoveProducto(${producto.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                         </tr>`);
         } else {
           TablaProducto.append(`
@@ -57,6 +58,7 @@ function BuscarProductos() {
                             <td>
                             <img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 50px;"/>
                             </td>
+                            <td><button onClick="RemoveProducto(${producto.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                         </tr>`);
         }
       })
@@ -177,7 +179,7 @@ function BuscarCategoria(Id) {
       }
   })
 }
-//BUSCAR CATEGORIA EDITTAR
+
 
 
 
@@ -220,7 +222,34 @@ function eliminarProducto() {
       }
   });
 }
-
-function EditarNombre(id) {
-  // EditarNombre(${producto.id})
+function RemoveProducto(id) {
+  $.ajax({
+    // la URL para la petición
+    url: '../../Producto/RemoveProducto',
+    // la información a enviar
+    // (también es posible utilizar una cadena de datos)
+    data: { ID: id },
+    // especifica si será una petición POST o GET
+    type: 'POST',
+    // el tipo de información que se espera de respuesta
+    dataType: 'json',
+    // código a ejecutar si la petición es satisfactoria;
+    // la respuesta es pasada como argumento a la función
+    success: function (resultado) {
+        if (resultado.nonError) {
+           alert(resultado.msjError)
+        }
+        else {
+            alert(resultado.msjError)
+        }
+    },
+    // código a ejecutar si la petición falla;
+    // son pasados como argumentos a la función
+    // el objeto de la petición en crudo y código de estatus de la petición
+    error: function (xhr, status) {
+        alert('Disculpe, existió un problema');
+        $("#ModalProducto").modal("hide");
+        BuscarCategorias();
+    }
+});
 }
