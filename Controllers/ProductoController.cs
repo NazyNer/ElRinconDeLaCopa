@@ -207,7 +207,29 @@ namespace ElRinconDeLaCopa.Controllers
             }
             return Json(resultado);
             }
-
+        public JsonResult RemoveProducto(int ID){
+            var resultado = new ValidacionError();
+            resultado.nonError = false;
+            resultado.MsjError = "No se selecciono ningun producto";
+            if(ID > 0)
+            {
+                var productoOriginal = _context.Productos?.Find(ID);
+                if(productoOriginal != null){
+                    if (productoOriginal.Cantidad == 0)
+                    {
+                        _context.Remove(productoOriginal);
+                        _context.SaveChanges();
+                        resultado.nonError = true;
+                        resultado.MsjError = "Producto " + productoOriginal.Nombre + " eliminado correctamente";
+                    }
+                    resultado.MsjError = "El Producto " + productoOriginal.Nombre + " Tiene stock (Asegurese de que la cantidad del producto sea 0 y volver a intentar).";
+                    return Json(resultado);
+                }
+                resultado.MsjError = "No se encuentra el producto seleccionado";
+                return Json(resultado);
+            }
+            return Json(resultado);
+        }
     }
 
 
