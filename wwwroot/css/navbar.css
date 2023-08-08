@@ -17,10 +17,18 @@
   filter: drop-shadow(0 0 35px #ce996f); 
 }
 }
-.limaq{
-  position: relative;
-  list-style: none;
-}
+@media only screen and (max-width: 768px) {
+  .limaq {
+    display: none !important;
+   }
+  }
+
+  .limaq{
+    position: relative;
+    list-style: none;
+  }
+
+
 .Isologo{
   display: flex;
   align-items: center
@@ -50,3 +58,4 @@
   width: 100%;
   filter: drop-shadow(0 0 35px #ce996f); 
 }
+

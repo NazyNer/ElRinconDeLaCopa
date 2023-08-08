@@ -7,11 +7,13 @@ body{
 .footer{
   background-color: rgb(222, 226, 230);
 }
+
 .cards{
   margin: 5rem;
   display: flex;
   justify-content: space-between;
 }
+
 .card{
   background-color: #af936e;
   border: 1px solid rgb(97 48 41);
