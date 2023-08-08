@@ -94,7 +94,6 @@ function GuardarProducto() {
 }
 
 function BuscarProducto(ID) {
-  console.log(ID)
   $.ajax({
     // la URL para la petición
     url: '../../Producto/BuscarProductos',
@@ -179,12 +178,6 @@ function BuscarCategoria(Id) {
       }
   })
 }
-
-
-
-
-
-
 
 function eliminarProducto() {
 
