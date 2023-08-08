@@ -3,8 +3,9 @@
 }
 .navbar-nav.navbar-center {
   position: absolute;
-  left: 50%;
+  right: 0;
   transform: translatex(-50%);
+  gap: 1.5rem;
 }
 @media (hover: hover) {
 .casa:hover{
@@ -17,11 +18,6 @@
   filter: drop-shadow(0 0 35px #ce996f); 
 }
 }
-@media only screen and (max-width: 768px) {
-  .limaq {
-    display: none !important;
-   }
-  }
 
   .limaq{
     position: relative;
@@ -59,3 +55,38 @@
   filter: drop-shadow(0 0 35px #ce996f); 
 }
 
+
+/*------- Mediaqueris Navbar -------*/
+
+@media (max-width: 980px) {
+  .limaq {
+    font-size: 0.7rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .limaq {
+    font-size: 0.5rem;
+   }
+
+   .navbar-nav.navbar-center {
+    gap: 1rem;
+  }
+
+  }
+
+@media only screen and (max-width: 575px) {
+  .navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+    gap: 3rem;
+    background: #2d1a16da;
+    width: 100%;
+    height: 3rem;
+    z-index: 90;
+  }
+}

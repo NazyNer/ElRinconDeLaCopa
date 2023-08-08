@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElRinconDeLaCopa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230801222722_basededatos")]
-    partial class basededatos
+    [Migration("20230808024457_god")]
+    partial class god
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
