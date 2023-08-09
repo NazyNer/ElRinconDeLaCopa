@@ -12,7 +12,7 @@ function CrearNueva() {
 }
 function BuscarCategorias() {
     $("#btnEliminar").hide();
-    let TablaCategoria = $("#tbody-categorias"); console.log(TablaCategoria)
+    let TablaCategoria = $("#tbody-categorias");
     TablaCategoria.empty();
     $.ajax({
         // la URL para la petición
@@ -27,10 +27,9 @@ function BuscarCategorias() {
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
         success: function (categorias) {
-            console.log(categorias);
             TablaCategoria.empty();
             $.each(categorias, function (index, categoria) {
-                console.log(categoria.eliminado);
+
                 if (categoria.eliminado) {
                     TablaCategoria.append(`
                             <tr class="">
@@ -51,7 +50,6 @@ function BuscarCategorias() {
 }
 function BuscarCategoria(Id) {
     $("#lbl-error").text("");
-    console.log(Id)
     $.ajax({
         // la URL para la petición
         url: '../../Categoria/BuscarCategorias',
@@ -63,7 +61,6 @@ function BuscarCategoria(Id) {
         // el tipo de información que se espera de respuesta
         dataType: 'json',
         success: function (Categoria) {
-            console.log(Categoria)
             if (Categoria.length == 1) {
                 let categoria = Categoria[0];
                 $("#lbl-error").text("");
@@ -96,10 +93,8 @@ function BuscarCategoria(Id) {
     })
 }
 function GuardarCategoria() {
-    console.log("aqui estoy");
     let Id = $("#Id").val();
     let Nombre = $("#form-categoria input[name='Nombre']").val().toUpperCase();
-    console.log("Capte el ID", Id, "Capte el nombre ", Nombre);
     $.ajax({
         // la URL para la petición
         url: '../../Categoria/GuardarCategoria',
@@ -113,7 +108,6 @@ function GuardarCategoria() {
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
         success: function (resultado) {
-            console.log(resultado)
             if (resultado.nonError) {
                 $("#ModalCategoria").modal("hide");
                 BuscarCategorias();

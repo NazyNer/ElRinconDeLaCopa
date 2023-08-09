@@ -117,20 +117,25 @@ namespace ElRinconDeLaCopa.Controllers
                 }
             }
             else{
-                var ProductoOriginal = _context.Categorias?.Where(p => p.Nombre == Nombre && p.ID != Productoid).FirstOrDefault();
-                if (ProductoOriginal.Eliminado = true)
+                var ProductoOriginal = _context.Productos?.Where(p => p.Nombre == Nombre && p.ID != Productoid).FirstOrDefault();
+                if (ProductoOriginal != null)
                 {
                     resultado.nonError = false;
-                    resultado.MsjError = "El producto esta eliminado";
+                    resultado.MsjError = "El producto " + Nombre + " ya existe, por favor ingrese otro nombre";
                     return Json(resultado);
                 }else{
-                    if(ProductoOriginal == null){
+                    //BUSCAMOS EL PRODUCTO A EDITAR
+                    var productoEditar = _context.Productos?.Find(Productoid);
+                    if(productoEditar != null){
+                        if (productoEditar.Eliminado == true)
+                        {
+                            resultado.nonError = false;
+                            resultado.MsjError = "El producto " + productoEditar.Nombre + " esta deshabilitado";
+                            return Json(resultado);
+                        }
                         //BUSCAMOS LA CATEGORIA SELECCIONADA
                         var categoriaSeleccionada = _context.Categorias?.Where(c => c.ID == CategoriaID).FirstOrDefault();
                         if (categoriaSeleccionada != null){
-                            //BUSCAMOS EL PRODUCTO A EDITAR
-                            var productoEditar = _context.Productos?.Find(Productoid);
-                            if(productoEditar != null){
                                 productoEditar.Nombre = Nombre;
                                 productoEditar.IDCategoria = CategoriaID;
                                 productoEditar.NombreCategoria = categoriaSeleccionada.Nombre;
@@ -155,17 +160,13 @@ namespace ElRinconDeLaCopa.Controllers
                                 resultado.nonError = true;
                                 resultado.MsjError = "";
                                 return Json(resultado);
-                            }
-                            resultado.nonError = false;
-                            resultado.MsjError = "No existe el producto a editar";
-                            return Json(resultado);
                         }
                         resultado.nonError = false;
                         resultado.MsjError = "No existe la categoria seleccionada";
                         return Json(resultado);
                     }
                     resultado.nonError = false;
-                    resultado.MsjError = "Hay un producto con el mismo nombre";
+                    resultado.MsjError = "No exite el producto a editar";
                     return Json(resultado);
                 }
             }
