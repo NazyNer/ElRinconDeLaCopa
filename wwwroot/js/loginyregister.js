@@ -66,18 +66,18 @@ function register () {
 let btn_register = $("#btn-register");
 btn_register.click(function(e) {
     e.preventDefault()
-    console.log("Entre en la funcion");
+   
     let email = $("#register-form input[name='email']").val();
     let password = $("#register-form input[name='password']").val();
     let retryPassword = $("#register-form input[name='retryPassword']").val();
-    console.log("tome los valores ", email, password, retryPassword );
+   
     if (password === retryPassword) {
-        console.log("Adentro del if");
+        
         var formData = {
             email: email,
             password: password
         }
-        console.log("parceamos la data ", formData);
+        
         $.ajax({
               // la URL para la petición
                 url: '/Account/Register',
@@ -92,7 +92,7 @@ btn_register.click(function(e) {
               success: function(data) {
                 if (data.success) {
                     // El usuario se registró correctamente
-                    alert('Registro exitoso');
+                    window.location.href = "/";
                     // Aquí puedes redirigir al usuario a otra página si lo deseas
                 } else {
                     // Hubo errores durante el registro
@@ -112,15 +112,15 @@ btn_register.click(function(e) {
 let btn_login = $("#btn-login");
 btn_login.click(function(e){
     e.preventDefault();
-    console.log("Entre en la funcion");
+    
     let email = $("#login-form input[name='email']").val();
     let password = $("#login-form input[name='password']").val();
-    console.log("tome los valores ", email, password);
+    
     var formData = {
         email: email,
         password: password
     }
-    console.log("parceamos la data ", formData);
+    
     $.ajax({
         url: '/Account/Login',
         method: 'POST',
@@ -129,7 +129,7 @@ btn_login.click(function(e){
         success: function(data) {
             if (data.success) {
                 // El inicio de sesión fue exitoso
-                alert('Inicio de sesión exitoso');
+                window.location.href = "/";
                 // Aquí puedes redirigir al usuario a otra página si lo deseas
             } else {
                 // Hubo errores durante el inicio de sesión

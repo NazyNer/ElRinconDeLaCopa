@@ -14,7 +14,7 @@
                 <form id="form-producto" class="form-group" method="post" enctype="multipart/form-data">
                     <input type="Hidden" name="Productoid" type="number" value="0"/>
                     <label class="control-label">Nombre</label>
-                    <input class="form-control" placeholder="Nombre" name="Nombre" onkeyup="this.value = this.value.toUpperCase()"/>
+                    <input id="textoInput" class="form-control" placeholder="Nombre" name="Nombre"/>
                     <label class="control-label">Categoría del Producto</label>
                     @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control"})
                     <label class="control-label">Precio</label>
@@ -22,8 +22,10 @@
                     <label class="control-label">Cantidad</label>
                     <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
                     <label>Cargar imagen</label>
-                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen">
+                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen" id="selectorImagen">
                     <span id="texto-error" class="text-danger"></span>
+                    <label id="nombreImagen" ></label>
+                    <img id="imagenSeleccionada" class="imgPreview" src="~/img/productos/fotodefaullt.jpg" alt="Imagen seleccionada">
                 </form>
             </div>
             <div class="modal-footer">

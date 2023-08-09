@@ -13,6 +13,9 @@ function CrearNuevo() {
   $("#btnCrear").text("Crear");
   $("#form-producto input[name='Cantidad']").val(``);
   $("#form-producto input[name='Precio']").val(``);
+  $("#selectorImagen").val("");
+  $("#nombreImagen").text("imagen por defecto");
+  $("#imagenSeleccionada").attr("src", "/img/productos/fotodefaullt.jpg")
 }
 
 function BuscarProductos() {
@@ -31,12 +34,9 @@ function BuscarProductos() {
     // código a ejecutar si la petición es satisfactoria;
     // la respuesta es pasada como argumento a la función
     success: function (productos) {
-      console.log(productos);
       TablaProducto.empty();
       $.each(productos, function (index, producto) {
-        console.log(producto.eliminado);
         if (producto.eliminado) {
-          console.log(producto)
           TablaProducto.append(`
                         <tr class="">
                             <td> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
@@ -44,7 +44,11 @@ function BuscarProductos() {
                             <td> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
                             <td><b>${producto.cantidad}</b></td>
                             <td>
-                            <img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>
+                            ${
+                              producto.imagen == null 
+                              ? `<img src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>` 
+                              : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
+                            }
                             </td> 
                             <td><button onClick="RemoveProducto(${producto.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                         </tr>`);
@@ -56,7 +60,11 @@ function BuscarProductos() {
                             <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
                             <td><b>${producto.cantidad}</b></td>
                             <td>
-                            <img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 50px;"/>
+                            ${
+                              producto.imagen == null 
+                              ? `<img src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>` 
+                              : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
+                            }
                             </td>
                             <td><button onClick="RemoveProducto(${producto.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                         </tr>`);
@@ -70,15 +78,12 @@ function GuardarProducto() {
   $("#lbl-error").text("");
   let form = $("form#form-producto");
   let formData = new FormData(form[0])
-  console.log(form);
-  console.log(formData);
   $.ajax({
     url: '../../Producto/GuardarProducto',
     type: 'POST',
     data: formData,
     async: false,
     success: function (resultado) {
-      console.log(resultado);
       if (resultado.nonError) {
         $("#ModalProducto").modal("hide");
         BuscarProductos();
@@ -94,7 +99,7 @@ function GuardarProducto() {
 }
 
 function BuscarProducto(ID) {
-  console.log(ID)
+  
   $.ajax({
     // la URL para la petición
     url: '../../Producto/BuscarProductos',
@@ -108,7 +113,6 @@ function BuscarProducto(ID) {
     // código a ejecutar si la petición es satisfactoria;
     // la respuesta es pasada como argumento a la función
     success: function (productos) {
-      console.log(productos);
       if (productos.length = 1) {
         let producto = productos[0];
         $("#texto-error").text("");
@@ -119,13 +123,17 @@ function BuscarProducto(ID) {
         $(`#CategoriaID`).val(producto.idCategoria);
         $("#form-producto input[name='Precio']").val(producto.precio);
         $("#form-producto input[name='Cantidad']").val(producto.cantidad);
-        if(!producto.eliminado){
-            $("#btnEliminarProducto").show();
-            $("#btnHabilitarProducto").hide();
-            $("#btnCrear").show();
-            $("#btnCrear").text("Editar");
+        var imagenGuardadaBytes = "data:image/" + producto.tipoImagen + ";base64," + producto.imagen;
+        $("#nombreImagen").text(producto.nombreImagen);
+        $("#selectorImagen").val("");
+        $("#imagenSeleccionada").attr("src", imagenGuardadaBytes);
+        if (!producto.eliminado) {
+          $("#btnEliminarProducto").show();
+          $("#btnHabilitarProducto").hide();
+          $("#btnCrear").show();
+          $("#btnCrear").text("Editar");
         }
-        else{
+        else {
           $("#btnHabilitarProducto").show();
           $("#btnEliminarProducto").hide();
           $("#btnCrear").hide();
@@ -136,90 +144,40 @@ function BuscarProducto(ID) {
   })
 
 }
-//BUSCAR CATEGORIA EDITTAR
-function BuscarCategoria(Id) {
-  console.log(Id)
-  $.ajax({
-      // la URL para la petición
-      url: '../../Categoria/BuscarCategorias',
-      // la información a enviar
-      // (también es posible utilizar una cadena de datos)
-      data: { Id: Id },
-      // especifica si será una petición POST o GET
-      type: 'GET',
-      // el tipo de información que se espera de respuesta
-      dataType: 'json',
-      success: function (Categoria) {
-          console.log(Categoria)
-          if (Categoria.length == 1) {
-              let categoria = Categoria[0];
-              $("#lbl-error").text("");
-              $("#h1Categoria").text("Editar Categoria");
-              $("#Id").val(`${Categoria[0].id}`);
-              $("#form-categoria input[name='Nombre']").val(`${categoria.nombre}`);
-              if (!categoria.eliminado) {
-                  $("#btnEliminar").show();
-                  $("#btnHabilitar").hide();
-              }
-          else{
-              $("#btnEliminar").hide();
-              $("#btnHabilitar").show();
-          }
-
-          $("#ModalCategoria").modal("show");
-      }
-      },
-      error: function (xhr, status) {
-          alert('Error al cargar categorias');
-      },
-
-      // código a ejecutar sin importar si la petición falló o no
-      complete: function (xhr, status) {
-          //alert('Petición realizada');
-      }
-  })
-}
-
-
-
-
-
-
 
 function eliminarProducto() {
 
   //JAVASCRIPT
   let Id = $("#form-producto input[name='Productoid']").val();
-  console.log(Id)
   $.ajax({
-      // la URL para la petición
-      url: '../../Producto/EliminarProducto',
-      // la información a enviar
-      // (también es posible utilizar una cadena de datos)
-      data: { Id: Id },
-      // especifica si será una petición POST o GET
-      type: 'POST',
-      // el tipo de información que se espera de respuesta
-      dataType: 'json',
-      // código a ejecutar si la petición es satisfactoria;
-      // la respuesta es pasada como argumento a la función
-      success: function (resultado) {
-          if (resultado.nonError) {
-              $("#ModalProducto").modal("hide");
-              BuscarProductos();
-          }
-          else {
-              $("#lbl-error").text(resultado.msjError);
-          }
-      },
-      // código a ejecutar si la petición falla;
-      // son pasados como argumentos a la función
-      // el objeto de la petición en crudo y código de estatus de la petición
-      error: function (xhr, status) {
-          alert('Disculpe, existió un problema');
-          $("#ModalProducto").modal("hide");
-          BuscarCategorias();
+    // la URL para la petición
+    url: '../../Producto/EliminarProducto',
+    // la información a enviar
+    // (también es posible utilizar una cadena de datos)
+    data: { Id: Id },
+    // especifica si será una petición POST o GET
+    type: 'POST',
+    // el tipo de información que se espera de respuesta
+    dataType: 'json',
+    // código a ejecutar si la petición es satisfactoria;
+    // la respuesta es pasada como argumento a la función
+    success: function (resultado) {
+      if (resultado.nonError) {
+        $("#ModalProducto").modal("hide");
+        BuscarProductos();
       }
+      else {
+        $("#lbl-error").text(resultado.msjError);
+      }
+    },
+    // código a ejecutar si la petición falla;
+    // son pasados como argumentos a la función
+    // el objeto de la petición en crudo y código de estatus de la petición
+    error: function (xhr, status) {
+      alert('Disculpe, existió un problema');
+      $("#ModalProducto").modal("hide");
+      BuscarCategorias();
+    }
   });
 }
 function RemoveProducto(id) {
@@ -236,20 +194,47 @@ function RemoveProducto(id) {
     // código a ejecutar si la petición es satisfactoria;
     // la respuesta es pasada como argumento a la función
     success: function (resultado) {
-        if (resultado.nonError) {
-           alert(resultado.msjError)
-        }
-        else {
-            alert(resultado.msjError)
-        }
+      if (resultado.nonError) {
+        alert(resultado.msjError)
+        BuscarProductos();
+      }
+      else {
+        alert(resultado.msjError)
+      }
     },
     // código a ejecutar si la petición falla;
     // son pasados como argumentos a la función
     // el objeto de la petición en crudo y código de estatus de la petición
     error: function (xhr, status) {
-        alert('Disculpe, existió un problema');
-        $("#ModalProducto").modal("hide");
-        BuscarCategorias();
+      alert('Disculpe, existió un problema');
+      $("#ModalProducto").modal("hide");
+      BuscarCategorias();
     }
-});
+  });
 }
+
+$("#textoInput").on("input", function () {
+  var input = $(this);
+  var startPosition = input[0].selectionStart;  // Guardar la posición del cursor
+
+  input.val(input.val().toUpperCase());  // Convertir texto a mayúsculas
+
+  input[0].setSelectionRange(startPosition, startPosition);  // Restaurar la posición del cursor
+});
+
+$("#selectorImagen").change(function() {
+  var inputFile = $(this)[0];
+  if (inputFile.files.length > 0) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      $("#imagenSeleccionada").attr("src", e.target.result).show();
+    };
+    
+    reader.readAsDataURL(inputFile.files[0]);
+
+    var imagenGuardadaNombre = inputFile.files[0].name;
+    $("#nombreImagen").text(imagenGuardadaNombre);
+  }
+});
+
