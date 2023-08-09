@@ -1,12 +1,17 @@
 .navbar-custom{
   background-color: #2d1a16;
 }
+
+
 .navbar-nav.navbar-center {
   position: absolute;
   right: 0;
-  transform: translatex(-50%);
+  /* transform: translatex(-50%); */
   gap: 1.5rem;
+  margin-right: 2rem;
 }
+
+
 @media (hover: hover) {
 .casa:hover{
   color: #ce996f;
@@ -15,7 +20,7 @@
 }
 .Isologo:hover .logo{
   transform: scale(1.5);
-  filter: drop-shadow(0 0 35px #ce996f); 
+  filter: drop-shadow(0 0 35px #ce996f);
 }
 }
 
@@ -52,7 +57,7 @@
 }
 .Isologo:hover .lia::before{
   width: 100%;
-  filter: drop-shadow(0 0 35px #ce996f); 
+  filter: drop-shadow(0 0 35px #ce996f);
 }
 
 
@@ -64,21 +69,27 @@
   }
 }
 
-@media only screen and (max-width: 768px) {
+
+
+@media only screen and (max-width: 870px) {
   .limaq {
     font-size: 0.5rem;
    }
 
-   .navbar-nav.navbar-center {
-    gap: 1rem;
-  }
+   /* .navbar-nav.navbar-center {
+    gap: 3rem;
+  } */
 
   }
+  /* @media only screen and (max-width: 768px) {
+    .navbar-nav {
+      display: none;
+     }
+    } */
 
-@media only screen and (max-width: 575px) {
+@media only screen and (max-width: 767px) {
   .navbar-nav.navbar-center {
     position: absolute;
-    left: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,5 +99,7 @@
     width: 100%;
     height: 3rem;
     z-index: 90;
+    left: 0;
   }
 }
+

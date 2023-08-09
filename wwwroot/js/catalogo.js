@@ -21,7 +21,7 @@ function BuscarProductos() {
         console.log(producto);
         if (!producto.eliminado) {
           ContainCards.append(`
-          <div class="card m-1">
+          <div class="card mx-auto">
               <img src="data:${producto.tipoImagen};base64, ${producto.imagenString}"  class="card-img-top" alt="${producto.nombreCategoria} ${producto.nombre}">
               <div class="card-body">
                   <h5 class="card-title">${producto.nombre}</h5>

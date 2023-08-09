@@ -13,12 +13,16 @@
 }
 
 
+
+
     .table{
         text-align: center;
         justify-content: center;
     }
 
-
+.categoriah1{
+    margin-top: 100px;
+}
 
 .btn-crear{
     background-color: #bd652a;
