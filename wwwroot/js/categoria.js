@@ -9,10 +9,10 @@ function CrearNueva() {
     $("#btnHabilitar").hide();
     $("#btn-crear").show();
     $("#btn-crear").text("Crear");
-}   
+}
 function BuscarCategorias() {
     $("#btnEliminar").hide();
-    let TablaCategoria = $("#tbody-categorias");    console.log(TablaCategoria)
+    let TablaCategoria = $("#tbody-categorias"); console.log(TablaCategoria)
     TablaCategoria.empty();
     $.ajax({
         // la URL para la petición
@@ -76,14 +76,14 @@ function BuscarCategoria(Id) {
                     $("#btn-crear").show();
                     $("#btn-crear").text("Editar");
                 }
-            else{
-                $("#btnEliminar").hide();
-                $("#btnHabilitar").show();
-                $("#btn-crear").hide();
-            }
+                else {
+                    $("#btnEliminar").hide();
+                    $("#btnHabilitar").show();
+                    $("#btn-crear").hide();
+                }
 
-            $("#ModalCategoria").modal("show");
-        }
+                $("#ModalCategoria").modal("show");
+            }
         },
         error: function (xhr, status) {
             alert('Error al cargar categorias');
@@ -112,7 +112,7 @@ function GuardarCategoria() {
         dataType: 'json',
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
-        success: function(resultado) {
+        success: function (resultado) {
             console.log(resultado)
             if (resultado.nonError) {
                 $("#ModalCategoria").modal("hide");
@@ -168,7 +168,7 @@ function eliminarCategoria() {
     });
 }
 
-function RemoveCategoria(Id){
+function RemoveCategoria(Id) {
     $.ajax({
         // la URL para la petición
         url: '../../Categoria/removeCategoria',
@@ -200,3 +200,11 @@ function RemoveCategoria(Id){
         }
     });
 };
+$("#textoInput").on("input", function () {
+    var input = $(this);
+    var startPosition = input[0].selectionStart;  // Guardar la posición del cursor
+
+    input.val(input.val().toUpperCase());  // Convertir texto a mayúsculas
+
+    input[0].setSelectionRange(startPosition, startPosition);  // Restaurar la posición del cursor
+});

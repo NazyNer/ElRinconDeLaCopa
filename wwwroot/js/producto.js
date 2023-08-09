@@ -118,13 +118,13 @@ function BuscarProducto(ID) {
         $(`#CategoriaID`).val(producto.idCategoria);
         $("#form-producto input[name='Precio']").val(producto.precio);
         $("#form-producto input[name='Cantidad']").val(producto.cantidad);
-        if(!producto.eliminado){
-            $("#btnEliminarProducto").show();
-            $("#btnHabilitarProducto").hide();
-            $("#btnCrear").show();
-            $("#btnCrear").text("Editar");
+        if (!producto.eliminado) {
+          $("#btnEliminarProducto").show();
+          $("#btnHabilitarProducto").hide();
+          $("#btnCrear").show();
+          $("#btnCrear").text("Editar");
         }
-        else{
+        else {
           $("#btnHabilitarProducto").show();
           $("#btnEliminarProducto").hide();
           $("#btnCrear").hide();
@@ -139,43 +139,43 @@ function BuscarProducto(ID) {
 function BuscarCategoria(Id) {
   console.log(Id)
   $.ajax({
-      // la URL para la petición
-      url: '../../Categoria/BuscarCategorias',
-      // la información a enviar
-      // (también es posible utilizar una cadena de datos)
-      data: { Id: Id },
-      // especifica si será una petición POST o GET
-      type: 'GET',
-      // el tipo de información que se espera de respuesta
-      dataType: 'json',
-      success: function (Categoria) {
-          console.log(Categoria)
-          if (Categoria.length == 1) {
-              let categoria = Categoria[0];
-              $("#lbl-error").text("");
-              $("#h1Categoria").text("Editar Categoria");
-              $("#Id").val(`${Categoria[0].id}`);
-              $("#form-categoria input[name='Nombre']").val(`${categoria.nombre}`);
-              if (!categoria.eliminado) {
-                  $("#btnEliminar").show();
-                  $("#btnHabilitar").hide();
-              }
-          else{
-              $("#btnEliminar").hide();
-              $("#btnHabilitar").show();
-          }
+    // la URL para la petición
+    url: '../../Categoria/BuscarCategorias',
+    // la información a enviar
+    // (también es posible utilizar una cadena de datos)
+    data: { Id: Id },
+    // especifica si será una petición POST o GET
+    type: 'GET',
+    // el tipo de información que se espera de respuesta
+    dataType: 'json',
+    success: function (Categoria) {
+      console.log(Categoria)
+      if (Categoria.length == 1) {
+        let categoria = Categoria[0];
+        $("#lbl-error").text("");
+        $("#h1Categoria").text("Editar Categoria");
+        $("#Id").val(`${Categoria[0].id}`);
+        $("#form-categoria input[name='Nombre']").val(`${categoria.nombre}`);
+        if (!categoria.eliminado) {
+          $("#btnEliminar").show();
+          $("#btnHabilitar").hide();
+        }
+        else {
+          $("#btnEliminar").hide();
+          $("#btnHabilitar").show();
+        }
 
-          $("#ModalCategoria").modal("show");
+        $("#ModalCategoria").modal("show");
       }
-      },
-      error: function (xhr, status) {
-          alert('Error al cargar categorias');
-      },
+    },
+    error: function (xhr, status) {
+      alert('Error al cargar categorias');
+    },
 
-      // código a ejecutar sin importar si la petición falló o no
-      complete: function (xhr, status) {
-          //alert('Petición realizada');
-      }
+    // código a ejecutar sin importar si la petición falló o no
+    complete: function (xhr, status) {
+      //alert('Petición realizada');
+    }
   })
 }
 
@@ -185,34 +185,34 @@ function eliminarProducto() {
   let Id = $("#form-producto input[name='Productoid']").val();
   console.log(Id)
   $.ajax({
-      // la URL para la petición
-      url: '../../Producto/EliminarProducto',
-      // la información a enviar
-      // (también es posible utilizar una cadena de datos)
-      data: { Id: Id },
-      // especifica si será una petición POST o GET
-      type: 'POST',
-      // el tipo de información que se espera de respuesta
-      dataType: 'json',
-      // código a ejecutar si la petición es satisfactoria;
-      // la respuesta es pasada como argumento a la función
-      success: function (resultado) {
-          if (resultado.nonError) {
-              $("#ModalProducto").modal("hide");
-              BuscarProductos();
-          }
-          else {
-              $("#lbl-error").text(resultado.msjError);
-          }
-      },
-      // código a ejecutar si la petición falla;
-      // son pasados como argumentos a la función
-      // el objeto de la petición en crudo y código de estatus de la petición
-      error: function (xhr, status) {
-          alert('Disculpe, existió un problema');
-          $("#ModalProducto").modal("hide");
-          BuscarCategorias();
+    // la URL para la petición
+    url: '../../Producto/EliminarProducto',
+    // la información a enviar
+    // (también es posible utilizar una cadena de datos)
+    data: { Id: Id },
+    // especifica si será una petición POST o GET
+    type: 'POST',
+    // el tipo de información que se espera de respuesta
+    dataType: 'json',
+    // código a ejecutar si la petición es satisfactoria;
+    // la respuesta es pasada como argumento a la función
+    success: function (resultado) {
+      if (resultado.nonError) {
+        $("#ModalProducto").modal("hide");
+        BuscarProductos();
       }
+      else {
+        $("#lbl-error").text(resultado.msjError);
+      }
+    },
+    // código a ejecutar si la petición falla;
+    // son pasados como argumentos a la función
+    // el objeto de la petición en crudo y código de estatus de la petición
+    error: function (xhr, status) {
+      alert('Disculpe, existió un problema');
+      $("#ModalProducto").modal("hide");
+      BuscarCategorias();
+    }
   });
 }
 function RemoveProducto(id) {
@@ -229,20 +229,30 @@ function RemoveProducto(id) {
     // código a ejecutar si la petición es satisfactoria;
     // la respuesta es pasada como argumento a la función
     success: function (resultado) {
-        if (resultado.nonError) {
-           alert(resultado.msjError)
-        }
-        else {
-            alert(resultado.msjError)
-        }
+      if (resultado.nonError) {
+        alert(resultado.msjError)
+      }
+      else {
+        alert(resultado.msjError)
+      }
     },
     // código a ejecutar si la petición falla;
     // son pasados como argumentos a la función
     // el objeto de la petición en crudo y código de estatus de la petición
     error: function (xhr, status) {
-        alert('Disculpe, existió un problema');
-        $("#ModalProducto").modal("hide");
-        BuscarCategorias();
+      alert('Disculpe, existió un problema');
+      $("#ModalProducto").modal("hide");
+      BuscarCategorias();
     }
-});
+  });
 }
+
+$("#textoInput").on("input", function () {
+  var input = $(this);
+  var startPosition = input[0].selectionStart;  // Guardar la posición del cursor
+
+  input.val(input.val().toUpperCase());  // Convertir texto a mayúsculas
+
+  input[0].setSelectionRange(startPosition, startPosition);  // Restaurar la posición del cursor
+});
+
