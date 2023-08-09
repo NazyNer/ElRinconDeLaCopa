@@ -22,9 +22,10 @@
                     <label class="control-label">Cantidad</label>
                     <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
                     <label>Cargar imagen</label>
-                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen">
+                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen" id="selectorImagen">
                     <span id="texto-error" class="text-danger"></span>
-                    <img class="imgPreview" src="~/img/productos/fotodefaullt.jpg" alt="Foto seleccionada">
+                    <label id="nombreImagen" ></label>
+                    <img id="imagenSeleccionada" class="imgPreview" src="~/img/productos/fotodefaullt.jpg" alt="Imagen seleccionada">
                 </form>
             </div>
             <div class="modal-footer">
