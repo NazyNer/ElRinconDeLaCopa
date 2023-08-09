@@ -14,7 +14,7 @@ function CrearNuevo() {
   $("#form-producto input[name='Cantidad']").val(``);
   $("#form-producto input[name='Precio']").val(``);
   $("#selectorImagen").val("");
-  $("#nombreImagen").text("imagen por defecto");
+  $("#nombreImagen").text("Imagen por defecto");
   $("#imagenSeleccionada").attr("src", "/img/productos/fotodefaullt.jpg")
 }
 
@@ -44,11 +44,10 @@ function BuscarProductos() {
                             <td> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
                             <td><b>${producto.cantidad}</b></td>
                             <td>
-                            ${
-                              producto.imagen == null 
-                              ? `<img src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>` 
-                              : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
-                            }
+                            ${producto.imagen == null
+              ? `<img src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
+              : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
+            }
                             </td> 
                             <td><button onClick="RemoveProducto(${producto.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                         </tr>`);
@@ -60,11 +59,10 @@ function BuscarProductos() {
                             <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
                             <td><b>${producto.cantidad}</b></td>
                             <td>
-                            ${
-                              producto.imagen == null 
-                              ? `<img src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>` 
-                              : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
-                            }
+                            ${producto.imagen == null
+              ? `<img src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
+              : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
+            }
                             </td>
                             <td><button onClick="RemoveProducto(${producto.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                         </tr>`);
@@ -99,7 +97,7 @@ function GuardarProducto() {
 }
 
 function BuscarProducto(ID) {
-  
+
   $.ajax({
     // la URL para la petición
     url: '../../Producto/BuscarProductos',
@@ -123,9 +121,14 @@ function BuscarProducto(ID) {
         $(`#CategoriaID`).val(producto.idCategoria);
         $("#form-producto input[name='Precio']").val(producto.precio);
         $("#form-producto input[name='Cantidad']").val(producto.cantidad);
-        var imagenGuardadaBytes = "data:image/" + producto.tipoImagen + ";base64," + producto.imagen;
-        $("#nombreImagen").text(producto.nombreImagen);
-        $("#selectorImagen").val("");
+        if (producto.imagen == null) {
+          var imagenGuardadaBytes = "/img/productos/fotodefaullt.jpg"
+          $("#nombreImagen").text("Imagen por defecto");
+        } else {
+          var imagenGuardadaBytes = "data:image/" + producto.tipoImagen + ";base64," + producto.imagen;
+          $("#nombreImagen").text(producto.nombreImagen);
+          $("#selectorImagen").val("");
+        }
         $("#imagenSeleccionada").attr("src", imagenGuardadaBytes);
         if (!producto.eliminado) {
           $("#btnEliminarProducto").show();
@@ -222,15 +225,15 @@ $("#textoInput").on("input", function () {
   input[0].setSelectionRange(startPosition, startPosition);  // Restaurar la posición del cursor
 });
 
-$("#selectorImagen").change(function() {
+$("#selectorImagen").change(function () {
   var inputFile = $(this)[0];
   if (inputFile.files.length > 0) {
     var reader = new FileReader();
-    
-    reader.onload = function(e) {
+
+    reader.onload = function (e) {
       $("#imagenSeleccionada").attr("src", e.target.result).show();
     };
-    
+
     reader.readAsDataURL(inputFile.files[0]);
 
     var imagenGuardadaNombre = inputFile.files[0].name;
