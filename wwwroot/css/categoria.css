@@ -8,6 +8,16 @@
 .modal-footer{
     background-color: #E9E3D7;
 }
+.bodytable{
+    text-align: center;
+}
+
+
+    .table{
+        text-align: center;
+        justify-content: center;
+    }
+
 
 
 .btn-crear{
@@ -30,6 +40,9 @@
     outline: none;
 }
 
+.crearcatbutton{
+    text-align: center;
+}
 .divcolor .colorh2:hover{
     background-color: #2d1a16;
     color: #E9E3D7;
@@ -48,6 +61,8 @@
   line-height: 1em;
 }
 
+
+
 .divtable table{
     background-color: #2d1a16;
 }
@@ -58,3 +73,4 @@
 .box-shadowBtn:hover{
     box-shadow: 0px 0px 9px 5px #ffffff;
 }
+
