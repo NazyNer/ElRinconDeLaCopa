@@ -11,6 +11,10 @@
     color: #2d1a16;
 }
 
+
+body{
+    margin-top: 90px;
+}
 .btn-marron:hover{
     color: white;
     box-shadow: #caa075;
@@ -20,6 +24,7 @@
 }
 .card{
     padding: .2rem;
+    margin-top: 20px;
 }
 .card-title{
     text-align: center;
@@ -27,3 +32,4 @@
 .card-img-top{
     border-radius: 0px 25px;
 }
+

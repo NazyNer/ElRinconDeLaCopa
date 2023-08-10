@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElRinconDeLaCopa.Migrations
 {
-    public partial class basededatos : Migration
+    public partial class god : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
