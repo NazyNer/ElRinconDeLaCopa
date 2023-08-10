@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using ElRinconDeLaCopa.Data;
 using ElRinconDeLaCopa.Models;
 
 namespace ElRinconDeLaCopa.Controllers
 {
+    [Authorize]
     public class ProductoController : Controller
     {
         private readonly ILogger<CategoriaController> _logger;
