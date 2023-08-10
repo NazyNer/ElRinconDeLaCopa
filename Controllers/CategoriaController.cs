@@ -143,7 +143,7 @@ namespace ElRinconDeLaCopa.Controllers
             {
                 var categoriaRemove = _context.Categorias?.Find(ID);
                 var productosRelacionados = _context.Productos?.Where(p => p.Categoria == categoriaRemove).ToList();
-                if (productosRelacionados == null)
+                if (productosRelacionados.Count() == 0)
                 {
                     _context.Remove(categoriaRemove);
                     _context.SaveChanges();
