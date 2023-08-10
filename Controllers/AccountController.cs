@@ -48,6 +48,7 @@ namespace ElRinconDeLaCopa.Controllers
                 if (result.Succeeded)
                 {
                     // Usuario registrado correctamente
+                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
                     return Json(new { success = true });
                 }
                 else

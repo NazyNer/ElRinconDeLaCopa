@@ -6,7 +6,9 @@
         display: none;
     }
   }
-  
-/* .thcat{
-    display: none;
-} */
+
+.imgPreview{
+    width: 202px;
+    height: 202px;
+    border-radius: 0px 25px;
+}

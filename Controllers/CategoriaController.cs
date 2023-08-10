@@ -131,6 +131,26 @@ namespace ElRinconDeLaCopa.Controllers
             }
             return Json(resultado);
         }
+        public JsonResult removeCategoria(int ID) {
+            var resultado = new ValidacionError();
+            resultado.nonError = false;
+            resultado.MsjError = "No se selecciono ninguna categoria";
+            if (ID > 0)
+            {
+                var categoriaRemove = _context.Categorias?.Find(ID);
+                var productosRelacionados = _context.Productos?.Where(p => p.Categoria == categoriaRemove).ToList();
+                if (productosRelacionados == null)
+                {
+                    _context.Remove(categoriaRemove);
+                    _context.SaveChanges();
+                    resultado.nonError = true;
+                    resultado.MsjError = "la categoria " + categoriaRemove?.Nombre + " se elimino correctamente";
+                    return Json(resultado);    
+                }
+                resultado.MsjError = "La categoria " + categoriaRemove?.Nombre + " tiene productos relacionados";
+            }
+            return Json(resultado);
+        }
     }
 
 }

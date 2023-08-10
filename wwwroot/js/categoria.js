@@ -9,10 +9,10 @@ function CrearNueva() {
     $("#btnHabilitar").hide();
     $("#btn-crear").show();
     $("#btn-crear").text("Crear");
-}   
+}
 function BuscarCategorias() {
     $("#btnEliminar").hide();
-    let TablaCategoria = $("#tbody-categorias");    console.log(TablaCategoria)
+    let TablaCategoria = $("#tbody-categorias");
     TablaCategoria.empty();
     $.ajax({
         // la URL para la petición
@@ -27,19 +27,20 @@ function BuscarCategorias() {
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
         success: function (categorias) {
-            console.log(categorias);
             TablaCategoria.empty();
             $.each(categorias, function (index, categoria) {
-                console.log(categoria.eliminado);
+
                 if (categoria.eliminado) {
                     TablaCategoria.append(`
                             <tr class="">
                                 <td> <a class="btn btn-warning btn-sm" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
+                                <td> <button onClick="RemoveCategoria(${categoria.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                             </tr>`);
                 } else {
                     TablaCategoria.append(`
                             <tr class="">
                                 <td> <a class="btn btn-primary btn-sm" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
+                                <td> <button onClick="RemoveCategoria(${categoria.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                             </tr>`);
                 }
             })
@@ -49,7 +50,6 @@ function BuscarCategorias() {
 }
 function BuscarCategoria(Id) {
     $("#lbl-error").text("");
-    console.log(Id)
     $.ajax({
         // la URL para la petición
         url: '../../Categoria/BuscarCategorias',
@@ -61,7 +61,6 @@ function BuscarCategoria(Id) {
         // el tipo de información que se espera de respuesta
         dataType: 'json',
         success: function (Categoria) {
-            console.log(Categoria)
             if (Categoria.length == 1) {
                 let categoria = Categoria[0];
                 $("#lbl-error").text("");
@@ -74,14 +73,14 @@ function BuscarCategoria(Id) {
                     $("#btn-crear").show();
                     $("#btn-crear").text("Editar");
                 }
-            else{
-                $("#btnEliminar").hide();
-                $("#btnHabilitar").show();
-                $("#btn-crear").hide();
-            }
+                else {
+                    $("#btnEliminar").hide();
+                    $("#btnHabilitar").show();
+                    $("#btn-crear").hide();
+                }
 
-            $("#ModalCategoria").modal("show");
-        }
+                $("#ModalCategoria").modal("show");
+            }
         },
         error: function (xhr, status) {
             alert('Error al cargar categorias');
@@ -94,10 +93,8 @@ function BuscarCategoria(Id) {
     })
 }
 function GuardarCategoria() {
-    console.log("aqui estoy");
     let Id = $("#Id").val();
     let Nombre = $("#form-categoria input[name='Nombre']").val().toUpperCase();
-    console.log("Capte el ID", Id, "Capte el nombre ", Nombre);
     $.ajax({
         // la URL para la petición
         url: '../../Categoria/GuardarCategoria',
@@ -110,8 +107,7 @@ function GuardarCategoria() {
         dataType: 'json',
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
-        success: function(resultado) {
-            console.log(resultado)
+        success: function (resultado) {
             if (resultado.nonError) {
                 $("#ModalCategoria").modal("hide");
                 BuscarCategorias();
@@ -165,3 +161,44 @@ function eliminarCategoria() {
         }
     });
 }
+
+function RemoveCategoria(Id) {
+    $.ajax({
+        // la URL para la petición
+        url: '../../Categoria/removeCategoria',
+        // la información a enviar
+        // (también es posible utilizar una cadena de datos)
+        data: { Id: Id },
+        // especifica si será una petición POST o GET
+        type: 'POST',
+        // el tipo de información que se espera de respuesta
+        dataType: 'json',
+        // código a ejecutar si la petición es satisfactoria;
+        // la respuesta es pasada como argumento a la función
+        success: function (resultado) {
+            if (resultado.nonError) {
+                alert(resultado.msjError)
+                BuscarCategorias();
+            }
+            else {
+                alert(resultado.msjError);
+            }
+        },
+        // código a ejecutar si la petición falla;
+        // son pasados como argumentos a la función
+        // el objeto de la petición en crudo y código de estatus de la petición
+        error: function (xhr, status) {
+            alert('Disculpe, existió un problema');
+            $("#ModalCategoria").modal("hide");
+            BuscarCategorias();
+        }
+    });
+};
+$("#textoInput").on("input", function () {
+    var input = $(this);
+    var startPosition = input[0].selectionStart;  // Guardar la posición del cursor
+
+    input.val(input.val().toUpperCase());  // Convertir texto a mayúsculas
+
+    input[0].setSelectionRange(startPosition, startPosition);  // Restaurar la posición del cursor
+});
