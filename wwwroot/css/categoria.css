@@ -13,12 +13,14 @@
 }
 
 
-
-
+@media (max-width: 425px) {
     .table{
         text-align: center;
         justify-content: center;
     }
+  }
+
+    
 
 .categoriah1{
     margin-top: 100px;

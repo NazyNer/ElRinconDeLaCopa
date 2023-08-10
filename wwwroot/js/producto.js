@@ -39,7 +39,7 @@ function BuscarProductos() {
           console.log(producto)
           TablaProducto.append(`
                         <tr class="">
-                            <td> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+                            <td class="thcat"> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
                             <td> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
                             <td> <a class="btn btn-warning btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
                             <td><b>${producto.cantidad}</b></td>
@@ -50,7 +50,7 @@ function BuscarProductos() {
         } else {
           TablaProducto.append(`
                         <tr class="">
-                            <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+                            <td class="thcat"> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
                             <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
                             <td> <a class="btn btn-primary btn-sm" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
                             <td><b>${producto.cantidad}</b></td>

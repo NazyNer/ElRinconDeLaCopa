@@ -1,4 +1,12 @@
 .form-control{
     margin: 1rem !important;
 }
-
+@media (max-width: 610px) {
+    .thcat{
+        display: none;
+    }
+  }
+  
+/* .thcat{
+    display: none;
+} */
