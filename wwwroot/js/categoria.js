@@ -34,13 +34,13 @@ function BuscarCategorias() {
                     TablaCategoria.append(`
                             <tr class="">
                                 <td> <a class="btn btn-warning btn-sm" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
-                                <td> <button onClick="RemoveCategoria(${categoria.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
+                                <td class="tdbasura"> <button class="buttonbasura" onClick="RemoveCategoria(${categoria.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                             </tr>`);
                 } else {
                     TablaCategoria.append(`
                             <tr class="">
                                 <td> <a class="btn btn-primary btn-sm" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
-                                <td> <button onClick="RemoveCategoria(${categoria.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
+                                <td class="tdbasura"> <button class="buttonbasura" onClick="RemoveCategoria(${categoria.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
                             </tr>`);
                 }
             })

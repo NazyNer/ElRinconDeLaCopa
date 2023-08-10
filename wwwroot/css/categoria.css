@@ -12,6 +12,14 @@
     text-align: center;
 }
 
+.tdbasura{
+    position: relative;
+}
+
+.buttonbasura{
+    position: absolute;
+    right: 10%;
+}
 
 @media (max-width: 425px) {
     .table{
