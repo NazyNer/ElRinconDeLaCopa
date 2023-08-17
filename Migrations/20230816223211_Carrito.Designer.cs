@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElRinconDeLaCopa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230803172713_carrito de compra")]
-    partial class carritodecompra
+    [Migration("20230816223211_Carrito")]
+    partial class Carrito
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,11 +35,14 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<string>("DireccionEntrega")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FechaActual")
+                    b.Property<DateTime?>("FechaActual")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("estado")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 

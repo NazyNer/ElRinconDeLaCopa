@@ -33,11 +33,14 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<string>("DireccionEntrega")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FechaActual")
+                    b.Property<DateTime?>("FechaActual")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UsuarioId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("estado")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 

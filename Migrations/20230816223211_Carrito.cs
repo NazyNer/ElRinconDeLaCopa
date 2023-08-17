@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElRinconDeLaCopa.Migrations
 {
-    public partial class carritodecompra : Migration
+    public partial class Carrito : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -175,8 +175,9 @@ namespace ElRinconDeLaCopa.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    FechaActual = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DireccionEntrega = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    FechaActual = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DireccionEntrega = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    estado = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
