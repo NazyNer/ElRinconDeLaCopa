@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElRinconDeLaCopa.Migrations
 {
-    public partial class Carrito : Migration
+    public partial class carrito : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,21 @@ namespace ElRinconDeLaCopa.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CarritoCompra",
+                columns: table => new
+                {
+                    CarritoID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FechaActual = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UsuarioID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Estado = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarritoCompra", x => x.CarritoID);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,24 +184,24 @@ namespace ElRinconDeLaCopa.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CarritoCompra",
+                name: "DetalleCompra",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    DetalleCompraID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    FechaActual = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DireccionEntrega = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    estado = table.Column<int>(type: "int", nullable: false)
+                    CarritoID = table.Column<int>(type: "int", nullable: false),
+                    ProductoID = table.Column<int>(type: "int", nullable: false),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    CarritoCompraCarritoID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CarritoCompra", x => x.ID);
+                    table.PrimaryKey("PK_DetalleCompra", x => x.DetalleCompraID);
                     table.ForeignKey(
-                        name: "FK_CarritoCompra_AspNetUsers_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        name: "FK_DetalleCompra_CarritoCompra_CarritoCompraCarritoID",
+                        column: x => x.CarritoCompraCarritoID,
+                        principalTable: "CarritoCompra",
+                        principalColumn: "CarritoID");
                 });
 
             migrationBuilder.CreateTable(
@@ -214,33 +229,6 @@ namespace ElRinconDeLaCopa.Migrations
                         column: x => x.CategoriaID,
                         principalTable: "Categorias",
                         principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DetalleCompra",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CarritoID = table.Column<int>(type: "int", nullable: false),
-                    ProductoID = table.Column<int>(type: "int", nullable: false),
-                    Cantidad = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DetalleCompra", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_DetalleCompra_CarritoCompra_CarritoID",
-                        column: x => x.CarritoID,
-                        principalTable: "CarritoCompra",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DetalleCompra_Productos_ProductoID",
-                        column: x => x.ProductoID,
-                        principalTable: "Productos",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -283,19 +271,9 @@ namespace ElRinconDeLaCopa.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CarritoCompra_UsuarioId",
-                table: "CarritoCompra",
-                column: "UsuarioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DetalleCompra_CarritoID",
+                name: "IX_DetalleCompra_CarritoCompraCarritoID",
                 table: "DetalleCompra",
-                column: "CarritoID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DetalleCompra_ProductoID",
-                table: "DetalleCompra",
-                column: "ProductoID");
+                column: "CarritoCompraCarritoID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Productos_CategoriaID",
@@ -324,16 +302,16 @@ namespace ElRinconDeLaCopa.Migrations
                 name: "DetalleCompra");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "CarritoCompra");
-
-            migrationBuilder.DropTable(
                 name: "Productos");
 
             migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "CarritoCompra");
 
             migrationBuilder.DropTable(
                 name: "Categorias");

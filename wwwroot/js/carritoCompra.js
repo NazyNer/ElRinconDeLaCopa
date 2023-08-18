@@ -23,3 +23,7 @@ function AgregarAlDetalle(Id) {
         }
     });
 }
+
+function ProductosEnCarrito() {
+    
+}

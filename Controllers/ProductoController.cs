@@ -237,6 +237,8 @@ namespace ElRinconDeLaCopa.Controllers
                 };               
                 _context.Add(Detalle);
                 _context.SaveChanges();
+                resultado.nonError = true;
+                resultado.MsjError = "";
 
             }
             return Json(resultado);

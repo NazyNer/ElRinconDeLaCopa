@@ -24,27 +24,22 @@ namespace ElRinconDeLaCopa.Migrations
 
             modelBuilder.Entity("ElRinconDeLaCopa.Models.CarritoCompra", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("CarritoID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarritoID"), 1L, 1);
 
-                    b.Property<string>("DireccionEntrega")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("FechaActual")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UsuarioId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("estado")
+                    b.Property<int>("Estado")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.Property<DateTime>("FechaActual")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("UsuarioId");
+                    b.Property<string>("UsuarioID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CarritoID");
 
                     b.ToTable("CarritoCompra");
                 });
@@ -70,13 +65,16 @@ namespace ElRinconDeLaCopa.Migrations
 
             modelBuilder.Entity("ElRinconDeLaCopa.Models.DetalleCompra", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("DetalleCompraID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetalleCompraID"), 1L, 1);
 
                     b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CarritoCompraCarritoID")
                         .HasColumnType("int");
 
                     b.Property<int>("CarritoID")
@@ -85,11 +83,9 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<int>("ProductoID")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("DetalleCompraID");
 
-                    b.HasIndex("CarritoID");
-
-                    b.HasIndex("ProductoID");
+                    b.HasIndex("CarritoCompraCarritoID");
 
                     b.ToTable("DetalleCompra");
                 });
@@ -341,32 +337,13 @@ namespace ElRinconDeLaCopa.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ElRinconDeLaCopa.Models.CarritoCompra", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId");
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("ElRinconDeLaCopa.Models.DetalleCompra", b =>
                 {
                     b.HasOne("ElRinconDeLaCopa.Models.CarritoCompra", "CarritoCompra")
                         .WithMany("Detalles")
-                        .HasForeignKey("CarritoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ElRinconDeLaCopa.Models.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CarritoCompraCarritoID");
 
                     b.Navigation("CarritoCompra");
-
-                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("ElRinconDeLaCopa.Models.Producto", b =>
