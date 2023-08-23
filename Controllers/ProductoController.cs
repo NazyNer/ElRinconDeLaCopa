@@ -15,11 +15,11 @@ namespace ElRinconDeLaCopa.Controllers
     [Authorize]
     public class ProductoController : Controller
     {
-        private readonly ILogger<CategoriaController> _logger;
+        private readonly ILogger<ProductoController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public ProductoController(ApplicationDbContext context, ILogger<CategoriaController> logger, UserManager<IdentityUser> userManager)
+        public ProductoController(ApplicationDbContext context, ILogger<ProductoController> logger, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _logger = logger;
@@ -36,13 +36,18 @@ namespace ElRinconDeLaCopa.Controllers
             {
                 var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
                 if (carritoCreado == null){
-                     carritoCreado = new CarritoCompra{
+                    carritoCreado = new CarritoCompra{
                         FechaActual = DateTime.Now,
                         UsuarioID = user.Id,
                         Estado = 0
                     };
                     _context.Add(carritoCreado);
                     _context.SaveChanges();
+                }
+                var DetalleCarrito = _context.DetalleCompra?.Where(c => c.CarritoID == carritoCreado.CarritoID).ToList();
+                if (DetalleCarrito != null)
+                {
+                    ViewBag.DetalleCompra = DetalleCarrito?.Count;
                 }
             }
             return View();
@@ -212,11 +217,7 @@ namespace ElRinconDeLaCopa.Controllers
             }
             return Json(resultado);
             }
-
-
-
-
-
+            
         public async Task<JsonResult> AgregarDetalle(int Id){
 
             var resultado = new ValidacionError();
@@ -225,21 +226,29 @@ namespace ElRinconDeLaCopa.Controllers
 
             var productoSeleccionado = _context.Productos?.Find(Id);
             if(productoSeleccionado != null){
-
+                
                 var user = await _userManager.GetUserAsync(User);
                 var carrito = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
-                
-                var Detalle = new DetalleCompra
+                var detalleCreado = _context.DetalleCompra?.Where(d => d.CarritoID == carrito.CarritoID && d.ProductoID == Id).FirstOrDefault();
+                if(detalleCreado == null)
                 {
-                    CarritoID = carrito.CarritoID,                   
-                    ProductoID = Id,                
-                    Cantidad =+ 1
-                };               
-                _context.Add(Detalle);
-                _context.SaveChanges();
-                resultado.nonError = true;
-                resultado.MsjError = "";
+                    var Detalle = new DetalleCompra
+                    {
+                        CarritoID = carrito.CarritoID,                   
+                        ProductoID = Id,                
+                        Cantidad = 1
+                    };               
+                    _context.Add(Detalle);
+                    _context.SaveChanges();
+                    resultado.nonError = true;
+                    resultado.MsjError = "";
+                }else{
+                    detalleCreado.Cantidad += 1;
+                    _context.SaveChanges();
+                }
 
+                var DetalleCarrito = _context.DetalleCompra?.Where(c => c.CarritoID == carrito.CarritoID).ToList();
+                ViewBag.DetalleCompra = DetalleCarrito?.Count;
             }
             return Json(resultado);
         }
