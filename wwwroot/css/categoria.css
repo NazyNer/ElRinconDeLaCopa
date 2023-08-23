@@ -88,3 +88,17 @@
     box-shadow: 0px 0px 9px 5px #ffffff;
 }
 
+@media (hover: hover) {
+    .botones-tablas:hover{
+      color: #ce996f;
+      background-color: #2d1a16;
+      transform: scale(1.1);
+      border-color: #2d1a1600;
+    }
+    }
+.botones-tablas{
+    color: #2d1a16;
+    background-color: #ce996f;
+    transform: scale(1.1);
+    border-color: #2d1a1600;
+  }
