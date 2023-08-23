@@ -1,3 +1,4 @@
+
 .form-control{
     margin: 1rem !important;
     width: 95%;
@@ -13,3 +14,18 @@
     height: 202px;
     border-radius: 0px 25px;
 }
+
+@media (hover: hover) {
+    .botones-tablas:hover{
+      color: #ce996f;
+      background-color: #2d1a16;
+      transform: scale(1.1);
+      border-color: #2d1a1600;
+    }
+    }
+.botones-tablas{
+    color: #2d1a16;
+    background-color: #ce996f;
+    transform: scale(1.1);
+    border-color: #2d1a1600;
+  }

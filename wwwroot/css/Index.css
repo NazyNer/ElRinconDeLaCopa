@@ -1,8 +1,11 @@
 html{
-  background-color: rgb(99, 39, 38);
+  background-image: url(../img/red-wine-pouring-from-bottle-glass.width-1920.jpg);
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover; 
 }
 body{
-  background-color: rgb(99, 39, 38);
+  background-color: rgba(127, 255, 212, 0);
 }
 .footer{
   background-color: rgb(222, 226, 230);
