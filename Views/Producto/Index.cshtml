@@ -44,7 +44,6 @@
             </div>
             <div class="modal-body">
                 <div id="Cart-Contain">
-
                 </div>
             </div>
             <div class="modal-footer">
@@ -55,10 +54,11 @@
 </div>
 
 <div class="Carrito" id="cart">
-    <button onclick="AbrirCarrito()"><i class="fa-solid fa-cart-shopping"></i></button>
+    <button onclick="AbrirCarrito()"><i class="fa-solid fa-cart-shopping"></i>
     @if(ViewBag.DetalleCompra != null){
         <span>@ViewBag.DetalleCompra</span>
     }
+    </button>
 </div>
 
 <h1 class="text-center categoriah1">Productos</h1>

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using ElRinconDeLaCopa.Data;
 using ElRinconDeLaCopa.Models;
 using System.Dynamic;
+using NuGet.Protocol.Core.Types;
 
 namespace ElRinconDeLaCopa.Controllers
 {
@@ -46,6 +47,36 @@ namespace ElRinconDeLaCopa.Controllers
           }
           var Carrito = new {resultado = resultado, detalleCompra = Detalle, productos = Productos};
           return Json(Carrito);
+        }
+        public async Task<JsonResult> SubtQuantity(int IdProducto){
+          var resultado = new ValidacionError();
+          resultado.nonError = false;
+          resultado.MsjError = "Ocurrio un error con el producto seleccionado";
+          var user = await _userManager.GetUserAsync(User);
+          var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
+          var DetalleCarrito = _context.DetalleCompra?.Where(d => d.CarritoID == carritoCreado.CarritoID && d.ProductoID == IdProducto).FirstOrDefault();
+          if(DetalleCarrito != null){
+            resultado.nonError = true;
+            resultado.MsjError = "";
+            DetalleCarrito.Cantidad -= 1;
+            _context.SaveChanges();
+          }
+          return Json(resultado);
+        }
+        public async Task<JsonResult> RemoveDetail(int IdProducto){
+          var resultado = new ValidacionError();
+          resultado.nonError = false;
+          resultado.MsjError = "Ocurrio un error con el producto seleccionado";
+          var user = await _userManager.GetUserAsync(User);
+          var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
+          var DetalleCarrito = _context.DetalleCompra?.Where(d => d.CarritoID == carritoCreado.CarritoID && d.ProductoID == IdProducto).FirstOrDefault();
+          if(DetalleCarrito != null){
+            resultado.nonError = true;
+            resultado.MsjError = "Eliminado con exito";
+            _context.DetalleCompra?.Remove(DetalleCarrito);
+            _context.SaveChanges();
+          }
+          return Json(resultado);
         }
     }
 }

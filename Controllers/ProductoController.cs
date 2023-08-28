@@ -45,7 +45,7 @@ namespace ElRinconDeLaCopa.Controllers
                     _context.SaveChanges();
                 }
                 var DetalleCarrito = _context.DetalleCompra?.Where(c => c.CarritoID == carritoCreado.CarritoID).ToList();
-                if (DetalleCarrito != null)
+                if (DetalleCarrito.Count != 0)
                 {
                     ViewBag.DetalleCompra = DetalleCarrito?.Count;
                 }
@@ -226,7 +226,8 @@ namespace ElRinconDeLaCopa.Controllers
 
             var productoSeleccionado = _context.Productos?.Find(Id);
             if(productoSeleccionado != null){
-                
+                resultado.nonError = true;
+                resultado.MsjError = "";
                 var user = await _userManager.GetUserAsync(User);
                 var carrito = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
                 var detalleCreado = _context.DetalleCompra?.Where(d => d.CarritoID == carrito.CarritoID && d.ProductoID == Id).FirstOrDefault();

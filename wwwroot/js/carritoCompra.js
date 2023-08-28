@@ -48,9 +48,10 @@ function AbrirCarrito(){
                     console.log("producto: " + producto + " indice: " + index);
                     carritoDiv.append(`
                     <div class="producto">
-                    <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/>
+                        <button onclick="RemoveDetail(${producto.id})">🗑</button>
+                        <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/>
                         <h3>${producto.nombre}</h3>
-                        <p>Cantidad: ${Carrito.detalleCompra[index].cantidad}</p>
+                        <button onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})">-</button><p id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad}</p><button>+</button>
                     </div>
                     `)
                 });
@@ -61,4 +62,40 @@ function AbrirCarrito(){
             alert('Disculpe, existió un problema');
         }
     });
+}
+function SubtQuantity(ProductID, cantidad){
+    if (cantidad>1) {
+        $.ajax({
+            url: '../../Carrito/SubtQuantity',
+            data: { IdProducto: ProductID },
+            type: 'POST',
+            success: function(resultado) {
+                if (resultado.nonError) {
+                    AbrirCarrito();
+                }else{
+                    alert(resultado.msjError)
+                }
+            }
+        });
+    }
+    else{
+        RemoveDetail(ProductID);
+    }
+}
+function RemoveDetail(ProductID) {
+    let Eliminar = confirm("Desea eliminar este producto del carrito de stock?")
+    if (Eliminar) {
+        $.ajax({
+            url: '../../Carrito/RemoveDetail',
+            data: { IdProducto: ProductID },
+            type: 'POST',
+            success: function(resultado) {
+                if (resultado.nonError) {
+                    AbrirCarrito();
+                }else{
+                    alert(resultado.msjError)
+                }
+            }
+        });
+    }
 }
