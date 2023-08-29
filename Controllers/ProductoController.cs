@@ -44,11 +44,6 @@ namespace ElRinconDeLaCopa.Controllers
                     _context.Add(carritoCreado);
                     _context.SaveChanges();
                 }
-                var DetalleCarrito = _context.DetalleCompra?.Where(c => c.CarritoID == carritoCreado.CarritoID).ToList();
-                if (DetalleCarrito.Count != 0)
-                {
-                    ViewBag.DetalleCompra = DetalleCarrito?.Count;
-                }
             }
             return View();
         }
@@ -247,9 +242,6 @@ namespace ElRinconDeLaCopa.Controllers
                     detalleCreado.Cantidad += 1;
                     _context.SaveChanges();
                 }
-
-                var DetalleCarrito = _context.DetalleCompra?.Where(c => c.CarritoID == carrito.CarritoID).ToList();
-                ViewBag.DetalleCompra = DetalleCarrito?.Count;
             }
             return Json(resultado);
         }

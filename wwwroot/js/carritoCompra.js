@@ -1,3 +1,5 @@
+window.onload = ProuctCart();
+
 function AgregarAlDetalle(Id) {
     //llamar al controlador
     $.ajax({
@@ -14,6 +16,7 @@ function AgregarAlDetalle(Id) {
         // la respuesta es pasada como argumento a la función
         success: function (resultado) {
             if (resultado.nonError) {
+                ProuctCart()
                 alert("Producto agregado al carrito");
             }else{
                 alert(resultado.msjError);
@@ -29,6 +32,7 @@ function AgregarAlDetalle(Id) {
 }
 
 function AbrirCarrito(){
+    let carritoDiv = $("#Cart-Contain");
     $.ajax({
         // la URL para la petición
         url: '../../Carrito/AbrirCarrito',
@@ -41,7 +45,6 @@ function AbrirCarrito(){
         success: function (Carrito) {
             if (Carrito.resultado) {
                 console.log(Carrito);
-                let carritoDiv = $("#Cart-Contain");
                 carritoDiv.empty();
                 $("#ModalCarrito").modal("show");
                 $.each(Carrito.productos, function (index, producto) {
@@ -51,7 +54,7 @@ function AbrirCarrito(){
                         <button onclick="RemoveDetail(${producto.id})">🗑</button>
                         <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/>
                         <h3>${producto.nombre}</h3>
-                        <button onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})">-</button><p id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad}</p><button>+</button>
+                        <button onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})">-</button><p id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad}</p><button onclick="PlusQuantity(${producto.id})">+</button>
                     </div>
                     `)
                 });
@@ -63,6 +66,24 @@ function AbrirCarrito(){
         }
     });
 }
+
+//Funcion para sumar 1 a la cantidad del producto
+function PlusQuantity(ProductID){
+    $.ajax({
+        url: '../../Carrito/PlusQuantity',
+        data: { IdProducto: ProductID },
+        type: 'POST',
+        success: function(resultado) {
+            if (resultado.nonError) {
+                AbrirCarrito();
+            }else{
+                alert(resultado.msjError)
+            }
+        }
+    });
+}
+
+//Funcion para restar 1 a la cantidad del producto
 function SubtQuantity(ProductID, cantidad){
     if (cantidad>1) {
         $.ajax({
@@ -82,6 +103,8 @@ function SubtQuantity(ProductID, cantidad){
         RemoveDetail(ProductID);
     }
 }
+
+//funcion para eliminar el producto del carrito
 function RemoveDetail(ProductID) {
     let Eliminar = confirm("Desea eliminar este producto del carrito de stock?")
     if (Eliminar) {
@@ -91,6 +114,7 @@ function RemoveDetail(ProductID) {
             type: 'POST',
             success: function(resultado) {
                 if (resultado.nonError) {
+                    ProuctCart();
                     AbrirCarrito();
                 }else{
                     alert(resultado.msjError)
@@ -98,4 +122,44 @@ function RemoveDetail(ProductID) {
             }
         });
     }
+}
+
+//Funcion para completar la compra
+function CompletePurchase(){
+    let verificacion = confirm("Seguro de completar esta compra(la cantidad de cada producto va ser agregada al stock de cada uno correspondientemente)");
+    if (verificacion) {
+        let carritoDiv = $("#Cart-Contain");
+        $.ajax({
+            url: '../../Carrito/CompletePurchase',
+            type: 'GET',
+            dataType: 'json',
+            success: function(resultado) {
+                if (resultado.nonError) {
+                    ProuctCart();
+                    carritoDiv.empty();
+                    $("#ModalCarrito").modal("hide");
+                    alert(resultado.msjError)
+                }else{
+                    alert(resultado.msjError)
+                }
+            }
+        });
+    }else{
+        alert("Cancelado correctamente");
+    }
+}
+
+function ProuctCart() {
+    let NumberCart = $("#ProductCart");
+    NumberCart.text("")
+    $.ajax({
+        url: '../../Carrito/ProuctCart',
+        type: 'GET',
+        dataType: 'json',
+        success: function(resultado) {
+            if (resultado != 0) {
+                NumberCart.text(resultado)
+            }
+        }
+    });
 }

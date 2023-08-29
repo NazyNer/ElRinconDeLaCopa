@@ -63,6 +63,23 @@ namespace ElRinconDeLaCopa.Controllers
           }
           return Json(resultado);
         }
+
+        public async Task<JsonResult> PlusQuantity(int IdProducto){
+          var resultado = new ValidacionError();
+          resultado.nonError = false;
+          resultado.MsjError = "Ocurrio un error con el producto seleccionado";
+           var user = await _userManager.GetUserAsync(User);
+          var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
+          var DetalleCarrito = _context.DetalleCompra?.Where(d => d.CarritoID == carritoCreado.CarritoID && d.ProductoID == IdProducto).FirstOrDefault();
+          if(DetalleCarrito != null){
+            resultado.nonError = true;
+            resultado.MsjError = "";
+            DetalleCarrito.Cantidad += 1;
+            _context.SaveChanges();
+          }
+          return Json(resultado);
+        }
+
         public async Task<JsonResult> RemoveDetail(int IdProducto){
           var resultado = new ValidacionError();
           resultado.nonError = false;
@@ -78,5 +95,34 @@ namespace ElRinconDeLaCopa.Controllers
           }
           return Json(resultado);
         }
+
+        public async Task<JsonResult> CompletePurchase(){
+          var resultado = new ValidacionError();
+          resultado.nonError = false;
+          resultado.MsjError = "Ocurrio un error al completar la compra";
+          var user = await _userManager.GetUserAsync(User);
+          var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
+          var DetalleCarrito = _context.DetalleCompra?.Where(c => c.CarritoID == carritoCreado.CarritoID).ToList();
+           foreach (var item in DetalleCarrito)
+            {
+              var producto = _context.Productos?.Where(p => p.ID == item.ProductoID).FirstOrDefault();
+              producto.Cantidad += item.Cantidad;
+              _context.SaveChanges();
+              resultado.nonError = true;
+              resultado.MsjError = "Compra realizada correctamente";
+            }
+            carritoCreado.Estado = EstadoCarrito.Completado;
+            carritoCreado.FechaActual = DateTime.Now;
+            _context.SaveChanges();
+          return Json(resultado);
+        }
+
+        public async Task<JsonResult> ProuctCart(){
+          var user = await _userManager.GetUserAsync(User);
+          var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
+          var DetalleCarrito = _context.DetalleCompra?.Where(c => c.CarritoID == carritoCreado.CarritoID).Count();
+          return Json(DetalleCarrito);
+        }
+        
     }
 }
