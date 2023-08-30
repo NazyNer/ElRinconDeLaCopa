@@ -2,7 +2,7 @@ window.onload = BuscarCategorias();
 function CrearNueva() {
     $("#Id").val(`0`)
     $("#ModalCategoria").modal("show");
-    $("#h1Categoria").text("Crear Categoria");
+    $("#h1Categoria").text("C A T E G O R I A");
     $("#form-categoria input[name='Nombre']").val("")
     $("#lbl-error").text("");
     $("#btnEliminar").hide();
@@ -34,13 +34,21 @@ function BuscarCategorias() {
                     TablaCategoria.append(`
                             <tr class="">
                                 <td> <a class="btn btn-warning btn-sm botones-tablas" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
-                                <td class="tdbasura"> <button class="buttonbasura" onClick="RemoveCategoria(${categoria.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
+                                <td class="tdbasura"> 
+                                <button class="delete-button" onClick="RemoveCategoria(${categoria.id})"> 
+                                <i class="fa-solid fa-trash"></i>
+                                </button>
+                                </td>
                             </tr>`);
                 } else {
                     TablaCategoria.append(`
                             <tr class="">
                                 <td> <a class="btn btn-primary btn-sm botones-tablas" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
-                                <td class="tdbasura"> <button class="buttonbasura" onClick="RemoveCategoria(${categoria.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
+                                <td class="tdbasura"> 
+                                <button class="delete-button" onClick="RemoveCategoria(${categoria.id})"> 
+                                <i class="fa-solid fa-trash"></i>
+                                </button>
+                                </td>
                             </tr>`);
                 }
             })
@@ -64,7 +72,7 @@ function BuscarCategoria(Id) {
             if (Categoria.length == 1) {
                 let categoria = Categoria[0];
                 $("#lbl-error").text("");
-                $("#h1Categoria").text("Editar Categoria");
+                $("#h1Categoria").text("E D I T A R");
                 $("#Id").val(`${Categoria[0].id}`);
                 $("#form-categoria input[name='Nombre']").val(`${categoria.nombre}`);
                 if (!categoria.eliminado) {
@@ -202,3 +210,4 @@ $("#textoInput").on("input", function () {
 
     input[0].setSelectionRange(startPosition, startPosition);  // Restaurar la posición del cursor
 });
+
