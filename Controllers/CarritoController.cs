@@ -29,24 +29,30 @@ namespace ElRinconDeLaCopa.Controllers
         }
         public async Task<JsonResult> AbrirCarrito(){
           var resultado = new ValidacionError();
-          resultado.nonError = true;
-          resultado.MsjError = "";
+          resultado.nonError = false;
+          resultado.MsjError = "No hay productos en el carrito";
           var user = await _userManager.GetUserAsync(User);
           var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
           var DetalleCarrito = _context.DetalleCompra?.Where(c => c.CarritoID == carritoCreado.CarritoID).ToList();
-          dynamic Productos = new ExpandoObject();
-          dynamic Detalle = new ExpandoObject();
-          if(DetalleCarrito != null){
-            foreach (var item in DetalleCarrito)
-            {
-              var producto = _context.Productos?.Where(p => p.ID == item.ProductoID).FirstOrDefault();
-              var detalleProducto = DetalleCarrito.Where(p => p.ProductoID == producto?.ID).FirstOrDefault();
-              ((IDictionary<string, object>)Productos)[producto.Nombre] = producto;
-              ((IDictionary<string, object>)Detalle)[producto.Nombre] = detalleProducto;
+          if(DetalleCarrito.Count != 0){
+            resultado.nonError = true;
+            resultado.MsjError = "";
+            dynamic Productos = new ExpandoObject();
+            dynamic Detalle = new ExpandoObject();
+            if(DetalleCarrito != null){
+              foreach (var item in DetalleCarrito)
+              {
+                var producto = _context.Productos?.Where(p => p.ID == item.ProductoID).FirstOrDefault();
+                var detalleProducto = DetalleCarrito.Where(p => p.ProductoID == producto?.ID).FirstOrDefault();
+                ((IDictionary<string, object>)Productos)[producto.Nombre] = producto;
+                ((IDictionary<string, object>)Detalle)[producto.Nombre] = detalleProducto;
+              }
             }
+            var Carrito = new {resultado = resultado, detalleCompra = Detalle, productos = Productos};
+            return Json(Carrito);
           }
-          var Carrito = new {resultado = resultado, detalleCompra = Detalle, productos = Productos};
-          return Json(Carrito);
+          var ResultadoError = new {resultado = resultado};
+          return Json(ResultadoError);
         }
         public async Task<JsonResult> SubtQuantity(int IdProducto){
           var resultado = new ValidacionError();

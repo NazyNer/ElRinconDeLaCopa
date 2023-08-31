@@ -33,6 +33,7 @@ function AgregarAlDetalle(Id) {
 
 function AbrirCarrito(){
     let carritoDiv = $("#Cart-Contain");
+    let btnGuardar = $("#Guardarstock");
     $.ajax({
         // la URL para la petición
         url: '../../Carrito/AbrirCarrito',
@@ -43,10 +44,10 @@ function AbrirCarrito(){
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
         success: function (Carrito) {
-            if (Carrito.resultado) {
+            if (Carrito.resultado.nonError) {
                 console.log(Carrito);
+                btnGuardar.show()
                 carritoDiv.empty();
-                $("#ModalCarrito").modal("show");
                 $.each(Carrito.productos, function (index, producto) {
                     console.log("producto: " + producto + " indice: " + index);
                     carritoDiv.append(`
@@ -61,6 +62,14 @@ function AbrirCarrito(){
                     </div>
                     `)
                 });
+                $("#ModalCarrito").modal("show");
+            }
+            else{
+                console.log(Carrito.resultado);
+                carritoDiv.empty();
+                carritoDiv.append(`<h1 style="color: white;">${Carrito.resultado.msjError}</h1>`)
+                btnGuardar.hide()
+                $("#ModalCarrito").modal("show");
             }
         },
         // código a ejecutar si la petición falla;
