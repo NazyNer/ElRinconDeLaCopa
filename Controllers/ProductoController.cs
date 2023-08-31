@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using ElRinconDeLaCopa.Data;
 using ElRinconDeLaCopa.Models;
 
@@ -14,19 +15,36 @@ namespace ElRinconDeLaCopa.Controllers
     [Authorize]
     public class ProductoController : Controller
     {
-        private readonly ILogger<CategoriaController> _logger;
+        private readonly ILogger<ProductoController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ProductoController(ApplicationDbContext context, ILogger<CategoriaController> logger)
+        public ProductoController(ApplicationDbContext context, ILogger<ProductoController> logger, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _logger = logger;
+            _userManager = userManager;
         }
         // GET: Producto
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var Categoria = _context.Categorias?.Where(c => c.Eliminado == false).ToList();
             ViewBag.CategoriaID = new SelectList(Categoria?.OrderBy(p => p.Nombre), "ID", "Nombre");
+            
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
+                if (carritoCreado == null){
+                    carritoCreado = new CarritoCompra{
+                        FechaActual = DateTime.Now,
+                        UsuarioID = user.Id,
+                        Estado = 0
+                    };
+                    _context.Add(carritoCreado);
+                    _context.SaveChanges();
+                }
+            }
             return View();
         }
         public IActionResult Catalogo()
@@ -231,6 +249,36 @@ namespace ElRinconDeLaCopa.Controllers
                 }
                 resultado.MsjError = "No se encuentra el producto seleccionado";
                 return Json(resultado);
+            }            
+        public async Task<JsonResult> AgregarDetalle(int Id){
+
+            var resultado = new ValidacionError();
+            resultado.nonError = false;
+            resultado.MsjError = "No se selecciono ningun producto";
+
+            var productoSeleccionado = _context.Productos?.Find(Id);
+            if(productoSeleccionado != null){
+                resultado.nonError = true;
+                resultado.MsjError = "";
+                var user = await _userManager.GetUserAsync(User);
+                var carrito = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
+                var detalleCreado = _context.DetalleCompra?.Where(d => d.CarritoID == carrito.CarritoID && d.ProductoID == Id).FirstOrDefault();
+                if(detalleCreado == null)
+                {
+                    var Detalle = new DetalleCompra
+                    {
+                        CarritoID = carrito.CarritoID,                   
+                        ProductoID = Id,                
+                        Cantidad = 1
+                    };               
+                    _context.Add(Detalle);
+                    _context.SaveChanges();
+                    resultado.nonError = true;
+                    resultado.MsjError = "";
+                }else{
+                    detalleCreado.Cantidad += 1;
+                    _context.SaveChanges();
+                }
             }
             return Json(resultado);
         }

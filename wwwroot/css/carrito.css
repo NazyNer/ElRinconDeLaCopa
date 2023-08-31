@@ -1,0 +1,7 @@
+.Carrito{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 1.7em;
+    color: white;
+}

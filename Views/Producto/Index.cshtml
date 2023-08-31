@@ -37,6 +37,30 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="ModalCarrito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 id="h1Producto" class="modal-title fs-5" >Carrito🛒</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="Cart-Contain">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="CompletePurchase()">Listo</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="Carrito" id="cart">
+    <button onclick="AbrirCarrito()"><i class="fa-solid fa-cart-shopping"></i>
+        <span id="ProductCart"></span>
+    </button>
+</div>
 
  <div class="waviy">
    <span style="--i:1">P</span>
@@ -86,4 +110,5 @@
 
 @section Scripts {
     <script src="~/js/producto.js"></script>
+    <script src="~/js/carritoCompra.js"></script>
 }
