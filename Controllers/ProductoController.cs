@@ -93,13 +93,6 @@ namespace ElRinconDeLaCopa.Controllers
                 resultado.MsjError = "No se agrego una categoria a la producto";
                 return Json(resultado);
             }
-            //Si no es mayor a 0 y es null no se agrego una imagen
-            if (imagen == null && imagen?.Length <= 0)
-            {
-                resultado.nonError = false;
-                resultado.MsjError = "No se agrego una imagen a la producto";
-                return Json(resultado);
-            }
             Nombre = Nombre.ToUpper();
             //Se esta creando el producto
             if (Productoid == 0)
@@ -112,13 +105,6 @@ namespace ElRinconDeLaCopa.Controllers
                     var categoriaSeleccionada = _context.Categorias?.Where(c => c.ID == CategoriaID).FirstOrDefault();
                     if (categoriaSeleccionada != null)
                     {
-                        byte[]? imagenBinaria = null;
-                        using (var fs1 = imagen?.OpenReadStream())
-                        using (var ms1 = new MemoryStream())
-                        {
-                            fs1?.CopyTo(ms1);
-                            imagenBinaria = ms1.ToArray();
-                        }
                         //DECLAMOS EL OBJETO DANDO EL VALOR
                         var productoGuardar = new Producto
                         {
@@ -127,11 +113,22 @@ namespace ElRinconDeLaCopa.Controllers
                             Nombre = Nombre,
                             Precio = Precio,
                             Cantidad = Cantidad,
-                            Categoria = categoriaSeleccionada,
-                            Imagen = imagenBinaria,
-                            TipoImagen = imagen?.ContentType,
-                            NombreImagen = imagen?.FileName
+                            Categoria = categoriaSeleccionada
                         };
+                        //Si no es mayor a 0 y es null no se agrego una imagen
+                        if (imagen != null || imagen?.Length > 0)
+                        {
+                            byte[]? imagenBinaria = null;
+                            using (var fs1 = imagen?.OpenReadStream())
+                            using (var ms1 = new MemoryStream())
+                            {
+                                fs1?.CopyTo(ms1);
+                                imagenBinaria = ms1.ToArray();
+                            }
+                            productoGuardar.Imagen = imagenBinaria;
+                            productoGuardar.TipoImagen = imagen?.ContentType;
+                            productoGuardar.NombreImagen = imagen?.FileName;
+                        }
                         _context.Add(productoGuardar);
                         _context.SaveChanges();
                         resultado.nonError = true;
@@ -140,47 +137,58 @@ namespace ElRinconDeLaCopa.Controllers
                 }
             }
             else{
-                var ProductoOriginal = _context.Categorias?.Where(p => p.Nombre == Nombre && p.ID != Productoid).FirstOrDefault();
-                    if(ProductoOriginal == null){
+                var ProductoOriginal = _context.Productos?.Where(p => p.Nombre == Nombre && p.ID != Productoid).FirstOrDefault();
+                if (ProductoOriginal != null)
+                {
+                    resultado.nonError = false;
+                    resultado.MsjError = "El producto " + Nombre + " ya existe, por favor ingrese otro nombre";
+                    return Json(resultado);
+                }else{
+                    //BUSCAMOS EL PRODUCTO A EDITAR
+                    var productoEditar = _context.Productos?.Find(Productoid);
+                    if(productoEditar != null){
+                        if (productoEditar.Eliminado == true)
+                        {
+                            resultado.nonError = false;
+                            resultado.MsjError = "El producto " + productoEditar.Nombre + " esta deshabilitado";
+                            return Json(resultado);
+                        }
                         //BUSCAMOS LA CATEGORIA SELECCIONADA
                         var categoriaSeleccionada = _context.Categorias?.Where(c => c.ID == CategoriaID).FirstOrDefault();
                         if (categoriaSeleccionada != null){
-                            byte[]? imagenBinaria = null;
-                            using (var fs1 = imagen?.OpenReadStream())
-                            using (var ms1 = new MemoryStream())
-                            {
-                                fs1?.CopyTo(ms1);
-                                imagenBinaria = ms1.ToArray();
-                            }
-                            //BUSCAMOS EL PRODUCTO A EDITAR
-                            var productoEditar = _context.Productos?.Find(Productoid);
-                            if(productoEditar != null){
                                 productoEditar.Nombre = Nombre;
                                 productoEditar.IDCategoria = CategoriaID;
                                 productoEditar.NombreCategoria = categoriaSeleccionada.Nombre;
                                 productoEditar.Precio = Precio;
                                 productoEditar.Cantidad = Cantidad;
                                 productoEditar.Categoria = categoriaSeleccionada;
-                                productoEditar.Imagen = imagenBinaria;
-                                productoEditar.TipoImagen = imagen?.ContentType;
-                                productoEditar.NombreImagen = imagen?.FileName;
+                                //Si no es mayor a 0 y es null no se agrego una imagen
+                                if (imagen != null || imagen?.Length > 0)
+                                {
+                                    byte[]? imagenBinaria = null;
+                                    using (var fs1 = imagen?.OpenReadStream())
+                                    using (var ms1 = new MemoryStream())
+                                    {
+                                        fs1?.CopyTo(ms1);
+                                        imagenBinaria = ms1.ToArray();
+                                    }
+                                    productoEditar.Imagen = imagenBinaria;
+                                    productoEditar.TipoImagen = imagen?.ContentType;
+                                    productoEditar.NombreImagen = imagen?.FileName;
+                                }
                                 _context.SaveChanges();
                                 resultado.nonError = true;
                                 resultado.MsjError = "";
                                 return Json(resultado);
-
-                            }
-                            resultado.nonError = false;
-                            resultado.MsjError = "No existe el producto a editar";
-                            return Json(resultado);
                         }
                         resultado.nonError = false;
                         resultado.MsjError = "No existe la categoria seleccionada";
                         return Json(resultado);
                     }
                     resultado.nonError = false;
-                    resultado.MsjError = "Hay un producto con el mismo nombre";
+                    resultado.MsjError = "No exite el producto a editar";
                     return Json(resultado);
+                }
             }
             return Json(resultado);
         }
@@ -204,15 +212,44 @@ namespace ElRinconDeLaCopa.Controllers
                         resultado.nonError = true;
                     }
                     else{
-                        //Preguntar por categoria, para activarla de ser necesario (?
-                        productoOriginal.Eliminado = false;
-                        _context.SaveChanges();
-                        resultado.nonError= true;
+                        var categoriaRelacionada = _context.Categorias?.Find(productoOriginal?.IDCategoria);
+                        if(categoriaRelacionada.Eliminado == false)
+                        {
+                            productoOriginal.Eliminado = false;
+                            _context.SaveChanges();
+                            resultado.nonError= true;
+                        }else{
+                            categoriaRelacionada.Eliminado = false;
+                            productoOriginal.Eliminado = false;
+                            _context.SaveChanges();
+                            resultado.nonError= true;
+                        }
                     }
             }
             return Json(resultado);
-            }
-            
+        }
+        public JsonResult RemoveProducto(int ID){
+            var resultado = new ValidacionError();
+            resultado.nonError = false;
+            resultado.MsjError = "No se selecciono ningun producto";
+            if(ID > 0)
+            {
+                var productoOriginal = _context.Productos?.Find(ID);
+                if(productoOriginal != null){
+                    if (productoOriginal.Cantidad == 0)
+                    {
+                        _context.Remove(productoOriginal);
+                        _context.SaveChanges();
+                        resultado.nonError = true;
+                        resultado.MsjError = "Producto " + productoOriginal.Nombre + " eliminado correctamente";
+                        return Json(resultado);
+                    }
+                    resultado.MsjError = "El Producto " + productoOriginal.Nombre + " Tiene stock (Asegurese de que la cantidad del producto sea 0 y volver a intentar).";
+                    return Json(resultado);
+                }
+                resultado.MsjError = "No se encuentra el producto seleccionado";
+                return Json(resultado);
+            }            
         public async Task<JsonResult> AgregarDetalle(int Id){
 
             var resultado = new ValidacionError();
@@ -245,7 +282,6 @@ namespace ElRinconDeLaCopa.Controllers
             }
             return Json(resultado);
         }
-
     }
 
 

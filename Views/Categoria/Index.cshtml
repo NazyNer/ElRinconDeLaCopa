@@ -6,45 +6,64 @@
 <div class="modal fade" id="ModalCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h1 id="h1Categoria" class="modal-title fs-5">Crear Categoria</h1>
+      <div class="modal-header" id="header">
+        <h1 id="h1Categoria" class="modal-title fs-5 ">C A T E G O R I A</h1>
         <input type="Hidden" id="Id" type="number" value="0" disabled/>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
          <div id="form-categoria" class="form-group">
-                <label class="control-label">Nombre</label>
-                <input name="Nombre" class="form-control" autocomplete="off" onkeyup="this.value = this.value.toUpperCase()"/>
+                @* <label class="control-label">Nombre</label> *@
+                <p class="modalnombre">N O M B R E</p>
+                <input name="Nombre" class="form-control" autocomplete="off" id="textoInput"/>
                 <span class="text-danger" id="lbl-error"></span>
             </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button id="btn-crear" onclick="GuardarCategoria()"type="button" class="btn btn-crear"></button>
-        <input id="btnEliminar" type="button" onclick="eliminarCategoria()" class="btn btn-danger" value="Deshabilitar" />
-        <input id="btnHabilitar" type="button" onclick="eliminarCategoria()" class="btn btn-success" value="Habilitar" />
+        <button type="button" class="btn botones-modals " data-bs-dismiss="modal">Cerrar</button>
+        <button id="btn-crear" onclick="GuardarCategoria()"type="button" class="btn botones-modals"></button>
+        <input id="btnEliminar" type="button" onclick="eliminarCategoria()" class="btn botones-modals" value="Deshabilitar" />
+        <input id="btnHabilitar" type="button" onclick="eliminarCategoria()" class="btn botones-modals" value="Habilitar" />
 
       </div>
     </div>
   </div>
 </div>
 
-<h1 class="text-center categoriah1">Categorias</h1>
+ <div class="waviy">
+   <span style="--i:1">C</span>
+   <span style="--i:2">A</span>
+   <span style="--i:3">T</span>
+   <span style="--i:4">E</span>
+   <span style="--i:5">G</span>
+   <span style="--i:6">O</span>
+   <span style="--i:7">R</span>
+   <span style="--i:8">I</span>
+   <span style="--i:9">A</span>
+   <span style="--i:10">S</span>
+  </div>
+
+
+@* <h1 class="text-center categoriah1">Categorias</h1> *@
 <div class="divcolor container w-90  mt-5 rounded shadow"> 
 
 <div class="row align-items-stretch justify-content-center box-shadowTable rounded">
-        
+<p class="createbutton1">
+<button type="button" class="createbutton" onclick="CrearNueva()">Crear Nueva</button>
+</p>
 
-    <p class="text-white"> 
+
+    @* <p class="text-white crearcatbutton"> 
         <button type="button" class="colorh2 box-shadowBtn" onclick="CrearNueva()">Crear Nueva</button>
-    </p>
-    <div class="divtable col bg d-none d-lg-block rounded">
-        <table class="table text-white">
+    </p> *@
+    <div class="divtable col bg  d-lg-block rounded">
+        <table class="table text-white rounded">
             <thead>
                 <tr>
-                    <th>
-                        Nombre
+                    <th class="name">
+                        N O M B R E
                     </th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="tbody-categorias">
@@ -54,6 +73,9 @@
     </div>
 </div>
 
+
 @section Scripts {
     <script src="~/js/categoria.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/sweetalert.js"></script>
 }

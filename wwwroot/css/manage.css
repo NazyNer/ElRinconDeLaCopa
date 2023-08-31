@@ -1,0 +1,53 @@
+html{
+    background-image: url(../img/red-wine-pouring-from-bottle-glass.width-1920.jpg);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover; 
+}
+body{
+    background-color: rgba(127, 255, 212, 0);
+}
+.manageh1{
+    color: blanchedalmond;
+    text-align: center;
+}
+.fondo{
+    background-color: #2d1a16;
+}
+@media (hover: hover) {
+    .managehover:hover{
+      color: #2d1a16;
+      background-color: #ce996f;
+      transform: scale(1.1);
+    }
+    }
+
+.managehover{
+    margin: 0.5rem;
+    color: blanchedalmond;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #ce996f;
+}
+
+h3, .h3 {
+    font-size: calc(1.3rem + 0.6vw);
+    display: none;
+}
+
+@media (hover: hover) {
+    .btn-primary:hover{
+      color: #ce996f;
+      background-color: #2d1a16;
+      transform: scale(1.1);
+      border-color: #2d1a1600;
+    }
+    }
+.btn-primary{
+    color: #2d1a16;
+    background-color: #ce996f;
+    transform: scale(1.1);
+    border-color: #2d1a1600;
+  }

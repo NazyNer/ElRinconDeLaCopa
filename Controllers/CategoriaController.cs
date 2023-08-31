@@ -22,6 +22,8 @@ namespace ElRinconDeLaCopa.Controllers
             _context = context;
             _logger = logger;
         }
+
+        
         public IActionResult Index()
         {
             return View();
@@ -80,6 +82,12 @@ namespace ElRinconDeLaCopa.Controllers
                             _context.SaveChanges();
                             resultado.nonError = true;
                         }
+                        var productosRelacionados = _context.Productos?.Where(p => p.IDCategoria == id).ToList();
+                        if (productosRelacionados != null)
+                        {
+                            productosRelacionados?.ForEach(p => p.NombreCategoria = nombre);
+                            _context.SaveChanges();
+                        }
                     }
                     else
                     {
@@ -124,6 +132,26 @@ namespace ElRinconDeLaCopa.Controllers
                     _context.SaveChanges();
                     resultado.nonError = true;
                 }
+            }
+            return Json(resultado);
+        }
+        public JsonResult removeCategoria(int ID) {
+            var resultado = new ValidacionError();
+            resultado.nonError = false;
+            resultado.MsjError = "No se selecciono ninguna categoria";
+            if (ID > 0)
+            {
+                var categoriaRemove = _context.Categorias?.Find(ID);
+                var productosRelacionados = _context.Productos?.Where(p => p.Categoria == categoriaRemove).ToList();
+                if (productosRelacionados.Count() == 0)
+                {
+                    _context.Remove(categoriaRemove);
+                    _context.SaveChanges();
+                    resultado.nonError = true;
+                    resultado.MsjError = "la categoria " + categoriaRemove?.Nombre + " se elimino correctamente";
+                    return Json(resultado);    
+                }
+                resultado.MsjError = "La categoria " + categoriaRemove?.Nombre + " tiene productos relacionados";
             }
             return Json(resultado);
         }

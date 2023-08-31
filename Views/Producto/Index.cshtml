@@ -7,23 +7,25 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 id="h1Producto" class="modal-title fs-5" >Crear Producto</h1>
+                <h1 id="h1Producto" class="modal-title fs-5" >P R O D U C T O</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="form-producto" class="form-group" method="post" enctype="multipart/form-data">
                     <input type="Hidden" name="Productoid" type="number" value="0"/>
-                    <label class="control-label">Nombre</label>
-                    <input class="form-control" placeholder="Nombre" name="Nombre" onkeyup="this.value = this.value.toUpperCase()"/>
-                    <span class="text-danger"></span>
-                    <label class="control-label">Categoría del Producto</label>
+                    <p class="modalnombre">N O M B R E</p>
+                    <input id="textoInput" class="form-control" placeholder="Nombre" name="Nombre"/>
+                    <p class="modalnombre2">C A T E G O R I A</p>
                     @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control"})
-                    <label class="control-label">Precio</label>
+                    <p class="modalnombre2">P R E C I O</p>
                     <input type="number" placeholder="Precio" class="form-control" name="Precio">
-                    <label class="control-label">Cantidad</label>
-                    <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad">
-                    <label class="control-label">Imágen</label>
-                    <input type="file" accept="image/jpeg" class="form-control" placeholder="Imagen" name="Imagen">
+                    <p class="modalnombre2">C A N T I D A D</p>
+                    <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
+                    <p class="modalnombre2">I M A G E N</p>
+                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen" id="selectorImagen" >
+                    <span id="texto-error" class="text-danger"></span>
+                    <label id="nombreImagen" ></label>
+                    <img id="imagenSeleccionada" class="imgPreview" src="~/img/productos/fotodefaullt.jpg" alt="Imagen seleccionada">
                 </form>
             </div>
             <div class="modal-footer">
@@ -60,17 +62,27 @@
     </button>
 </div>
 
-<h1 class="text-center categoriah1">Productos</h1>
+ <div class="waviy">
+   <span style="--i:1">P</span>
+   <span style="--i:2">R</span>
+   <span style="--i:3">O</span>
+   <span style="--i:4">D</span>
+   <span style="--i:5">U</span>
+   <span style="--i:6">C</span>
+   <span style="--i:7">T</span>
+   <span style="--i:8">O</span>
+   <span style="--i:9">S</span>
+  </div>
 <div class="divcolor container w-90  mt-5 rounded shadow"> 
     <div class="row align-items-stretch justify-content-center box-shadowTable rounded">
-        <p class="text-white">
-            <button type="button" class="colorh2 box-shadowBtn" onclick="CrearNuevo()">Crear Nuevo</button>
-        </p>
-        <div class="divtable col bg d-none d-lg-block rounded">
+        <p class="createbutton1">
+<button type="button" class="createbutton" onclick="CrearNuevo()">Crear Nuevo</button>
+</p>
+        <div class="divtable col bg  d-lg-block rounded">
             <table class="table text-white">
                 <thead>
                     <tr>
-                        <th>
+                        <th class="thcat">
                             Categoria
                         </th>
                         <th>
@@ -85,6 +97,7 @@
                         <th>
                             Imagen
                         </th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="tbody-productos">

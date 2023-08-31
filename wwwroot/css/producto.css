@@ -1,3 +1,41 @@
+#h1Producto{
+  color: #2d1a16c0;
+  font-size: 25px;
+  text-align: center;
+  }
+
+.modalnombre2{
+  text-align: center;
+  color: #ce996f;
+  font-size: 15px;
+}
 .form-control{
     margin: 1rem !important;
+    width: 95%;
 }
+@media (max-width: 610px) {
+    .thcat{
+        display: none;
+    }
+  }
+
+.imgPreview{
+    width: 202px;
+    height: 202px;
+    border-radius: 0px 25px;
+}
+
+@media (hover: hover) {
+    .botones-tablas:hover{
+      color: #ce996f;
+      background-color: #2d1a16;
+      transform: scale(1.1);
+      border-color: #2d1a1600;
+    }
+    }
+.botones-tablas{
+    color: #2d1a16;
+    background-color: #ce996f;
+    transform: scale(1.1);
+    border-color: #2d1a1600;
+  }
