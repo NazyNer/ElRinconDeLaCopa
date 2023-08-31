@@ -64,7 +64,7 @@ function BuscarProductos() {
               : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
             }
                             </td>
-                            <td> <button onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>>
+                            <td> <button class="btn btn-marron" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>>
                             <td class="tdbasura"><button class="delete-button" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
                         </tr>`);
         }

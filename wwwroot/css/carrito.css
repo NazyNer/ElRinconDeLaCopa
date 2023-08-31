@@ -5,3 +5,32 @@
     font-size: 1.7em;
     color: white;
 }
+h3, .h3 {
+    /* font-size: calc(1.3rem + 0.6vw); */
+    text-align: center;
+    color: #ce996f;
+    font-size: 40px;
+}
+
+.cantidadcarrito{
+    color: #ce996f;
+    font-size: 20px;
+}
+
+@media (hover: hover) {
+    .delete-button-carrito:hover{
+      color: #ce996f;
+      background-color: #2d1a16;
+      transform: scale(1.1);
+      border-color: #2d1a1600;
+    }
+  }
+  
+   .delete-button-carrito{
+      /* position: absolute; */
+      color: #2d1a16;
+    background-color: #ce996f;
+    transform: scale(1.1);
+    border-color: #2d1a1600;
+    margin-top: 10px;
+  } 

@@ -51,10 +51,13 @@ function AbrirCarrito(){
                     console.log("producto: " + producto + " indice: " + index);
                     carritoDiv.append(`
                     <div class="producto">
-                        <button onclick="RemoveDetail(${producto.id})">🗑</button>
-                        <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/>
                         <h3>${producto.nombre}</h3>
-                        <button onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})">-</button><p id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad}</p><button onclick="PlusQuantity(${producto.id})">+</button>
+                        <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br> 
+                                
+                        <button class="delete-button-carrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button> <br>
+                        <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
+                        <button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
+                        <button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button>
                     </div>
                     `)
                 });

@@ -3,7 +3,9 @@
   font-size: 25px;
   text-align: center;
   }
-
+.modal-content{
+  text-align: center;
+  }
 .modalnombre2{
   text-align: center;
   color: #ce996f;
