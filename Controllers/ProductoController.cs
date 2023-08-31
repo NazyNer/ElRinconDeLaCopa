@@ -249,7 +249,9 @@ namespace ElRinconDeLaCopa.Controllers
                 }
                 resultado.MsjError = "No se encuentra el producto seleccionado";
                 return Json(resultado);
-            }            
+            } 
+            return Json(resultado);   
+        }        
         public async Task<JsonResult> AgregarDetalle(int Id){
 
             var resultado = new ValidacionError();
@@ -283,6 +285,6 @@ namespace ElRinconDeLaCopa.Controllers
             return Json(resultado);
         }
     }
-
-
 }
+
+
