@@ -41,3 +41,14 @@
     transform: scale(1.1);
     border-color: #2d1a1600;
   }
+
+  .btn-producto-cart{
+    background-color: #7a5938;
+    transition: all .5s ease-in-out;
+    color: #2d1a16;
+  }
+  .btn-producto-cart:hover{
+    color: white;
+    box-shadow: #caa075;
+    transform: scale(1.2);
+  }
