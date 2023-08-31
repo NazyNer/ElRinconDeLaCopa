@@ -4,7 +4,7 @@ function CrearNuevo() {
   $("#form-producto input[name='Productoid']").val(`0`);
   $(`#CategoriaID`).val('0');
   $("#ModalProducto").modal("show");
-  $("#h1Producto").text("Crear Producto");
+  $("#h1Producto").text("P R O D U C T O");
   $("#form-producto input[name='Nombre']").val("");
   $("#texto-error").text("");
   $("#btnEliminarProducto").hide();
@@ -64,7 +64,7 @@ function BuscarProductos() {
               : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
             }
                             </td>
-                            <td><button onClick="RemoveProducto(${producto.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
+                            <td class="tdbasura"><button class="delete-button" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
                         </tr>`);
         }
       })
@@ -114,7 +114,7 @@ function BuscarProducto(ID) {
       if (productos.length = 1) {
         let producto = productos[0];
         $("#texto-error").text("");
-        $("#h1Producto").text("Editar producto")
+        $("#h1Producto").text("E D I T A R")
         $("#form-producto input[name='Productoid']").val(producto.id);
         $("#btnCrear").show();
         $("#form-producto input[name='Nombre']").val(producto.nombre);
