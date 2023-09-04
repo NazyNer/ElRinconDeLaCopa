@@ -10,13 +10,17 @@
                 <h1 id="h1Producto" class="modal-title fs-5" >C A R R I T O</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="CarritoProductos">
                 <div id="Cart-Contain">
                 </div>
-                <div id="Total" class="cantidadcarrito" >Total :</div>
+                <h1 id="Total" class="cantidadcarrito"></h1>
+            </div>
+            <div class="modal-body" id="CarritoForm">
+                <div id="Form-Contain">
+                </div>
             </div>
             <div class="modal-footer">
-                <button id="Guardarstock" class="btn botones-modals" onclick="CompletePurchase()">Listo</button>
+                <button id="Guardarstock" class="btn botones-modals" onclick="CompletePurchaseProduct()">Listo</button>
                 <button type="button" class="btn botones-modals" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>

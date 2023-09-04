@@ -173,6 +173,8 @@ function ProductCart() {
         success: function(resultado) {
             if (resultado != 0) {
                 NumberCart.text(resultado)
+            }else{
+                NumberCart.text("")
             }
         }
     });

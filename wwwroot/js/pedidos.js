@@ -1,16 +1,23 @@
 window.onload = ProductCart();
+
 function MostrarPedido() {
     let carritoDiv = $("#Cart-Contain");
     let btnGuardar = $("#Guardarstock");
     let Total = $("#Total");
+    let CarritoProductos = $("#CarritoProductos");
+    let CarritoForm = $("#CarritoForm")
+    let btnGuardarstock = $("#Guardarstock");
     $.ajax({
         url: '../../Pedido/AbrirCarrito',
         type: 'GET',
         dataType: 'json',
         success: function (Carrito) {
             if (Carrito.resultado.nonError) {
-                Total.show()
-                btnGuardar.show()
+                btnGuardarstock.show();
+                CarritoProductos.show();
+                CarritoForm.hide();
+                Total.show();
+                btnGuardar.show();
                 carritoDiv.empty();
                 let totalPagar = 0;
                 $.each(Carrito.productos, function (index, producto) {
@@ -19,11 +26,11 @@ function MostrarPedido() {
                         <h3>${producto.nombre}</h3>
                         <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br> 
                         <button class="delete-button-carrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button> <br>
-                        <p class="cantidadcarrito">Precio: $${producto.precio}</p>
+                        <h3 class="cantidadcarrito">Precio: $${producto.precio}</h3>
                         <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
                         <button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
                         <button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button>
-                        <p class="cantidadcarrito">Subtotal: $${Carrito.detalleCompra[index].subtotal}</p>
+                        <h2 class="cantidadcarrito">Subtotal: $${Carrito.detalleCompra[index].subtotal}</h2>
                     </div>
                     `)
                     totalPagar += Carrito.detalleCompra[index].subtotal;
@@ -32,7 +39,8 @@ function MostrarPedido() {
                 $("#ModalCarrito").modal("show");
             }
             else{
-                console.log(Carrito.resultado);
+                CarritoProductos.show();
+                CarritoForm.hide();
                 Total.text("")
                 Total.hide()
                 carritoDiv.empty();
@@ -75,8 +83,87 @@ function ProductCart() {
             if (resultado != 0) {
                 NumberCart.text(resultado)
             }
+            else{
+                NumberCart.text("")
+            }
         }
     });
+}
+function SubtQuantity(ProductID, cantidad) {
+    if (cantidad>1) {
+        $.ajax({
+            url: '../../Pedido/SubtQuantity',
+            data: { ProductoID: ProductID },
+            type: 'POST',
+            success: function(resultado) {
+                if (resultado.nonError) {
+                    MostrarPedido();
+                }else{
+                    alert(resultado.msjError)
+                }
+            }
+        });
+    }
+    else{
+        RemoveDetail(ProductID);
+    }
+}
+
+function PlusQuantity(ProductID) {
+    $.ajax({
+        url: '../../Pedido/PlusQuantity',
+        data: { ProductoID: ProductID },
+        type: 'POST',
+        success: function(resultado) {
+            if (resultado.nonError) {
+                MostrarPedido();
+            }else{
+                alert(resultado.msjError)
+            }
+        }
+    });
+}
+
+function RemoveDetail(ProductID) {
+    let Eliminar = confirm("Desea eliminar este producto del carrito de stock?")
+    if (Eliminar) {
+        $.ajax({
+            url: '../../Pedido/RemoveDetail',
+            data: { ProductoID: ProductID },
+            type: 'POST',
+            success: function(resultado) {
+                if (resultado.nonError) {
+                    MostrarPedido();
+                    ProductCart();
+                }else{
+                    alert(resultado.msjError)
+                }
+            }
+        });
+    }
+}
+
+function CompletePurchaseProduct() {
+    let btnGuardarstock = $("#Guardarstock");
+    let CarritoProductos = $("#CarritoProductos");
+    let CarritoForm =$("#CarritoForm");
+    let  completePurchaseProduct = confirm("Seguro de completar la compra?");
+    if (completePurchaseProduct) {
+        btnGuardarstock.hide();
+        CarritoProductos.hide();
+        CarritoForm.show();
+        $.ajax({
+            url: '../../Pedido/CompletePurchaseProduct',
+            type: 'GET',
+            success: function(resultado) {
+                if (resultado.nonError) {
+                    
+                }else{
+                    alert(resultado.msjError)
+                }
+            }
+        });
+    }
 }
 function CompletePurchase(){
     console.log("Compra completa");
