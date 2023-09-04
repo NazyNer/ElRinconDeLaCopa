@@ -123,7 +123,7 @@ namespace ElRinconDeLaCopa.Controllers
           return Json(resultado);
         }
 
-        public async Task<JsonResult> ProuctCart(){
+        public async Task<JsonResult> ProductCart(){
           var user = await _userManager.GetUserAsync(User);
           var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
           var DetalleCarrito = _context.DetalleCompra?.Where(c => c.CarritoID == carritoCreado.CarritoID).Count();

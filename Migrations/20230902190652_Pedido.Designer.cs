@@ -4,6 +4,7 @@ using ElRinconDeLaCopa.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElRinconDeLaCopa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230902190652_Pedido")]
+    partial class Pedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,12 +82,17 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<int>("CarritoID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PedidoClientePedidoID")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProductoID")
                         .HasColumnType("int");
 
                     b.HasKey("DetalleCompraID");
 
                     b.HasIndex("CarritoCompraCarritoID");
+
+                    b.HasIndex("PedidoClientePedidoID");
 
                     b.ToTable("DetalleCompra");
                 });
@@ -410,13 +417,17 @@ namespace ElRinconDeLaCopa.Migrations
                         .WithMany("Detalles")
                         .HasForeignKey("CarritoCompraCarritoID");
 
+                    b.HasOne("ElRinconDeLaCopa.Models.PedidoCliente", null)
+                        .WithMany("Detalles")
+                        .HasForeignKey("PedidoClientePedidoID");
+
                     b.Navigation("CarritoCompra");
                 });
 
             modelBuilder.Entity("ElRinconDeLaCopa.Models.DetalleDelPedido", b =>
                 {
                     b.HasOne("ElRinconDeLaCopa.Models.PedidoCliente", "PedidoCliente")
-                        .WithMany("DetalleDelPedido")
+                        .WithMany()
                         .HasForeignKey("PedidoClientePedidoID");
 
                     b.Navigation("PedidoCliente");
@@ -494,7 +505,7 @@ namespace ElRinconDeLaCopa.Migrations
 
             modelBuilder.Entity("ElRinconDeLaCopa.Models.PedidoCliente", b =>
                 {
-                    b.Navigation("DetalleDelPedido");
+                    b.Navigation("Detalles");
                 });
 #pragma warning restore 612, 618
         }

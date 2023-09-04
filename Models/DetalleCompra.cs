@@ -15,6 +15,5 @@ namespace ElRinconDeLaCopa.Models
         public int Cantidad { get; set; } // Cantidad del producto comprado
         public virtual CarritoCompra? CarritoCompra { get; set; } // Referencia al carrito al que pertenece este detalle
          
-        //public virtual Producto? Producto { get; set; } // Referencia al producto comprado      
     }
 }

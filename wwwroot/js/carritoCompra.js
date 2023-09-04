@@ -1,4 +1,4 @@
-window.onload = ProuctCart();
+window.onload = ProductCart();
 
 function AgregarAlDetalle(Id) {
     //llamar al controlador
@@ -16,7 +16,7 @@ function AgregarAlDetalle(Id) {
         // la respuesta es pasada como argumento a la función
         success: function (resultado) {
             if (resultado.nonError) {
-                ProuctCart()
+                ProductCart()
                 alert("Producto agregado al carrito");
             }else{
                 alert(resultado.msjError);
@@ -126,7 +126,7 @@ function RemoveDetail(ProductID) {
             type: 'POST',
             success: function(resultado) {
                 if (resultado.nonError) {
-                    ProuctCart();
+                    ProductCart();
                     AbrirCarrito();
                 }else{
                     alert(resultado.msjError)
@@ -147,12 +147,14 @@ function CompletePurchase(){
             dataType: 'json',
             success: function(resultado) {
                 if (resultado.nonError) {
-                    ProuctCart();
+                    ProductCart();
                     carritoDiv.empty();
                     $("#ModalCarrito").modal("hide");
                     alert(resultado.msjError)
+                    BuscarProductos();
                 }else{
                     alert(resultado.msjError)
+                    BuscarProductos();
                 }
             }
         });
@@ -161,11 +163,11 @@ function CompletePurchase(){
     }
 }
 
-function ProuctCart() {
+function ProductCart() {
     let NumberCart = $("#ProductCart");
     NumberCart.text("")
     $.ajax({
-        url: '../../Carrito/ProuctCart',
+        url: '../../Carrito/ProductCart',
         type: 'GET',
         dataType: 'json',
         success: function(resultado) {

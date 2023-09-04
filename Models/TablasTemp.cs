@@ -7,3 +7,11 @@ public enum EstadoCarrito{
             enCurso,
             Completado
         }
+public enum EstadoPedido
+{
+  Incompleto,
+  Completado,
+  EnEspera,
+  Entregado,
+  Cancelado,
+}
