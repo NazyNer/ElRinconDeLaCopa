@@ -153,7 +153,7 @@ namespace ElRinconDeLaCopa.Controllers
           var resultado = new ValidacionError();
           resultado.nonError = false;
           resultado.MsjError = "No existe el productos en el carrito";
-           var user = await _userManager.GetUserAsync(User);
+          var user = await _userManager.GetUserAsync(User);
           var Pedido = _context.PedidosClientes?.Where(p => p.UsuarioID == user.Id & p.Estado == 0).FirstOrDefault();
           var DetalleCarrito = _context.DetallesDePedidos?.Where(c => c.PedidoID == Pedido.PedidoID & c.ProductoID == ProductoID).FirstOrDefault();
           if (DetalleCarrito != null){
@@ -164,6 +164,34 @@ namespace ElRinconDeLaCopa.Controllers
           }
           return Json(resultado);
         }
-        
+        public async Task<JsonResult>CompletePurchaseProduct(){
+          var resultado = new ValidacionError();
+          resultado.nonError = false;
+          resultado.MsjError = "Error al completar la compra de productos";
+          var user = await _userManager.GetUserAsync(User);
+          var Pedido = _context.PedidosClientes?.Where(p => p.UsuarioID == user.Id & p.Estado == 0).FirstOrDefault();
+          var DetalleCarrito = _context.DetallesDePedidos?.Where(c => c.PedidoID == Pedido.PedidoID).ToList();
+          
+            if(DetalleCarrito != null){
+              try
+              {
+                 foreach (var item in DetalleCarrito)
+                {
+                  var producto = _context.Productos.Where(p => p.ID == item.ProductoID).FirstOrDefault();
+                  var stock = producto.Cantidad - item.Cantidad;
+                  if (stock >= 0)
+                  {
+                    
+                  }
+                }
+              }
+              catch (System.Exception error)
+              {
+                
+                throw;
+              }
+            }
+          return Json(resultado);
+        }
     }
 }
