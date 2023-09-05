@@ -1,95 +1,97 @@
+// Algoritmos de Animación
 
-// Algoritmos de Animacion
+// Evento para mostrar el formulario de inicio de sesión al hacer clic en el botón
 document.getElementById("btn__iniciar-sesion").addEventListener("click", login);
+
+// Evento para mostrar el formulario de registro al hacer clic en el botón
 document.getElementById("btn__registrarse").addEventListener("click", register);
-window.addEventListener("resize" , anchopagina);
-//Declaracion de Variables
+
+// Evento que se dispara cuando la ventana cambia de tamaño para ajustar la interfaz
+window.addEventListener("resize", anchopagina);
+
+// Declaración de Variables
 var contenedor_login_register = document.querySelector(".contenedor__login-register");
 var formulario_login = document.querySelector(".formulario__login");
 var formulario_register = document.querySelector(".formulario__register");
 var caja_trasera_login = document.querySelector(".caja__trasera-login");
 var caja_trasera_register = document.querySelector(".caja__trasera-register");
 
-
-function anchopagina(){     
-    if(window.innerWidth > 850){
+// Función que ajusta la interfaz en función del tamaño de la ventana
+function anchopagina() {
+    if (window.innerWidth > 850) {
         caja_trasera_login.style.display = "block";
         caja_trasera_register.style.display = "block";
-    }else{
+    } else {
         caja_trasera_register.style.display = "block";
         caja_trasera_register.style.opacity = "1";
         caja_trasera_login.style.display = "none";
         formulario_login.style.display = "block";
-        formulario_register.style.display = "none"
+        formulario_register.style.display = "none";
         contenedor_login_register.style.left = "0px";
     }
 }
 
-anchopagina()
+anchopagina();
 
-
-function login () {
-    if(window.innerWidth > 850){
+// Función para mostrar el formulario de inicio de sesión
+function login() {
+    if (window.innerWidth > 850) {
         formulario_register.style.display = "none";
-        contenedor_login_register.style.left = "10px"
-        formulario_login.style.display = "block"
+        contenedor_login_register.style.left = "10px";
+        formulario_login.style.display = "block";
         caja_trasera_register.style.opacity = "1";
         caja_trasera_login.style.opacity = "0";
-    }else{
+    } else {
         formulario_register.style.display = "none";
-        contenedor_login_register.style.left = "0px"
-        formulario_login.style.display = "block"
+        contenedor_login_register.style.left = "0px";
+        formulario_login.style.display = "block";
         caja_trasera_register.style.display = "block";
         caja_trasera_login.style.display = "none";
     }
 }
 
-function register () {
-    if(window.innerWidth > 850){
+// Función para mostrar el formulario de registro
+function register() {
+    if (window.innerWidth > 850) {
         formulario_register.style.display = "block";
-        contenedor_login_register.style.left = "410px"
-        formulario_login.style.display = "none"
+        contenedor_login_register.style.left = "410px";
+        formulario_login.style.display = "none";
         caja_trasera_register.style.opacity = "0";
         caja_trasera_login.style.opacity = "1";
-    }else{
+    } else {
         formulario_register.style.display = "block";
-        contenedor_login_register.style.left = "0px"
-        formulario_login.style.display = "none"
+        contenedor_login_register.style.left = "0px";
+        formulario_login.style.display = "none";
         caja_trasera_register.style.display = "none";
         caja_trasera_login.style.display = "block";
         caja_trasera_login.style.opacity = "1";
     }
 }
-// /Algoritmos de Animacion
 
-// funcion para registrarse en la pagina...
+// /Algoritmos de Animación
+
+// Función para registrarse en la página
 let btn_register = $("#btn-register");
-btn_register.click(function(e) {
-    e.preventDefault()
-   
+btn_register.click(function (e) {
+    e.preventDefault();
+
     let email = $("#register-form input[name='email']").val();
     let password = $("#register-form input[name='password']").val();
     let retryPassword = $("#register-form input[name='retryPassword']").val();
-   
+
     if (password === retryPassword) {
-        
+
         var formData = {
             email: email,
             password: password
         }
-        
+
         $.ajax({
-              // la URL para la petición
-                url: '/Account/Register',
-              // la información a enviar
-              // (también es posible utilizar una cadena de datos)
-              contentType: 'application/x-www-form-urlencoded',
-              // especifica si será una petición POST o GET
-              method: 'POST',
-              data: formData,
-              // código a ejecutar si la petición es satisfactoria;
-              // la respuesta es pasada como argumento a la función
-              success: function(data) {
+            url: '/Account/Register',
+            method: 'POST',
+            contentType: 'application/x-www-form-urlencoded',
+            data: formData,
+            success: function (data) {
                 if (data.success) {
                     // El usuario se registró correctamente
                     window.location.href = "/";
@@ -98,9 +100,8 @@ btn_register.click(function(e) {
                     // Hubo errores durante el registro
                     alert('Error durante el registro: ' + data.errors.join(', '));
                 }
-              },
-            //   error:function (xhr, status){}
-            error: function(error) {
+            },
+            error: function (error) {
                 // Manejar errores de la solicitud
                 console.log(error);
             }
@@ -108,25 +109,25 @@ btn_register.click(function(e) {
     }
 });
 
-// funcion para logearse en la pagina...
+// Función para iniciar sesión en la página
 let btn_login = $("#btn-login");
-btn_login.click(function(e){
+btn_login.click(function (e) {
     e.preventDefault();
-    
+
     let email = $("#login-form input[name='email']").val();
     let password = $("#login-form input[name='password']").val();
-    
+
     var formData = {
         email: email,
         password: password
     }
-    
+
     $.ajax({
         url: '/Account/Login',
         method: 'POST',
         contentType: 'application/x-www-form-urlencoded',
         data: formData,
-        success: function(data) {
+        success: function (data) {
             if (data.success) {
                 // El inicio de sesión fue exitoso
                 window.location.href = "/";
@@ -136,7 +137,7 @@ btn_login.click(function(e){
                 alert('Error durante el inicio de sesión: ' + data.error);
             }
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error);
         }
     });

@@ -1,24 +1,25 @@
+// Cuando la ventana se carga, se llama a la función BuscarProductos
 window.onload = BuscarProductos();
 
+// Esta función busca y muestra los productos disponibles en el catálogo
 function BuscarProductos() {
   let ContainCards = $("#catalogo");
   ContainCards.empty();
   $.ajax({
-    // la URL para la petición
+    // URL para la petición AJAX que busca productos
     url: '../../Producto/BuscarProductos',
-    // la información a enviar
-    // (también es posible utilizar una cadena de datos)
+    // Datos a enviar (en este caso, no se envían datos)
     data: {},
-    // especifica si será una petición POST o GET
+    // Tipo de petición: GET en este caso
     type: 'GET',
-    // el tipo de información que se espera de respuesta
+    // Tipo de respuesta esperada: JSON
     dataType: 'json',
-    // código a ejecutar si la petición es satisfactoria;
-    // la respuesta es pasada como argumento a la función
+    // Función a ejecutar si la petición es exitosa
     success: function (productos) {
+      // Iterar a través de los productos
       $.each(productos, function (index, producto) {
-        if (!producto.eliminado) {
-          if (producto.cantidad != 0) {
+        if (!producto.eliminado) { // Si el producto no está eliminado
+          if (producto.cantidad != 0) { // Si el producto tiene cantidad disponible
             ContainCards.append(`
             <div class="card mx-auto">
               ${producto.imagen == null
