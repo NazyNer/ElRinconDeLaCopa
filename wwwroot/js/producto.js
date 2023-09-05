@@ -1,5 +1,5 @@
 // Asignar la función BuscarProductos al evento onload de la ventana
-window.onload = BuscarProductos;
+window.onload = BuscarProductos();
 
 // Función para crear un nuevo producto
 function CrearNuevo() {

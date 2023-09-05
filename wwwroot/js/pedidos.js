@@ -152,17 +152,18 @@ function CompletePurchaseProduct() {
         btnGuardarstock.hide();
         CarritoProductos.hide();
         CarritoForm.show();
-        $.ajax({
-            url: '../../Pedido/CompletePurchaseProduct',
-            type: 'GET',
-            success: function(resultado) {
-                if (resultado.nonError) {
+        console.log("compra completada");
+        // $.ajax({
+        //     url: '../../Pedido/CompletePurchaseProduct',
+        //     type: 'GET',
+        //     success: function(resultado) {
+        //         if (resultado.nonError) {
                     
-                }else{
-                    alert(resultado.msjError)
-                }
-            }
-        });
+        //         }else{
+        //             alert(resultado.msjError)
+        //         }
+        //     }
+        // });
     }
 }
 function CompletePurchase(){

@@ -149,6 +149,7 @@ namespace ElRinconDeLaCopa.Controllers
 
           return Json(resultado);
         }
+        
         public async Task<JsonResult>RemoveDetail(int ProductoID){
           var resultado = new ValidacionError();
           resultado.nonError = false;
@@ -164,6 +165,7 @@ namespace ElRinconDeLaCopa.Controllers
           }
           return Json(resultado);
         }
+
         public async Task<JsonResult>CompletePurchaseProduct(){
           var resultado = new ValidacionError();
           resultado.nonError = false;
@@ -173,22 +175,36 @@ namespace ElRinconDeLaCopa.Controllers
           var DetalleCarrito = _context.DetallesDePedidos?.Where(c => c.PedidoID == Pedido.PedidoID).ToList();
           
             if(DetalleCarrito != null){
-              try
+              using (var transaction = _context.Database.BeginTransaction())
               {
-                 foreach (var item in DetalleCarrito)
+                try
                 {
-                  var producto = _context.Productos.Where(p => p.ID == item.ProductoID).FirstOrDefault();
-                  var stock = producto.Cantidad - item.Cantidad;
-                  if (stock >= 0)
+                  foreach (var item in DetalleCarrito)
                   {
-                    
+                    var producto = _context.Productos.Where(p => p.ID == item.ProductoID).FirstOrDefault();
+                    var stock = producto.Cantidad - item.Cantidad;
+                    if (stock >= 0)
+                      {
+                          producto.Cantidad = stock; // Restar la cantidad del producto
+                          _context.SaveChanges(); // Guardar los cambios en la base de datos
+                      }
+                      else
+                      {
+                          // Si no hay suficiente stock, lanzar una excepción y detener la función
+                          throw new Exception("No hay suficiente stock para el producto.");
+                      }
                   }
+                  Pedido.Estado = EstadoPedido.Completado;
+                  _context.SaveChanges();
+                  resultado.nonError = true;
+                  resultado.MsjError = "";
+                  transaction.Commit();
                 }
-              }
-              catch (System.Exception error)
-              {
-                
-                throw;
+                catch (Exception error)
+                {
+                  transaction.Rollback(); // Deshacer la transacción en caso de error
+                  resultado.MsjError = error.Message; // Actualizar el mensaje de error
+                }
               }
             }
           return Json(resultado);
