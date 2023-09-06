@@ -117,11 +117,25 @@ function GuardarCategoria() {
         // la respuesta es pasada como argumento a la función
         success: function (resultado) {
             if (resultado.nonError) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Categoria Creada',
+                    showConfirmButton: false,
+                    timer: 1500
+                            })
                 $("#ModalCategoria").modal("hide");
                 BuscarCategorias();
             }
             else {
-                $("#lbl-error").text(resultado.msjError);
+                // $("#lbl-error").text(resultado.msjError);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Es necesario rellenar todos los campos!',
+                    showConfirmButton: false,
+                    timer: 1500
+                            })
             }
         },
         error: function (xhr, status) {
@@ -156,7 +170,15 @@ function eliminarCategoria() {
                 BuscarCategorias();
             }
             else {
-                $("#lbl-error").text(resultado.msjError);
+                // $("#lbl-error").text(resultado.msjError);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'warning',
+                    title: 'Primero deshabilite los productos relacionados!',
+                    showConfirmButton: false,
+                    timer: 1500
+                            })
+                
             }
         },
         // código a ejecutar si la petición falla;
@@ -185,11 +207,25 @@ function RemoveCategoria(Id) {
         // la respuesta es pasada como argumento a la función
         success: function (resultado) {
             if (resultado.nonError) {
-                alert(resultado.msjError)
+                // alert(resultado.msjError)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Categoria eliminada correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                            })
                 BuscarCategorias();
             }
             else {
-                alert(resultado.msjError);
+                // alert(resultado.msjError);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'warning',
+                    title: 'Esta categoría tiene productos relacionados',
+                    showConfirmButton: false,
+                    timer: 1500
+                            })
             }
         },
         // código a ejecutar si la petición falla;
