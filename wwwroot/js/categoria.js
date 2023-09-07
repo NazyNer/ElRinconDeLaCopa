@@ -32,20 +32,20 @@ function BuscarCategorias() {
 
                 if (categoria.eliminado) {
                     TablaCategoria.append(`
-                            <tr class="">
-                                <td> <a class="btn btn-warning btn-sm botones-tablas" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
+                            <tr class="bg-danger">
+                                <td> <a class=" btn btn-producto-cart" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
                                 <td class="tdbasura"> 
-                                <button class="delete-button" onClick="RemoveCategoria(${categoria.id})"> 
+                                <button class="delete-button btn btn-producto-cart" onClick="RemoveCategoria(${categoria.id})"> 
                                 <i class="fa-solid fa-trash"></i>
                                 </button>
                                 </td>
                             </tr>`);
                 } else {
                     TablaCategoria.append(`
-                            <tr class="">
-                                <td> <a class="btn btn-primary btn-sm botones-tablas" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
+                            <tr class="fondo-tabla">
+                                <td> <a class="btn btn-producto-cart" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
                                 <td class="tdbasura"> 
-                                <button class="delete-button" onClick="RemoveCategoria(${categoria.id})"> 
+                                <button class="delete-button btn btn-producto-cart" onClick="RemoveCategoria(${categoria.id})"> 
                                 <i class="fa-solid fa-trash"></i>
                                 </button>
                                 </td>

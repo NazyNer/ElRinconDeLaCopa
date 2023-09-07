@@ -50,17 +50,33 @@ function AbrirCarrito(){
                 carritoDiv.empty();
                 $.each(Carrito.productos, function (index, producto) {
                     console.log("producto: " + producto + " indice: " + index);
-                    carritoDiv.append(`
-                    <div class="producto">
-                        <h3>${producto.nombre}</h3>
-                        <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br> 
+                    carritoDiv.append(
+                        `
+                        <tr class="fondo-tabla">
+                            <td class="thcat"> <a class="btn btn-producto-cart">${producto.nombre}</a></td>
+
+                            <td>
+                            <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/>
+                            </td>
+                            <td class="tdbasura"><p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
+                            <td class="tdbasura"><button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
+                            <td class="tdbasura"><button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button></td>
+                        </tr>`
+
+
+
+                    //     `
+                    // <div class="producto">
+                    //     <h3>${producto.nombre}</h3>
+                    //     <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br> 
                                 
-                        <button class="delete-button-carrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button> <br>
-                        <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
-                        <button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
-                        <button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button>
-                    </div>
-                    `)
+                    //     <button class="delete-button-carrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button> <br>
+                    //     <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
+                    //     <button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
+                    //     <button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button>
+                    // </div>
+                    // `
+                    )
                 });
                 $("#ModalCarrito").modal("show");
             }

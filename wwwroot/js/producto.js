@@ -38,10 +38,10 @@ function BuscarProductos() {
       $.each(productos, function (index, producto) {
         if (producto.eliminado) {
           TablaProducto.append(`
-                        <tr class="">
-                            <td class="thcat"> <a class="btn btn-warning btn-sm botones-tablas" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
-                            <td> <a class="btn btn-warning btn-sm botones-tablas" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
-                            <td> <a class="btn btn-warning btn-sm botones-tablas" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
+                        <tr class="bg-danger">
+                            <td class="thcat"> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+                            <td> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
+                            <td> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
                             <td><b>${producto.cantidad}</b></td>
                             <td>
                             ${producto.imagen == null
@@ -53,10 +53,10 @@ function BuscarProductos() {
                         </tr>`);
         } else {
           TablaProducto.append(`
-                        <tr class="">
-                            <td class="thcat"> <a class="btn btn-primary btn-sm botones-tablas" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
-                            <td> <a class="btn btn-primary btn-sm botones-tablas" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
-                            <td> <a class="btn btn-primary btn-sm botones-tablas" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
+                        <tr class="fondo-tabla">
+                            <td class="thcat"> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+                            <td> <a class=" btn btn-producto-cart " onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
+                            <td> <a class="btn btn-producto-cart " onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
                             <td><b>${producto.cantidad}</b></td>
                             <td>
                             ${producto.imagen == null
@@ -65,7 +65,7 @@ function BuscarProductos() {
             }
                             </td>
                             <td> <button class="btn btn-producto-cart" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>>
-                            <td class="tdbasura"><button class="delete-button" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
+                            <td class="tdbasura"><button class="delete-button btn btn-producto-cart" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
                         </tr>`);
         }
       })
