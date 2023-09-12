@@ -18,18 +18,20 @@
             <div class="modal-body" id="CarritoForm">
                 <div id="Form-Contain">
                     <form class="form-group">
-                        <label class="modalnombre2">Calle</label>
-                        <input class="form-control" type="text">
-                        <label class="modalnombre2">Numero</label>
-                        <input class="form-control" type="number">
+                        <span style="color: white;">Completar campos obligatorios(*)</span> <br>
+                        <label class="modalnombre2">Calle*</label>
+                        <input id="Calle" class="form-control" type="text">
+                        <label class="modalnombre2">Numero*</label>
+                        <input id="Numero" class="form-control" type="number">
                         <label class="modalnombre2" >N° Departamento</label>
-                        <input class="form-control" type="number"></input>
-                        <input type="checkbox"><label class="modalnombre2" >guardar datos</label>
+                        <input id="Depto" class="form-control" type="number"></input>
+                        @* <input type="checkbox"><label class="modalnombre2" >guardar datos</label> *@
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="Guardarstock" class="btn botones-modals" onclick="CompletePurchaseProduct()">Listo</button>
+                <button id="Guardarstock" class="btn botones-modals" onclick="CompletePurchaseProduct()">Siguiente</button>
+                <button id="GuardarCompra" class="btn botones-modals" onclick="CompletePurchase()">Comprar</button>
                 <button type="button" class="btn botones-modals" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>

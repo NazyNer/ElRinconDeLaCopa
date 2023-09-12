@@ -7,11 +7,14 @@ function MostrarPedido() {
     let CarritoProductos = $("#CarritoProductos");
     let CarritoForm = $("#CarritoForm")
     let btnGuardarstock = $("#Guardarstock");
+    let btnComprar = $("#GuardarCompra");
     $.ajax({
         url: '../../Pedido/AbrirCarrito',
         type: 'GET',
         dataType: 'json',
         success: function (Carrito) {
+            console.log(Carrito);
+            btnComprar.hide();
             if (Carrito.resultado.nonError) {
                 btnGuardarstock.show();
                 CarritoProductos.show();
@@ -147,25 +150,34 @@ function CompletePurchaseProduct() {
     let btnGuardarstock = $("#Guardarstock");
     let CarritoProductos = $("#CarritoProductos");
     let CarritoForm =$("#CarritoForm");
-    let  completePurchaseProduct = confirm("Seguro de completar la compra?");
-    if (completePurchaseProduct) {
-        btnGuardarstock.hide();
-        CarritoProductos.hide();
-        CarritoForm.show();
-        console.log("compra completada");
-        // $.ajax({
-        //     url: '../../Pedido/CompletePurchaseProduct',
-        //     type: 'GET',
-        //     success: function(resultado) {
-        //         if (resultado.nonError) {
-                    
-        //         }else{
-        //             alert(resultado.msjError)
-        //         }
-        //     }
-        // });
-    }
+    let btnComprar = $("#GuardarCompra");
+    let calle = $("#Calle");
+    let numero = $("#Numero");
+    let depto = $("#Depto");
+    calle.val("");
+    numero.val("");
+    depto.val("");
+    btnGuardarstock.hide();
+    CarritoProductos.hide();
+    CarritoForm.show();
+    btnComprar.show();
 }
 function CompletePurchase(){
-    console.log("Compra completa");
+    let calle = $("#Calle").val();
+    let numero = $("#Numero").val();
+    let depto = $("#Depto").val();
+    if (depto == "") {
+        depto = "-1";
+    }
+    $.ajax({
+        url: '../../Pedido/CompletePurchase',
+        data: { Calle: calle, Numero: numero, Depto: depto  },
+        type: 'POST',
+        success: function(resultado) {
+            ProductCart();
+            BuscarProductos();
+            $("#ModalCarrito").modal("hide");
+            alert(resultado.msjError);
+        }
+    });
 }

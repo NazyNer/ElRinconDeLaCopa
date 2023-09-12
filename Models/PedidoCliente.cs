@@ -15,7 +15,7 @@ namespace ElRinconDeLaCopa.Models
         public EstadoPedido Estado { get; set; } // Estado actual del pedido
         public string? Calle { get; set; } // Calle donde se realizará el envio
         public int Numero { get; set; } // Numero de la calle
-        public int Depto { get; set; } // Numero del departamento(Si es que vive en un departamento)
+        public string? Depto { get; set; } // Numero del departamento(Si es que vive en un departamento)
         public decimal Total { get; set; } // Total a pagar
         public virtual ICollection<DetalleDelPedido>? DetalleDelPedido { get; set; } // Relación uno a muchos con los detalles de compra
         

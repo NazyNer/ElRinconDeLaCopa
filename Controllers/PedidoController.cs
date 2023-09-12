@@ -38,15 +38,6 @@ namespace ElRinconDeLaCopa.Controllers
             resultado.MsjError = "No hay mas stock";
             var user = await _userManager.GetUserAsync(User);
             var Pedido = _context.PedidosClientes?.Where(p => p.UsuarioID == user.Id & p.Estado == 0).FirstOrDefault();
-            if (Pedido == null){
-              Pedido = new PedidoCliente{
-                UsuarioID = user.Id,
-                FechaActual = DateTime.Now,
-                Estado = 0
-              };
-              _context.Add(Pedido);
-              _context.SaveChanges();
-            }
             var detalle = _context.DetallesDePedidos?.Where(d => d.ProductoID == id & d.PedidoID == Pedido.PedidoID).FirstOrDefault();
             var CantidadProducto = Producto.Cantidad - 1;
             if (CantidadProducto >= 0)
@@ -102,6 +93,15 @@ namespace ElRinconDeLaCopa.Controllers
         public async Task<JsonResult>ProductCart(){
           var user = await _userManager.GetUserAsync(User);
           var carritoCreado = _context.PedidosClientes?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
+          if (carritoCreado == null){
+              carritoCreado = new PedidoCliente{
+                UsuarioID = user.Id,
+                FechaActual = DateTime.Now,
+                Estado = 0
+              };
+              _context.Add(carritoCreado);
+              _context.SaveChanges();
+            }
           var DetalleCarrito = _context.DetallesDePedidos?.Where(c => c.PedidoID == carritoCreado.PedidoID).Count();
           return Json(DetalleCarrito);
         }
@@ -166,14 +166,16 @@ namespace ElRinconDeLaCopa.Controllers
           return Json(resultado);
         }
 
-        public async Task<JsonResult>CompletePurchaseProduct(){
+        public async Task<JsonResult>CompletePurchase(string Calle, int Numero, string Depto){
           var resultado = new ValidacionError();
           resultado.nonError = false;
-          resultado.MsjError = "Error al completar la compra de productos";
+          resultado.MsjError = "Completar campos obligatorios";
           var user = await _userManager.GetUserAsync(User);
           var Pedido = _context.PedidosClientes?.Where(p => p.UsuarioID == user.Id & p.Estado == 0).FirstOrDefault();
           var DetalleCarrito = _context.DetallesDePedidos?.Where(c => c.PedidoID == Pedido.PedidoID).ToList();
-          
+          if (!string.IsNullOrEmpty(Calle) && Numero > 0)
+          {
+            resultado.MsjError = "No se encontraron detalles del pedido";
             if(DetalleCarrito != null){
               using (var transaction = _context.Database.BeginTransaction())
               {
@@ -194,10 +196,19 @@ namespace ElRinconDeLaCopa.Controllers
                           throw new Exception("No hay suficiente stock para el producto.");
                       }
                   }
+                  Pedido.Calle = Calle;
+                  if (Depto == "-1" )
+                  {
+                    Pedido.Depto = "Vivo en una casa";
+                  }else{
+                    Pedido.Depto = "Vivo en el departamento "+Depto;
+                  }
+                  Pedido.FechaActual = DateTime.Now;
+                  Pedido.Numero = Numero;
                   Pedido.Estado = EstadoPedido.Completado;
                   _context.SaveChanges();
                   resultado.nonError = true;
-                  resultado.MsjError = "";
+                  resultado.MsjError = "Compra realizada con exito";
                   transaction.Commit();
                 }
                 catch (Exception error)
@@ -207,6 +218,7 @@ namespace ElRinconDeLaCopa.Controllers
                 }
               }
             }
+          }
           return Json(resultado);
         }
     }
