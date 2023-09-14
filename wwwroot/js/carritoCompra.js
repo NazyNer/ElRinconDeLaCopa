@@ -22,6 +22,7 @@ function AgregarAlDetalle(Id) {
     });
 }
 
+// <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br> 
 // Esta función abre el carrito de compras
 function AbrirCarrito() {
     let carritoDiv = $("#Cart-Contain");
@@ -38,8 +39,13 @@ function AbrirCarrito() {
                     carritoDiv.append(`
                     <div class="producto">
                         <h3>${producto.nombre}</h3>
-                        <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br> 
-                                
+                        ${
+                            producto.imagen != null ?
+                                `<img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br>` :
+                                `<img src="/img/productos/fotodefaullt.jpg" style="width: 100px;" alt="${producto.nombre}"/> <br>`
+                            
+                            
+                        }
                         <button class="delete-button-carrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button> <br>
                         <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
                         <button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
