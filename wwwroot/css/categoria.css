@@ -43,7 +43,7 @@ text-align: center;
     position: relative;
 }
 
-@media (hover: hover) {
+/* @media (hover: hover) {
   .delete-button:hover{
     color: #ce996f;
     background-color: #2d1a16;
@@ -59,7 +59,7 @@ text-align: center;
   background-color: #ce996f;
   transform: scale(1.1);
   border-color: #2d1a1600;
-} 
+}  */
 
 @media (max-width: 425px) {
     .table{
@@ -81,6 +81,9 @@ text-align: center;
 
 .divcolor{
     background-color: #2d1a16c0;
+}
+.radio{
+  border-radius: .8rem !important;
 }
 
 .createbutton1{
@@ -139,21 +142,21 @@ text-align: center;
   line-height: 1em;
 }
 
-@media (hover: hover) {
+/* @media (hover: hover) {
   .bg-danger:hover{
     background-color: #f52c40 !important ;
   }
   .fondo-tabla:hover{
     background-color: #866448bd !important ;
   }
-  }
+  } */
 
 
 
-.divtable table{
+/* .divtable table{
     background-color: #ce996f;
 
-}
+} */
 .box-shadowBtn{
     box-shadow: 0px 0px 9px 5px #2d1a16a2;
     transition: box-shadow .5s ease;
@@ -193,5 +196,4 @@ text-align: center;
     transform: scale(1.1);
     border-color: #2d1a1600;
 }
-
 

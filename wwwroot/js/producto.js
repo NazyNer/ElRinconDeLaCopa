@@ -40,12 +40,16 @@ function BuscarProductos() {
           TablaProducto.append(`
                         <tr class="bg-danger">
                             <td class="thcat"> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+
                             <td> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
+
                             <td> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
+
                             <td><b>${producto.cantidad}</b></td>
+                            
                             <td>
                             ${producto.imagen == null
-              ? `<img src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
+              ? `<img  src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
               : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
             }
                             </td> 
@@ -55,15 +59,14 @@ function BuscarProductos() {
           TablaProducto.append(`
                         <tr class="fondo-tabla">
                             <td class="thcat"> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
-                            <td> <a class=" btn btn-producto-cart " onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
-                            <td> <a class="btn btn-producto-cart " onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
-                            <td><b>${producto.cantidad}</b></td>
                             <td>
                             ${producto.imagen == null
-              ? `<img src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
-              : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
-            }
-                            </td>
+                              ? `<img class="radio" src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
+                              : `<img class="radio" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
+                            } 
+                            <a class=" btn btn-producto-cart " onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
+                            <td> <a class="btn btn-producto-cart " onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
+                            <td><b>${producto.cantidad}</b></td>
                             <td> <button class="btn btn-producto-cart" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>>
                             <td class="tdbasura"><button class="delete-button btn btn-producto-cart" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
                         </tr>`);

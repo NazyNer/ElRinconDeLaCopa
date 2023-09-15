@@ -16,8 +16,22 @@ function AgregarAlDetalle(Id) {
         // la respuesta es pasada como argumento a la función
         success: function (resultado) {
             if (resultado.nonError) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Producto agregado al carrito!',
+                    showConfirmButton: false,
+                    timer: 1500
+                            })
                 ProuctCart()
-                alert("Producto agregado al carrito");
+                // alert("Producto agregado al carrito");
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Producto agregado al carrito!',
+                    showConfirmButton: false,
+                    timer: 1500
+                            })
             }else{
                 alert(resultado.msjError);
             }
@@ -53,6 +67,15 @@ function AbrirCarrito(){
                     carritoDiv.append(
                         `
                         <tr class="fondo-tabla">
+                        <td class="thcat"> <a class="btn btn-producto-cart">${producto.nombre}</a></td>
+                        <td><img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/></td>
+                        <td class="tdbasura"><p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
+                            <td class="tdbasura"><button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
+                            <td class="tdbasura"><button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button></td>
+                        </tr>
+                        `
+                        )
+{/* <tr class="">
                             <td class="thcat"> <a class="btn btn-producto-cart">${producto.nombre}</a></td>
 
                             <td>
@@ -61,9 +84,7 @@ function AbrirCarrito(){
                             <td class="tdbasura"><p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
                             <td class="tdbasura"><button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
                             <td class="tdbasura"><button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button></td>
-                        </tr>`
-
-
+                        </tr> */}
 
                     //     `
                     // <div class="producto">
@@ -76,16 +97,23 @@ function AbrirCarrito(){
                     //     <button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button>
                     // </div>
                     // `
-                    )
+                    
                 });
                 $("#ModalCarrito").modal("show");
             }
             else{
-                console.log(Carrito.resultado);
+                // console.log(Carrito.resultado);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'warning',
+                    title: 'No hay productos en el carrito',
+                    showConfirmButton: false,
+                    timer: 1500
+                            })
                 carritoDiv.empty();
                 carritoDiv.append(`<h1 style="color: white;">${Carrito.resultado.msjError}</h1>`)
                 btnGuardar.hide()
-                $("#ModalCarrito").modal("show");
+                // $("#ModalCarrito").modal("show");
             }
         },
         // código a ejecutar si la petición falla;
@@ -173,7 +201,13 @@ function CompletePurchase(){
             }
         });
     }else{
-        alert("Cancelado correctamente");
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Cancelado correctamente',
+            showConfirmButton: false,
+            timer: 1500
+                    });
     }
 }
 

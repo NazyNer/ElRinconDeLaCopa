@@ -27,19 +27,18 @@
 
                     </div>
 
-                    <div class="form-row">
-
-                        <div class="form-group col-sm-6">
+                    <div class="">
+                        <div class="form-group col-md-6">
                                 <p class="modalnombre2">P R E C I O</p>
                         <input type="number" placeholder="Precio" class="form-control" name="Precio">
                         </div>
-                        <div class="form-group col-sm-6">
                                 <p class="modalnombre2">C A N T I D A D</p>
                         <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
-                        </div>
-
+                        @* <div class="form-group col-sm-6">
+                                <p class="modalnombre2">C A N T I D A D</p>
+                        <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
+                        </div> *@
                     </div>
-
                     <div class="form-row">
 
                         <div class="form-group">
@@ -76,13 +75,14 @@
             </div>
 
             <div class="modal-body">
-                
-                <div class="divtable col bg  d-lg-block rounded">
+
+            <div class="fondo-carrito">
+                 <div class="divtable col bg  d-lg-block rounded">
             <table class="table text-white rounded">
                 <thead>
                     <tr>
                         <th class="thcat">
-                            Producto
+                            Productoo
                         </th>
                         <th>
                             Imagen
@@ -90,20 +90,19 @@
                         <th>
                             Cantidad
                         </th>
+                        <th>
+                            Manejo
+                        </th>
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="">
+                <tbody id="Cart-Contain">
                     <h1 id="errorTable"></h1>
                 </tbody>
             </table>
-        </div>
-
-            <div id="Cart-Contain">
-
+        </div> 
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button id="Guardarstock" class="btn botones-modals" onclick="CompletePurchase()">Listo</button>
@@ -130,35 +129,35 @@
    <span style="--i:8">O</span>
    <span style="--i:9">S</span>
   </div>
-<div class="divcolor container w-90  mt-5 rounded shadow"> 
-    <div class="row align-items-stretch justify-content-center box-shadowTable rounded">
+<div class="divcolor container w-90  mt-5  shadow radio"> 
+    <div class="row align-items-stretch justify-content-center box-shadowTable">
         <p class="createbutton1">
 <button type="button" class="createbutton" onclick="CrearNuevo()">Crear Nuevo</button>
+<button type="button" class="prueba" onclick="CrearNuevo()">Crear Nuevo</button>
 </p>
-        <div class="divtable col bg  d-lg-block rounded">
-            <table class="table text-white rounded">
-                <thead>
+        <div class="divtable1 col bg  d-lg-block">
+            <table class="table text-white radio">
+                <thead class="divtable2">
                     <tr>
-                        <th class="thcat">
-                            Categoria
+                        <th>
+                            <p class="thcat">Categoria</p>
+                        </th>
+
+                        <th>
+                            <p class="thcat">Nombre</p>
                         </th>
                         <th>
-                            Nombre
+                            <p class="thcat">Precio($ars)</p>
                         </th>
                         <th>
-                            Precio($ars)
+                            <p class="thcat">Stock</p>
                         </th>
-                        <th>
-                            Stock
-                        </th>
-                        <th>
-                            Imagen
-                        </th>
+
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="tbody-productos">
+                <tbody class="divtable4" id="tbody-productos">
                     <h1 id="errorTable"></h1>
                 </tbody>
             </table>
