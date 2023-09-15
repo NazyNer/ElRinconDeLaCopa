@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using ElRinconDeLaCopa.Data;
+using ElRinconDeLaCopa.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -29,10 +31,12 @@ namespace ElRinconDeLaCopa.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
+            _context = context;
             _signInManager = signInManager;
         }
         
@@ -47,6 +51,12 @@ namespace ElRinconDeLaCopa.Controllers
 
                 if (result.Succeeded)
                 {
+                    var nombreRolCrearUsuario = _context.Roles.Where(r => r.Name == "Usuario").SingleOrDefault();
+                    var NewUsuario = new Usuario{
+                        IdUsuario = user.Id,
+                        IdRol = nombreRolCrearUsuario.Id,
+                    };
+                    _context.Usuarios.Add(NewUsuario);
                     // Usuario registrado correctamente
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
                     return Json(new { success = true });
