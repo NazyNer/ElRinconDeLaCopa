@@ -11,8 +11,10 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly ApplicationDbContext _context;
     private readonly RoleManager<IdentityRole> _rolManager;
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context,  RoleManager<IdentityRole> rolManager)
+    private readonly UserManager<IdentityUser> _userManager;
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context,  RoleManager<IdentityRole> rolManager, UserManager<IdentityUser> userManager)
     {
+        _userManager = userManager;
         _logger = logger;
         _context = context;
          _rolManager = rolManager;
@@ -40,6 +42,21 @@ public class HomeController : Controller
         if (nombreRolCrearUsuario == null)
         {
             var roleResult = await _rolManager.CreateAsync(new IdentityRole("Usuario"));
+        }
+
+        var usuario = await _userManager.FindByNameAsync("Administrador");
+        if(usuario == null){
+            var user = new IdentityUser { UserName = "Administrador", Email = "admin@delacopa.com"};
+            var result = await _userManager.CreateAsync(user, "123456");
+            if (result.Succeeded){
+                var NewUsuario = new Usuario{
+                    IdUsuario = user.Id,
+                    IdRol = nombreRolCrearAdmin.Id,
+                };
+                _context.Usuarios.Add(NewUsuario);
+                var usuarioAdmin = await _userManager.FindByNameAsync("Administrador");
+                var asignarRolResult = await _userManager.AddToRoleAsync(usuarioAdmin, "Usuario");
+            }
         }
         
         return View();
