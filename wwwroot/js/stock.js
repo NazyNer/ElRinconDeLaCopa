@@ -1,4 +1,4 @@
-
+window.onload = CompletarTabla();
 
 
 function CompletarTabla() {
