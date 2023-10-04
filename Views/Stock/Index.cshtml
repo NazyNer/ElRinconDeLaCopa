@@ -1,0 +1,43 @@
+@{
+  ViewData["Title"] = "Index";
+}
+<div class="waviy">
+  <span style="--i:1">S</span>
+  <span style="--i:2">T</span>
+  <span style="--i:3">O</span>
+  <span style="--i:4">C</span>
+  <span style="--i:5">K</span>
+</div>
+<div class="divtable col bg  d-lg-block rounded">
+  <table class="table text-white">
+    <thead>
+      <tr>
+        <th class="thcat">
+          Email usuario
+        </th>
+        <th>
+          Fecha
+        </th>
+        <th>
+          Ingreso / egreso (stock)
+        </th>
+        <th>
+          productos
+        </th>
+        <th>
+          cantidad
+        </th>
+        <th>
+          estado
+        </th>
+      </tr>
+    </thead>
+    <tbody id="tbody-Stock">
+      <h1 id="errorTable"></h1>
+    </tbody>
+  </table>
+</div>
+
+@section Scripts {
+    <script src="~/js/stock.js"></script>
+}

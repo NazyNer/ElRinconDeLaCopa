@@ -1,4 +1,3 @@
-
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,14 +6,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 id="h1Producto" class="modal-title fs-5" >P R O D U C T O</h1>
+                <h1 id="h1Producto" class="modal-title fs-5">P R O D U C T O</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="form-producto" class="form-group" method="post" enctype="multipart/form-data">
-                    <input type="Hidden" name="Productoid" type="number" value="0"/>
+                    <input type="Hidden" name="Productoid" type="number" value="0" />
                     <p class="modalnombre">N O M B R E</p>
-                    <input id="textoInput" class="form-control" placeholder="Nombre" name="Nombre"/>
+                    <input id="textoInput" class="form-control" placeholder="Nombre" name="Nombre" />
                     <p class="modalnombre2">C A T E G O R I A</p>
                     @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control"})
                     <p class="modalnombre2">P R E C I O</p>
@@ -22,18 +21,21 @@
                     <p class="modalnombre2">C A N T I D A D</p>
                     <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
                     <p class="modalnombre2">I M A G E N</p>
-                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen" id="selectorImagen" >
+                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen" id="selectorImagen">
                     <span id="texto-error" class="text-danger"></span>
-                    <label id="nombreImagen" ></label>
-                    <img id="imagenSeleccionada" class="imgPreview" src="~/img/productos/fotodefaullt.jpg" alt="Imagen seleccionada">
+                    <label id="nombreImagen"></label>
+                    <img id="imagenSeleccionada" class="imgPreview" src="~/img/productos/fotodefaullt.jpg"
+                        alt="Imagen seleccionada">
                 </form>
             </div>
-            
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button id="btnCrear" type="button" class="btn btn-crear" onclick="GuardarProducto()"></button>
-                <input id="btnEliminarProducto" type="button" onclick="eliminarProducto()" class="btn btn-danger" value="Deshabilitar" />
-                <input id="btnHabilitarProducto" type="button" onclick="eliminarProducto()" class="btn btn-success" value="Habilitar" />
+                <input id="btnEliminarProducto" type="button" onclick="eliminarProducto()" class="btn btn-danger"
+                    value="Deshabilitar" />
+                <input id="btnHabilitarProducto" type="button" onclick="eliminarProducto()" class="btn btn-success"
+                    value="Habilitar" />
             </div>
         </div>
     </div>
@@ -42,7 +44,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 id="h1Producto" class="modal-title fs-5" >C A R R I T O</h1>
+                <h1 id="h1Producto" class="modal-title fs-5">C A R R I T O</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -63,22 +65,22 @@
     </button>
 </div>
 
- <div class="waviy">
-   <span style="--i:1">P</span>
-   <span style="--i:2">R</span>
-   <span style="--i:3">O</span>
-   <span style="--i:4">D</span>
-   <span style="--i:5">U</span>
-   <span style="--i:6">C</span>
-   <span style="--i:7">T</span>
-   <span style="--i:8">O</span>
-   <span style="--i:9">S</span>
-  </div>
-<div class="divcolor container w-90  mt-5 rounded shadow"> 
+<div class="waviy">
+    <span style="--i:1">P</span>
+    <span style="--i:2">R</span>
+    <span style="--i:3">O</span>
+    <span style="--i:4">D</span>
+    <span style="--i:5">U</span>
+    <span style="--i:6">C</span>
+    <span style="--i:7">T</span>
+    <span style="--i:8">O</span>
+    <span style="--i:9">S</span>
+</div>
+<div class="divcolor container w-90  mt-5 rounded shadow">
     <div class="row align-items-stretch justify-content-center box-shadowTable rounded">
         <p class="createbutton1">
-<button type="button" class="createbutton" onclick="CrearNuevo()">Crear Nuevo</button>
-</p>
+            <button type="button" class="createbutton" onclick="CrearNuevo()">Crear Nuevo</button>
+        </p>
         <div class="divtable col bg  d-lg-block rounded">
             <table class="table text-white">
                 <thead>
