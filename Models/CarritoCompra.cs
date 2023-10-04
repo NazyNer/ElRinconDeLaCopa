@@ -12,8 +12,6 @@ namespace ElRinconDeLaCopa.Models
         public int CarritoID { get; set; }
         public DateTime FechaActual { get; set; } // Fecha actual del carrito
         public string? UsuarioID { get; set; } // Agregar el Id del usuario propietario del carrito
-
-        //public virtual IdentityUser?  Usuario { get; set; } // Referencia al usuario propietario del carrito
         public EstadoCarrito Estado { get; set; }
         public virtual ICollection<DetalleCompra>? Detalles { get; set; } // Relación uno a muchos con los detalles de compra
         
