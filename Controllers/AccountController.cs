@@ -39,7 +39,7 @@ namespace ElRinconDeLaCopa.Controllers
             _context = context;
             _signInManager = signInManager;
         }
-        
+
         [HttpPost]
         [Route("/Account/Register")]
         public async Task<JsonResult> Register(RegisterViewModel model)
@@ -52,20 +52,24 @@ namespace ElRinconDeLaCopa.Controllers
                 if (result.Succeeded)
                 {
                     var nombreRolCrearUsuario = _context.Roles.Where(r => r.Name == "Usuario").SingleOrDefault();
-                    var NewUsuario = new Usuario{
+                    var NewUsuario = new Usuario
+                    {
                         IdUsuario = user.Id,
                         IdRol = nombreRolCrearUsuario.Id,
                     };
                     _context.Usuarios.Add(NewUsuario);
                     var usuario = await _userManager.FindByNameAsync(model.Email);
                     var asignarRolResult = await _userManager.AddToRoleAsync(usuario, "Usuario");
-                    if(asignarRolResult.Succeeded){
+                    if (asignarRolResult.Succeeded)
+                    {
                         await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
                         _context.SaveChanges();
                         ViewBag.Roles = nombreRolCrearUsuario.Name;
                         return Json(new { success = true });
                         // Usuario registrado correctamente
-                    }else{
+                    }
+                    else
+                    {
                         return Json(new { success = false });
                     }
                 }
@@ -90,44 +94,44 @@ namespace ElRinconDeLaCopa.Controllers
             {
                 var nombreRolCrearUsuario = _context.Roles.Where(r => r.Name == "Usuario").SingleOrDefault();
                 var usuario = await _userManager.FindByNameAsync(model.Email);
-                var usuarioConectado = _context.Usuarios.Where( u => u.IdUsuario == usuario.Id).FirstOrDefault();
-                if(usuarioConectado == null){
-                    usuarioConectado = new Usuario{
-                            IdUsuario = usuario.Id,
-                        };
-                    }
-                if(usuarioConectado.IdRol == null){
+                var usuarioConectado = _context.Usuarios.Where(u => u.IdUsuario == usuario.Id).FirstOrDefault();
+                if (usuarioConectado == null)
+                {
+                    usuarioConectado = new Usuario
+                    {
+                        IdUsuario = usuario.Id,
+                    };
+                }
+                if (usuarioConectado.IdRol == null)
+                {
                     usuarioConectado.IdRol = nombreRolCrearUsuario.Id;
                     var asignarRolResult = await _userManager.AddToRoleAsync(usuario, "Usuario");
-                    if(asignarRolResult.Succeeded){
+                    if (asignarRolResult.Succeeded)
+                    {
                         _context.Usuarios.Add(usuarioConectado);
                         _context.SaveChanges();
-                        var Rol = _context.Roles.Where(r => r.Id == usuarioConectado.IdRol ).FirstOrDefault();
-                         ViewData["Roles"] = Rol.Name;
+                        var Rol = _context.Roles.Where(r => r.Id == usuarioConectado.IdRol).FirstOrDefault();
                         // Inicio de sesión exitoso
-                        return Json(new { success = true });
-                    }else
+                        return Json(new { success = true, nombre = false });
+                    }
+                    else
                     {
                         // Error durante el inicio de sesión
                         return Json(new { success = false, error = "Credenciales inválidas" });
                     }
                 };
-                var rol = _context.Roles.Where(r => r.Id == usuarioConectado.IdRol ).FirstOrDefault();
-                ViewData["Roles"] = rol.Name;
-                return Json(new { success = true });
+                var rol = _context.Roles.Where(r => r.Id == usuarioConectado.IdRol).FirstOrDefault();
+                if (usuarioConectado.Nombre == null)
+                {
+                    return Json(new { success = true, nombre = false });
+                }
+                return Json(new { success = true, nombre = true });
             }
             else
             {
                 // Error durante el inicio de sesión
                 return Json(new { success = false, error = "Credenciales inválidas" });
             }
-        }
-
-        public async Task<JsonResult> Rol(){
-            var user = await _userManager.GetUserAsync(User);
-            var usuarioConectado = _context.Usuarios.Where( u => u.IdUsuario == user.Id).FirstOrDefault();
-            var rol = _context.Roles.Where(r => r.Id == usuarioConectado.IdRol ).FirstOrDefault();
-            return Json(rol.Name);
         }
     }
 }

@@ -55,7 +55,7 @@ public class HomeController : Controller
                 };
                 _context.Usuarios.Add(NewUsuario);
                 var usuarioAdmin = await _userManager.FindByNameAsync("Administrador");
-                var asignarRolResult = await _userManager.AddToRoleAsync(usuarioAdmin, "Usuario");
+                var asignarRolResult = await _userManager.AddToRoleAsync(usuarioAdmin, "Administrador");
             }
         }
         

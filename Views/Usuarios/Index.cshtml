@@ -1,0 +1,30 @@
+@{
+  ViewData["Title"] = "Usuarios";
+}
+
+<h1 class="text-white">@ViewData["Title"]</h1>
+<div class="divtable col bg  d-lg-block rounded">
+  <table class="table text-white rounded">
+    <thead>
+      <tr>
+        <th>
+          N O M B R E
+        </th>
+        <th>
+          E M A I L
+        </th>
+        <th>
+          R O L
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="tbody-usuarios">
+      <h1 id="errorTable"></h1>
+    </tbody>
+  </table>
+</div>
+@section Scripts {
+  <script src="~/js/usuarios.js"></script>
+
+}
