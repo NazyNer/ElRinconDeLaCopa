@@ -64,7 +64,6 @@ namespace ElRinconDeLaCopa.Controllers
                     {
                         await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
                         _context.SaveChanges();
-                        ViewBag.Roles = nombreRolCrearUsuario.Name;
                         return Json(new { success = true });
                         // Usuario registrado correctamente
                     }

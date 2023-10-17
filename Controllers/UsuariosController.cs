@@ -69,5 +69,38 @@ namespace ElRinconDeLaCopa.Controllers
       }
       return Json(resultado);
     }
+
+    public async Task<JsonResult> CambiarRol(string UsuarioID, string RolName)
+    {
+      var resultado = new ValidacionError();
+      resultado.nonError = false;
+      resultado.MsjError = "Error al cambiar Rol";
+          resultado.MsjError = "Error al encontrar al usuario";
+          var usuarioDb = _context.Usuarios.Where(u => u.IdUsuario == UsuarioID).FirstOrDefault();
+          if(usuarioDb != null){
+            var usuarioDotNet = await _userManager.FindByIdAsync(UsuarioID);
+            if(usuarioDotNet != null){
+              var RolNameNormalize = RolName.Normalize();
+              var rolAsignar = _context.Roles.Where(r => r.NormalizedName == RolNameNormalize).FirstOrDefault();
+              resultado.MsjError = "Error al encontrar el rol";
+              if(rolAsignar != null)
+              {
+                var RolAsignado = await _context.UserRoles.FirstOrDefaultAsync(UR => UR.UserId == UsuarioID && UR.RoleId == usuarioDb.IdRol);
+                _context.UserRoles.Remove(RolAsignado);
+                _context.SaveChanges();
+                usuarioDb.IdRol = rolAsignar.Id;
+                _context.SaveChanges();
+                var asignarRolResult = await _userManager.AddToRoleAsync(usuarioDotNet, rolAsignar.Name);
+                if (asignarRolResult.Succeeded)
+                    {
+                        resultado.nonError = true;
+                        resultado.MsjError = "Rol Cambiado con exito";
+                        await _context.SaveChangesAsync();
+                    }
+              }
+            }
+      }
+      return Json(resultado);
+    }
   }
 }
