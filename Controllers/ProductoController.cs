@@ -213,7 +213,7 @@ namespace ElRinconDeLaCopa.Controllers
             {
                 //BUSCAMOS EN LA TABLA SI EXISTE UNA CON EL MISMO ID
                 var productoOriginal = _context.Productos.Find(Id);
-                    //SI LA CATEGORIA NO ESTE ELIMINADA PROCEDEMOS A HACERLO
+                    //SI EL PRODUCTO NO ESTE ELIMINADO PROCEDEMOS A HACERLO
                     if(productoOriginal?.Eliminado == false)
                     {
                         productoOriginal.Eliminado = true;
@@ -247,11 +247,20 @@ namespace ElRinconDeLaCopa.Controllers
                 if(productoOriginal != null){
                     if (productoOriginal.Cantidad == 0)
                     {
-                        _context.Remove(productoOriginal);
-                        _context.SaveChanges();
-                        resultado.nonError = true;
-                        resultado.MsjError = "Producto " + productoOriginal.Nombre + " eliminado correctamente";
-                        return Json(resultado);
+                        var transaccionesCompra = _context.DetalleCompra?.Where( d => d.ProductoID == productoOriginal.ID).ToList();
+                        var transaccionesVenta = _context.DetallesDePedidos.Where( d => d.ProductoID == productoOriginal.ID).ToList();
+                        if(transaccionesCompra == null && transaccionesVenta == null){
+                            _context.Remove(productoOriginal);
+                            _context.SaveChanges();
+                            resultado.nonError = true;
+                            resultado.MsjError = "Producto " + productoOriginal.Nombre + " eliminado correctamente";
+                            return Json(resultado);
+                        }else
+                        {
+                            productoOriginal.Eliminado = true;
+                            _context.SaveChanges();
+                            resultado.MsjError = "El Producto " + productoOriginal.Nombre + " Tiene movimientos de stock (Por este motivo no se podra eliminar de la base de datos) lo hemos desabilitado por usted.";
+                        }
                     }
                     resultado.MsjError = "El Producto " + productoOriginal.Nombre + " Tiene stock (Asegurese de que la cantidad del producto sea 0 y volver a intentar).";
                     return Json(resultado);
