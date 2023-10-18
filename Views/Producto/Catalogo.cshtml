@@ -1,4 +1,6 @@
 @model IEnumerable<ElRinconDeLaCopa.Models.Producto>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Catalogo";
@@ -37,12 +39,13 @@
         </div>
     </div>
 </div>
-
-<div class="Carrito" id="cart">
-    <button onclick="MostrarPedido()"><i class="fa-solid fa-cart-shopping"></i>
-        <span id="Cart"></span>
-    </button>
-</div>
+@if(@User.IsInRole("Usuario") || @User.IsInRole("Cliente")){
+    <div class="Carrito" id="cart">
+        <button onclick="MostrarPedido()"><i class="fa-solid fa-cart-shopping"></i>
+            <span id="Cart"></span>
+        </button>
+    </div>
+}
 <div id="catalogo" class="cards catalogo m-0">
     
 </div>

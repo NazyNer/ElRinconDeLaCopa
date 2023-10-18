@@ -10,21 +10,22 @@ function CompletarTabla() {
       tabla.empty();
       $.each(usuarios, function (i, usuario) {
         if(i != "Roles"){
-          console.log(usuario);
-          tabla.append(`
-          <tr class="">
-            <td>${usuario.Nombre}</td>
-            <td>${usuario.Email}</td>
-            <td class="tdRol">
-              <input type="number" disabled id="idUsuario" placeholder="${usuario.Id}">
-              <select class="select-element">
-                ${usuarios.Roles.map((rol, index)=>(
-                  rol.id == usuario.rolID ? `<option value='${rol.name}' selected>${rol.name}</option>` : `<option value='${rol.name}'>${rol.name}</option>`
-                ))}
-              </select>
-            </td>
-          </tr>
-          `)
+          if (usuario.Email != "admin@delacopa.com") {
+            tabla.append(`
+            <tr class="">
+              <td>${usuario.Nombre}</td>
+              <td>${usuario.Email}</td>
+              <td class="tdRol">
+                <input type="number" disabled id="idUsuario" placeholder="${usuario.Id}">
+                <select class="select-element">
+                  ${usuarios.Roles.map((rol, index)=>(
+                    rol.id == usuario.rolID ? `<option value='${rol.name}' selected>${rol.name}</option>` : `<option value='${rol.name}'>${rol.name}</option>`
+                  ))}
+                </select>
+              </td>
+            </tr>
+            `)
+          }
         }
       });
       const selectElements = $("#tbody-usuarios tr td.tdRol");

@@ -40,7 +40,7 @@ function BuscarProductos() {
     success: function (productos) {
       TablaProducto.empty();
       
-      $.each(productos, function (index, producto) {
+      $.each(productos.Productos, function (index, producto) {
         if (producto.eliminado) {
           // Agregar fila para productos eliminados
           TablaProducto.append(`
@@ -119,8 +119,8 @@ function BuscarProducto(ID) {
     dataType: 'json',
     // código a ejecutar si la petición es satisfactoria
     success: function (productos) {
-      if (productos.length == 1) {
-        let producto = productos[0];
+      if (productos.Productos.length == 1) {
+        let producto = productos.Productos[0];
         $("#texto-error").text("");
         $("#h1Producto").text("E D I T A R")
         $("#form-producto input[name='Productoid']").val(producto.id);
