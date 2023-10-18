@@ -8,42 +8,42 @@
 
 <!--CONTENEDOR GENERAL DE TODO -->
 <main class="main-login">
- <div class="contenedor__todo">
-            <div class="caja__trasera">
-                <!--Cajas traseras-->
-                <div class="caja__trasera-login">
-                    <h3>¿Ya tenés una Cuenta?</h3>
-                    <p>Iniciá Sesión para utilizar "El Rincón de la Copa"</p>
-                    <button id="btn__iniciar-sesion">Iniciar Sesión</button>
-                </div>
-                <div class="caja__trasera-register">
-                    <h3>¿Todavía no tenés una Cuenta?</h3>
-                    <p>Registrate para utilizar "El Rincón de la Copa"</p>
-                    <button id="btn__registrarse">Registrarse</button>
-                </div>
+    <div class="contenedor__todo">
+        <div class="caja__trasera">
+            <!--Cajas traseras-->
+            <div class="caja__trasera-login">
+                <h3>¿Ya tenés una Cuenta?</h3>
+                <p>Iniciá Sesión para utilizar "El Rincón de la Copa"</p>
+                <button id="btn__iniciar-sesion">Iniciar Sesión</button>
             </div>
-            <!--Formulario de Login y Register-->
-            <div class="contenedor__login-register">
-                <!--Login-->
-                <form id="login-form" method="POST" class="formulario__login">
-                    <h2 class="iniciartext">Iniciar Sesión</h2>
-                    <input type="text" name="email" placeholder="Correo Electrónico">
-                    <input type="password" name="password" placeholder="Contraseña">
-                    <input id="btn-login" type="submit">
-                </form>
-                <!--Register-->
-                <form id="register-form" class="formulario__register" method="POST">
-                    <h2>Registrarse</h2>
-                    <input type="email" name="email" placeholder="Correo Electrónico">
-                    <input type="password" name="password" placeholder="Contraseña">
-                    <input type="password" name="retryPassword" placeholder="Confirmar contraseña">
-                    <input id="btn-register" type="submit">
-                </form>
+            <div class="caja__trasera-register">
+                <h3>¿Todavía no tenés una Cuenta?</h3>
+                <p>Registrate para utilizar "El Rincón de la Copa"</p>
+                <button id="btn__registrarse">Registrarse</button>
             </div>
         </div>
+        <!--Formulario de Login y Register-->
+        <div class="contenedor__login-register">
+            <!--Login-->
+            <form id="login-form" method="POST" class="formulario__login">
+                <h2 class="iniciartext">Iniciar Sesión</h2>
+                <input type="text" name="email" placeholder="Correo Electrónico">
+                <input type="password" name="password" placeholder="Contraseña">
+                <input id="btn-login" type="submit">
+            </form>
+            <!--Register-->
+            <form id="register-form" class="formulario__register" method="POST">
+                <h2>Registrarse</h2>
+                <input type="email" name="email" placeholder="Correo Electrónico">
+                <input type="password" name="password" placeholder="Contraseña">
+                <input type="password" name="retryPassword" placeholder="Confirmar contraseña">
+                <input id="btn-register" type="submit">
+            </form>
+        </div>
+    </div>
 </main>
 
-<link rel="stylesheet" href="~/css/login.css"/>
+<link rel="stylesheet" href="~/css/login.css" />
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/loginyregister.js"></script>

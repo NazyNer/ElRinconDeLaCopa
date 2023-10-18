@@ -80,12 +80,12 @@ btn_register.click(function (e) {
     let retryPassword = $("#register-form input[name='retryPassword']").val();
 
     if (password === retryPassword) {
-
         var formData = {
             email: email,
             password: password
         }
-
+        var nav = $("#navbar");
+        var modalDato = $("#ModalUsuario");
         $.ajax({
             url: '/Account/Register',
             method: 'POST',
@@ -94,8 +94,8 @@ btn_register.click(function (e) {
             success: function (data) {
                 if (data.success) {
                     // El usuario se registró correctamente
-                    window.location.href = "/";
-                    // Aquí puedes redirigir al usuario a otra página si lo deseas
+                    nav.attr("hidden",true);
+                    modalDato.modal("show");
                 } else {
                     // Hubo errores durante el registro
                     alert('Error durante el registro: ' + data.errors.join(', '));
@@ -121,7 +121,8 @@ btn_login.click(function (e) {
         email: email,
         password: password
     }
-
+    var nav = $("#navbar");
+    var modalDato = $("#ModalUsuario");
     $.ajax({
         url: '/Account/Login',
         method: 'POST',
@@ -129,9 +130,13 @@ btn_login.click(function (e) {
         data: formData,
         success: function (data) {
             if (data.success) {
-                // El inicio de sesión fue exitoso
-                window.location.href = "/";
-                // Aquí puedes redirigir al usuario a otra página si lo deseas
+                console.log(data);
+                if (data.nombre) {
+                    window.location.href = "/";
+                }else{
+                    nav.attr("hidden",true);
+                    modalDato.modal("show");
+                }
             } else {
                 // Hubo errores durante el inicio de sesión
                 alert('Error durante el inicio de sesión: ' + data.error);

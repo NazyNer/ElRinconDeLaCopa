@@ -16,8 +16,9 @@ function BuscarProductos() {
     dataType: 'json',
     // Función a ejecutar si la petición es exitosa
     success: function (productos) {
+      let validacion = productos.Rol.validacion;
       // Iterar a través de los productos
-      $.each(productos, function (index, producto) {
+      $.each(productos.Productos, function (index, producto) {
         if (!producto.eliminado) { // Si el producto no está eliminado
           if (producto.cantidad != 0) { // Si el producto tiene cantidad disponible
             ContainCards.append(`
@@ -32,7 +33,12 @@ function BuscarProductos() {
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Precio: <b>$${producto.precio}</b></li>
                     <li class="list-group-item">${producto.nombreCategoria}</li>
-                    <li class="list-group-item text-center"><a onClick="AgregarAlPedido(${producto.id})" class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
+                    ${
+                      validacion ? 
+                      `<li class="list-group-item text-center"><a onClick="AgregarAlPedido(${producto.id})" class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>` :
+                      `<li class="list-group-item text-center"></li>`
+                    }
+                    
                 </ul>
             </div>`)
           }

@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using ElRinconDeLaCopa.Data;
+using ElRinconDeLaCopa.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -29,13 +31,15 @@ namespace ElRinconDeLaCopa.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
+            _context = context;
             _signInManager = signInManager;
         }
-        
+
         [HttpPost]
         [Route("/Account/Register")]
         public async Task<JsonResult> Register(RegisterViewModel model)
@@ -47,9 +51,26 @@ namespace ElRinconDeLaCopa.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Usuario registrado correctamente
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
-                    return Json(new { success = true });
+                    var nombreRolCrearUsuario = _context.Roles.Where(r => r.Name == "Usuario").SingleOrDefault();
+                    var NewUsuario = new Usuario
+                    {
+                        IdUsuario = user.Id,
+                        IdRol = nombreRolCrearUsuario.Id,
+                    };
+                    _context.Usuarios.Add(NewUsuario);
+                    var usuario = await _userManager.FindByNameAsync(model.Email);
+                    var asignarRolResult = await _userManager.AddToRoleAsync(usuario, "Usuario");
+                    if (asignarRolResult.Succeeded)
+                    {
+                        await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
+                        _context.SaveChanges();
+                        return Json(new { success = true });
+                        // Usuario registrado correctamente
+                    }
+                    else
+                    {
+                        return Json(new { success = false });
+                    }
                 }
                 else
                 {
@@ -70,8 +91,40 @@ namespace ElRinconDeLaCopa.Controllers
 
             if (result.Succeeded)
             {
-                // Inicio de sesión exitoso
-                return Json(new { success = true });
+                var nombreRolCrearUsuario = _context.Roles.Where(r => r.Name == "Usuario").SingleOrDefault();
+                var usuario = await _userManager.FindByNameAsync(model.Email);
+                var usuarioConectado = _context.Usuarios.Where(u => u.IdUsuario == usuario.Id).FirstOrDefault();
+                if (usuarioConectado == null)
+                {
+                    usuarioConectado = new Usuario
+                    {
+                        IdUsuario = usuario.Id,
+                    };
+                }
+                if (usuarioConectado.IdRol == null)
+                {
+                    usuarioConectado.IdRol = nombreRolCrearUsuario.Id;
+                    var asignarRolResult = await _userManager.AddToRoleAsync(usuario, "Usuario");
+                    if (asignarRolResult.Succeeded)
+                    {
+                        _context.Usuarios.Add(usuarioConectado);
+                        _context.SaveChanges();
+                        var Rol = _context.Roles.Where(r => r.Id == usuarioConectado.IdRol).FirstOrDefault();
+                        // Inicio de sesión exitoso
+                        return Json(new { success = true, nombre = false });
+                    }
+                    else
+                    {
+                        // Error durante el inicio de sesión
+                        return Json(new { success = false, error = "Credenciales inválidas" });
+                    }
+                };
+                var rol = _context.Roles.Where(r => r.Id == usuarioConectado.IdRol).FirstOrDefault();
+                if (usuarioConectado.Nombre == null)
+                {
+                    return Json(new { success = true, nombre = false });
+                }
+                return Json(new { success = true, nombre = true });
             }
             else
             {

@@ -199,13 +199,19 @@ namespace ElRinconDeLaCopa.Controllers
                   Pedido.Calle = Calle;
                   if (Depto == "-1" )
                   {
-                    Pedido.Depto = "Vivo en una casa";
+                    Pedido.Depto = "Estoy en una casa";
                   }else{
-                    Pedido.Depto = "Vivo en el departamento "+Depto;
+                    Pedido.Depto = "Estoy en el departamento "+Depto;
                   }
                   Pedido.FechaActual = DateTime.Now;
                   Pedido.Numero = Numero;
                   Pedido.Estado = EstadoPedido.Completado;
+                  var usuario = _context.Usuarios.Where(u => u.IdUsuario == user.Id).FirstOrDefault();
+                  var nombreRolCrearCliente = _context.Roles.Where(r => r.Name == "Cliente").SingleOrDefault();
+                  usuario.Calle = Calle;
+                  usuario.Depto = Depto;
+                  usuario.Numero = Numero;
+                  usuario.IdRol = nombreRolCrearCliente.Id;
                   _context.SaveChanges();
                   resultado.nonError = true;
                   resultado.MsjError = "Compra realizada con exito";

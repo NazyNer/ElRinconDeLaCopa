@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using ElRinconDeLaCopa.Data;
 using ElRinconDeLaCopa.Models;
+using System.Dynamic;
 
 namespace ElRinconDeLaCopa.Controllers
 {
@@ -54,7 +55,8 @@ namespace ElRinconDeLaCopa.Controllers
 
         public JsonResult BuscarProductos(int Id = 0)
         {
-
+            dynamic Catalogo = new ExpandoObject();
+            dynamic rol = new ExpandoObject();
             var productos = _context.Productos?.ToList();
             if (Id > 0)
             {
@@ -67,7 +69,14 @@ namespace ElRinconDeLaCopa.Controllers
                     producto.ImagenString = System.Convert.ToBase64String(producto.Imagen);
                 }
             }
-            return Json(productos);
+            ((IDictionary<string, object>)Catalogo)["Productos"] = productos;
+            rol.validacion = true;
+            if(User.IsInRole("Empleado") || User.IsInRole("Administrador"))
+            {
+                rol.validacion = false;
+            }
+            ((IDictionary<string, object>)Catalogo)["Rol"] = rol;
+            return Json(Catalogo);
         }
         public JsonResult GuardarProducto(int CategoriaID, decimal Precio, int Cantidad, IFormFile imagen, string Nombre, int Productoid)
         {
