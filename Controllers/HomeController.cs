@@ -43,7 +43,7 @@ public class HomeController : Controller
         {
             var roleResult = await _rolManager.CreateAsync(new IdentityRole("Usuario"));
         }
-
+        var RolAdmin = _context.Roles.Where(r => r.Name == "Administrador").SingleOrDefault();
         var usuario = await _userManager.FindByNameAsync("Administrador");
         if(usuario == null){
             var user = new IdentityUser { UserName = "Administrador", Email = "admin@delacopa.com"};
@@ -51,11 +51,11 @@ public class HomeController : Controller
             if (result.Succeeded){
                 var NewUsuario = new Usuario{
                     IdUsuario = user.Id,
-                    IdRol = nombreRolCrearAdmin.Id,
+                    IdRol = RolAdmin.Id,
                 };
                 _context.Usuarios.Add(NewUsuario);
                 var usuarioAdmin = await _userManager.FindByNameAsync("Administrador");
-                var asignarRolResult = await _userManager.AddToRoleAsync(usuarioAdmin, "Administrador");
+                var asignarRolResult = await _userManager.AddToRoleAsync(usuarioAdmin, RolAdmin.Name);
             }
         }
         
