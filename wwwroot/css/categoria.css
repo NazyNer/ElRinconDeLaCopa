@@ -1,3 +1,21 @@
+@media (min-width: 360px){
+  .createbutton1{
+    margin: 30px 0px 30px 0px;
+  }
+
+  .divtable .table{
+    background-color: rgb(255, 255, 255);
+    border-radius: 1.3rem;
+    overflow: hidden;
+  }
+}
+@media (min-width: 820px) {
+  .Botones-max-width{
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
 .name{
   color: #000;
   border-bottom-color: snow !important;
@@ -6,10 +24,8 @@
 .table .tabla-eliminada{
   background-color: #ffc10775;
 }
-#h1Categoria{
+.modal-title{
 color: rgb(0, 0, 0);
-position: relative;
-left: 34%;
 font-style: italic;
 }
 .cerrar-modal{
@@ -27,10 +43,6 @@ left: 34%;
   border-radius: 1.3rem;
   overflow: hidden;
 }
-/* .modal-header {
-  border-top-left-radius: calc(1.3rem - 1px);
-  border-top-right-radius: calc(1.3rem - 1px);
-} */
 .waviy{
   color: #2d1a16c0;
   font-size: 25px;
@@ -52,13 +64,6 @@ left: 34%;
 .modal-footer{
   background-color: #dcdae7;
 }
-/* .modal-body{
-    background-color: #E9E3D7;
-}
-.modal-footer{
-    background-color: #E9E3D7;
-} */
-
 .modal-content{
   background-color: white;
 }
@@ -72,29 +77,19 @@ left: 34%;
   color: #000000;
 }
 
-
-@media (max-width: 425px) {
-    .table{
-        text-align: center;
-        justify-content: center;
-    }
-  }
-
-    
-
 .categoriah1 {
   margin-top: 100px;
 }
 
 
-.divtable .table{
+/* .divtable .table{
   background-color: rgb(255, 255, 255);
   border-radius: 1.3rem !important;
   overflow: hidden;
   width: 70%;
   position: relative;
   left: 11rem;
-}
+} */
 .table thead{
   background-color: #dcdae7;
 
@@ -108,7 +103,6 @@ left: 34%;
 
 .createbutton1 {
   text-align: center;
-  margin: 30px;
 }
 
 .createbutton {
@@ -158,47 +152,12 @@ left: 34%;
 .box-shadowBtn:hover {
   box-shadow: 0px 0px 9px 5px #ffffff;
 }
-
-/* @media (hover: hover) {
-    .botones-tablas:hover{
-      color: #ce996f;
-      background-color: #2d1a16;
-      transform: scale(1.1);
-      border-color: #2d1a1600;
-    }
-    }
-
-.botones-tablas{
-    color: #2d1a16;
-    background-color: #ce996f;
-    transform: scale(1.1);
-    border-color: #2d1a1600;
-  } */
-
-
-/* .botones-modals{
-    color: #2d1a16;
-    background-color: #ce996f;
-    transform: scale(1.1);
-    border-color: #2d1a1600;
-    position: relative;
-    left: -43%;
-    background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
-    border-radius: 30px;
-    border: 1px solid #8F9092;
-    transition: all 0.2s ease;
-    font-family: "Source Sans Pro", sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #606060;
-    text-shadow: 0 1px #fff;
-} */
-.table .botones-modals{
+/* .table .botones-modals{
   padding-left: 2rem;
   padding-right: 2rem;
   position: relative;
   left: 29rem;
-}
+} */
 .table .btn-cat{
   padding-left: 2rem;
   padding-right: 2rem;
@@ -210,9 +169,6 @@ left: 34%;
   left: 0rem;
   background-color: #ffc10775;
 }
-/* #btnEliminar:hover{
-  color: #000;
-} */
 #btnHabilitar{
   position: relative;
   background-color: rgba(0, 128, 0, 0.454);
@@ -238,7 +194,7 @@ left: 34%;
   padding-left: 2rem;
   padding-right: 2rem;
   font-style: italic;
-  padding: 0.4rem;
+  /* padding: 0.4rem; */
  }
  .btn-cat:disabled {
   pointer-events: none;
@@ -272,10 +228,10 @@ left: 34%;
   transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);;
   touch-action: manipulation;
   will-change: transform;
-  position: relative;
+  /* position: relative;
+  right: 40%; */
   padding-left: 2rem;
   padding-right: 2rem;
-  right: 40%;
   font-style: italic;
  }
  

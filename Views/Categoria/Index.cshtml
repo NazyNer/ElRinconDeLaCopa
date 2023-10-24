@@ -1,4 +1,6 @@
-
+@section Styles {
+    <link rel="stylesheet" href="~/css/categoria.css" asp-append-version="true" />
+}
 @{
     ViewData["Title"] = "Index";
 }
@@ -6,7 +8,7 @@
 <div class="modal fade" id="ModalCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header" id="header">
+      <div class="modal-header">
         <i class="fa-solid fa-tag"></i><h1 id="h1Categoria" class="modal-title fs-5 ">Crear Categoría</h1>
         <input type="Hidden" id="Id" type="number" value="0" disabled/>
         <button type="button" class="btn-close cerrar-modal" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -22,7 +24,6 @@
           <button id="btn-crear" onclick="GuardarCategoria()"type="button" class="btn botones-modals"></button>
         <input id="btnEliminar" type="button" onclick="eliminarCategoria()" class="btn botones-modals" value="Deshabilitar" />
         <input id="btnHabilitar" type="button" onclick="eliminarCategoria()" class="btn botones-modals" value="Habilitar" />
-
       </div>
     </div>
   </div>
@@ -41,20 +42,15 @@
    <span style="--i:10">S</span>
   </div>
 
-
-@* <h1 class="text-center categoriah1">Categorias</h1> *@
 <div class="divcolor container w-90  mt-5 rounded shadow"> 
 
-<div class="row align-items-stretch justify-content-center box-shadowTable rounded">
+<div class="row align-items-stretch justify-content-center box-shadowTable">
 <p class="createbutton1">
 <button type="button" class="createbutton" onclick="CrearNueva()">Crear Nueva</button>
 </p>
 
-    @* <p class="text-white crearcatbutton"> 
-        <button type="button" class="colorh2 box-shadowBtn" onclick="CrearNueva()">Crear Nueva</button>
-    </p> *@
-    <div class="divtable col bg  d-lg-block rounded">
-        <table class="table text-white rounded">
+    <div class="divtable col bg  d-lg-block">
+        <table class="table text-white">
             <thead>
                 <tr>
                 <th class="name">Nombre</th>
