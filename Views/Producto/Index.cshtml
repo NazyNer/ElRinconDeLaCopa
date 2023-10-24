@@ -7,58 +7,64 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 id="h1Producto" class="modal-title fs-5" >P R O D U C T O</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <i class="fa-solid fa-wine-bottle"></i><h1 id="h1Producto" class="modal-title fs-5" >Crear Producto</h1>
+                <button type="button" class="btn-close cerrar-modal" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="form-producto" class="form-group" method="post" enctype="multipart/form-data">
                     <input type="Hidden" name="Productoid" type="number" value="0"/>
 
-                    <div class="form-row">
+                    <div class="form-row juntos">
 
                         <div class="form-group col-sm-6">
-                                <p class="modalnombre">N O M B R E</p>
+                                <p class="modalnombre"><i class="fa-solid fa-file-signature"></i> Nombre</p>
                         <input id="textoInput" class="form-control" placeholder="Nombre" name="Nombre"/>
                         </div>
                         <div class="form-group col-sm-6">
-                                <p class="modalnombre2">C A T E G O R I A</p>
+                                <p class="modalnombre"><i class="fa-solid fa-tag"></i> Categoría</p>
                         @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control"})
                         </div>
 
                     </div>
 
-                    <div class="">
+                    <div class="form-row juntos">
+
                         <div class="form-group col-md-6">
-                                <p class="modalnombre2">P R E C I O</p>
+                                <p class="modalnombre"><i class="fa-solid fa-dollar-sign"></i> Precio</p>
                         <input type="number" placeholder="Precio" class="form-control" name="Precio">
                         </div>
-                                <p class="modalnombre2">C A N T I D A D</p>
+                        <div class="form-group col-md-6">
+                                <p class="modalnombre"><i class="fa-solid fa-pen-to-square"></i> Cantidad</p>
                         <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
-                        @* <div class="form-group col-sm-6">
-                                <p class="modalnombre2">C A N T I D A D</p>
-                        <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
-                        </div> *@
+                       </div>
                     </div>
-                    <div class="form-row">
-
+                    <div class="form-row juntos imagen-div">
                         <div class="form-group">
-                            <p class="modalnombre2">I M A G E N</p>
-                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen" id="selectorImagen" >
+                            <p class="modalnombre imagen-title"><i class="fa-regular fa-image"></i> Imagen</p>
+                            <input type="file" accept="image/jpeg" class="form-control input-imagen" name="Imagen" id="selectorImagen" >
+                            <div class="div-imagen">
+                        <header></header>
+                    <body>
+                        <img id="imagenSeleccionada" class="imgPreview" src="~/img/productos/fotodefaullt.jpg" alt="Imagen seleccionada">
+                    </body>
+                    <footer>
+                        <span id="texto-error" class="text-danger"></span>
+                        <label class="modalnombre" id="nombreImagen" ></label>
+                    </footer>
+                    </div>
                         </div>
                     
 
                         </div>
-                    <span id="texto-error" class="text-danger"></span>
-                    <label id="nombreImagen" ></label>
-                    <img id="imagenSeleccionada" class="imgPreview" src="~/img/productos/fotodefaullt.jpg" alt="Imagen seleccionada">
+                    
+                    
                 </form>
             </div>
             
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button id="btnCrear" type="button" class="btn btn-crear" onclick="GuardarProducto()"></button>
-                <input id="btnEliminarProducto" type="button" onclick="eliminarProducto()" class="btn btn-danger" value="Deshabilitar" />
-                <input id="btnHabilitarProducto" type="button" onclick="eliminarProducto()" class="btn btn-success" value="Habilitar" />
+                <button id="btnCrear" type="button" class="btn btn-crear botones-modals" onclick="GuardarProducto()"></button>
+                <input id="btnEliminarProducto" type="button" onclick="eliminarProducto()" class="btn botones-modals" value="Deshabilitar" />
+                <input id="btnHabilitarProducto" type="button" onclick="eliminarProducto()" class="btn botones-modals" value="Habilitar" />
             </div>
         </div>
     </div>
@@ -69,24 +75,19 @@
 
             <div class="modal-header">
 
-                <h1 id="h1Producto" class="modal-title fs-5" >C A R R I T O</h1>
+                <h1 id="h1Producto" class="modal-title fs-5" ><i class="fa-solid fa-cart-shopping"></i> Carrito</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
             </div>
 
             <div class="modal-body">
 
-            <div class="fondo-carrito">
-                 <div class="divtable col bg  d-lg-block rounded">
+           
+            <div class="divtable col bg  d-lg-block rounded tabla-carrito">
             <table class="table text-white rounded">
                 <thead>
                     <tr>
-                        <th class="thcat">
-                            Productoo
-                        </th>
-                        <th>
-                            Imagen
-                        </th>
+                        <th class="thcat"><i class="fa-solid fa-wine-bottle"></i> Producto</th>
                         <th>
                             Cantidad
                         </th>
@@ -102,7 +103,7 @@
                 </tbody>
             </table>
         </div> 
-                </div>
+                
             </div>
             <div class="modal-footer">
                 <button id="Guardarstock" class="btn botones-modals" onclick="CompletePurchase()">Listo</button>
@@ -133,28 +134,25 @@
     <div class="row align-items-stretch justify-content-center box-shadowTable">
         <p class="createbutton1">
 <button type="button" class="createbutton" onclick="CrearNuevo()">Crear Nuevo</button>
-<button type="button" class="prueba" onclick="CrearNuevo()">Crear Nuevo</button>
 </p>
-        <div class="divtable1 col bg  d-lg-block">
+        <div class="divtable col bg  d-lg-block">
             <table class="table text-white radio">
-                <thead class="divtable2">
+                <thead>
                     <tr>
-                        <th>
-                            <p class="thcat">Categoria</p>
-                        </th>
+                        <th class="name"><i class="fa-solid fa-tag"></i> Categoría</th>
 
-                        <th>
-                            <p class="thcat">Nombre</p>
-                        </th>
-                        <th>
-                            <p class="thcat">Precio($ars)</p>
-                        </th>
-                        <th>
-                            <p class="thcat">Stock</p>
-                        </th>
+                        <th class="name"><i class="fa-solid fa-file-signature"></i> Nombre</th>
 
+                        <th class="name"><i class="fa-solid fa-dollar-sign"></i> Precio($ars)</th>
+
+                        <th class="name"><i class="fa-solid fa-pen-to-square"></i> Stock</th>
+                        
                         <th></th>
+                        <th class="name opciones-title"><i class="fa-solid fa-gear"></i> Opciones</th>
                         <th></th>
+                   
+
+                        
                     </tr>
                 </thead>
                 <tbody class="divtable4" id="tbody-productos">

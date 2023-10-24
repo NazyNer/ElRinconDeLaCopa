@@ -6,100 +6,172 @@
 .modal-content{
   text-align: center;
   }
-.modalnombre2{
-  text-align: center;
-  color: #ce996f;
-  font-size: 15px;
-}
+
 .form-control{
     margin: 1rem !important;
     width: 95%;
+    font-style: italic;
+    font-weight: 600;
+}
+.table .botones-modalss{
+  padding-left: 2rem;
+  padding-right: 2rem;
+  position: relative;
+  left: 1rem;
 }
 @media (max-width: 610px) {
     .thcat{
         display: none;
     }
   }
+  .modal-body{
+    padding: 1.5rem;
+  }
+  .input-imagen{
+  width: 100%;
+  position: relative;
+  left: 1rem;
+  }
+  .div-imagen{
+   position: relative;
+   left: 2rem;
+
+  }
+  .imagen-title{
+    position: relative;
+    left: 10rem;
+  }
+  .imagen-div input{
+    background-color: white !important;
+  }
+  .juntos{
+    display: flex;
+    margin-left: -1.5rem;
+    margin-right: -0.4rem;
+  }
+  .inputs-titles{
+    text-align: left;
+    color: black;
+    font-size: 1.2rem;
+    margin-bottom: -0.8rem;
+    margin-left: 1rem;
+    font-style: italic;
+    font-weight: 500;
+  }
+  .modal-header .svg-inline--fa {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    color: rgb(0, 0, 0);
+    position: relative;
+    left: 34%;
+}
+.tabla-carrito .svg-inline--fa {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  color: rgb(0, 0, 0);
+  position: relative;
+  left: 34%;
+}
+.tabla-carrito th{}
+.divtable .table {
+  background-color: rgb(255, 255, 255);
+  border-radius: 1.3rem !important;
+  overflow: hidden;
+  width: 70%;
+  position: relative;
+  left: 13rem;
+}
+#nombreImagen{
+  left: -0.8rem;
+  position: relative;
+  margin-top: 0.8rem;
+}
+  #h1Producto{
+    color: rgb(0, 0, 0);
+    position: relative;
+    left: 34%;
+    font-style: italic;
+    }
 
   .thcat{
     color: black;
     font-family: sans-serif;
   }
-
+  .imagen-div{
+    border-radius: 1.3rem;
+    padding: 1rem;
+    margin: 1rem;
+    box-shadow: 0px 0px 7px 0px rgb(0 0 0 / 40%);
+  }
 .imgPreview{
     width: 202px;
     height: 202px;
     border-radius: 0px 25px;
+    box-shadow: 0px 0px 7px 0px #0c0b0b;
 }
 
-/* @media (hover: hover) {
-    .botones-tablas:hover{
-      color: #ce996f;
-      background-color: #2d1a16;
-      transform: scale(1.1);
-      border-color: #2d1a1600;
-    }
-    } */
-/* .botones-tablas{
-    color: #2d1a16;
-    background-color: #ce996f;
-    transform: scale(1.1);
-    border-color: #2d1a1600;
-  } */
 
-  /* .btn-producto-cart{
-    background-color: #7a5938;
-    transition: all .5s ease-in-out;
-    color: #2d1a16;
-  }
-  .btn-producto-cart:hover{
-    color: white;
-    box-shadow: #caa075;
-    transform: scale(1.2);
-  } */
-  .divtable2{
-    background-color: #dcdae7;
-  }
-  .divtable4{
-    background-color: #ffffff;
-  }
 
-  /* BOTON PRUEBA */
-  .prueba {
-    padding: 15px 25px;
-    border: unset;
-    border-radius: 15px;
-    color: #212121;
-    z-index: 1;
-    background: #e8e8e8;
-    position: relative;
-    font-weight: 1000;
-    font-size: 17px;
-    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-    transition: all 250ms;
-    overflow: hidden;
-   }
+
+.botones-modalss {
+  appearance: none;
+  background-color: transparent;
+  border: 0.125em solid #1A1A1A;
+  border-radius: 0.9375em;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600; 
+  line-height: normal;
+  margin: 0;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);;
+  touch-action: manipulation;
+  will-change: transform;
+  position: relative;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  right: 40%;
+  font-style: italic;
+ }
+ 
+ .botones-modalss:disabled {
+  pointer-events: none;
+ }
+ 
+ .botones-modalss:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+ }
+ 
+ .botones-modalss:active {
+  box-shadow: none;
+  transform: translateY(0);
+ }
+ .opciones-title{
+  position: relative;
+  text-align: center;
+ }
+ #btnEliminarProducto {
+  position: relative;
+  left: 0rem;
+  background-color: #ffc10775;
+}
+
+#btnHabilitarProducto {
+  position: relative;
+  background-color: rgba(0, 128, 0, 0.454);
+  left: -37%;
+}
+.tabla-carrito{
+  left: -11.5rem;
+  position: relative;
+}
+  
+
+
+
    
-   .prueba::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0;
-    border-radius: 15px;
-    background-color: #212121;
-    z-index: -1;
-    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-    transition: all 250ms
-   }
-   
-   .prueba:hover {
-    color: #e8e8e8;
-   }
-   
-   .prueba:hover::before {
-    width: 100%;
-   }

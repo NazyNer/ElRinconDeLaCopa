@@ -1,6 +1,7 @@
 window.onload = ProuctCart();
 
 function AgregarAlDetalle(Id) {
+    console.log("hola")
     //llamar al controlador
     $.ajax({
         // la URL para la petición
@@ -15,6 +16,7 @@ function AgregarAlDetalle(Id) {
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
         success: function (resultado) {
+            console.log("godines")
             if (resultado.nonError) {
                 Swal.fire({
                     position: 'center',
@@ -23,15 +25,7 @@ function AgregarAlDetalle(Id) {
                     showConfirmButton: false,
                     timer: 1500
                             })
-                ProuctCart()
-                // alert("Producto agregado al carrito");
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Producto agregado al carrito!',
-                    showConfirmButton: false,
-                    timer: 1500
-                            })
+                ProuctCart();
             }else{
                 alert(resultado.msjError);
             }
@@ -65,38 +59,37 @@ function AbrirCarrito(){
                 $.each(Carrito.productos, function (index, producto) {
                     console.log("producto: " + producto + " indice: " + index);
                     carritoDiv.append(
+                        
                         `
-                        <tr class="fondo-tabla">
-                        <td class="thcat"> <a class="btn btn-producto-cart">${producto.nombre}</a></td>
-                        <td><img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/></td>
-                        <td class="tdbasura"><p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
-                            <td class="tdbasura"><button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
-                            <td class="tdbasura"><button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button></td>
+                        <div class="form-row imagen-div-carrito">
+                        <header><td class="thcat"> <a class="btn btn-producto-cart carritonombre">${producto.nombre}</a></td></header>
+                        <tr>
+                        <body>
+                        <td><img class="radio-carrito" src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 80px;" alt="${producto.nombre}"/></td>
+                        <td><p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
+                        </body>
+                        <footer>
+                        <td><button class="btn botones-modalss" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
+                        <td><button class="btn botones-modalss" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button></td>
+                        </footer>
                         </tr>
+                        
+                        
+                        </div>
                         `
+                    //(
+                     //`  
+                        //<tr>
+                       // <td class="thcat back"> <a class="btn btn-producto-cart">${producto.nombre}</a></td>
+                       // <td><img class="radio" src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 40px;" alt="${producto.nombre}"/></td>
+                       // <td><p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
+                            //<td><button class="btn botones-modalss" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
+                            //<td><button class="btn botones-modalss" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button></td>
+                        //</tr>
+                        
+                        //`
+                        
                         )
-{/* <tr class="">
-                            <td class="thcat"> <a class="btn btn-producto-cart">${producto.nombre}</a></td>
-
-                            <td>
-                            <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/>
-                            </td>
-                            <td class="tdbasura"><p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
-                            <td class="tdbasura"><button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
-                            <td class="tdbasura"><button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button></td>
-                        </tr> */}
-
-                    //     `
-                    // <div class="producto">
-                    //     <h3>${producto.nombre}</h3>
-                    //     <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br> 
-                                
-                    //     <button class="delete-button-carrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button> <br>
-                    //     <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
-                    //     <button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
-                    //     <button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button>
-                    // </div>
-                    // `
                     
                 });
                 $("#ModalCarrito").modal("show");

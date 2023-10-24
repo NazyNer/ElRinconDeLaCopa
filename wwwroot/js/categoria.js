@@ -2,7 +2,7 @@ window.onload = BuscarCategorias();
 function CrearNueva() {
     $("#Id").val(`0`)
     $("#ModalCategoria").modal("show");
-    $("#h1Categoria").text("C A T E G O R I A");
+    $("#h1Categoria").text("Crear Categoría");
     $("#form-categoria input[name='Nombre']").val("")
     $("#lbl-error").text("");
     $("#btnEliminar").hide();
@@ -32,21 +32,27 @@ function BuscarCategorias() {
 
                 if (categoria.eliminado) {
                     TablaCategoria.append(`
-                            <tr class="bg-danger">
-                                <td> <a class=" btn btn-producto-cart" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
-                                <td class="tdbasura"> 
-                                <button class="delete-button btn btn-producto-cart" onClick="RemoveCategoria(${categoria.id})"> 
-                                <i class="fa-solid fa-trash"></i>
-                                </button>
-                                </td>
-                            </tr>`);
+                    <tr class="tabla-eliminada">
+                    <td> <a class="btn btn-cat" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
+                    <td> 
+                    <button class="botones-modals" onClick="RemoveCategoria(${categoria.id})"> 
+                    <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <button  class="botones-modals" onClick="BuscarCategoria(${categoria.id})"> 
+                    <i class="fa-solid fa-gear"></i>
+                    </button>
+                    </td>
+                </tr>`);
                 } else {
                     TablaCategoria.append(`
                             <tr class="fondo-tabla">
-                                <td> <a class="btn btn-producto-cart" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
-                                <td class="tdbasura"> 
-                                <button class="delete-button btn btn-producto-cart" onClick="RemoveCategoria(${categoria.id})"> 
+                                <td> <a class="btn btn-cat" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
+                                <td> 
+                                <button class="botones-modals" onClick="RemoveCategoria(${categoria.id})"> 
                                 <i class="fa-solid fa-trash"></i>
+                                </button>
+                                <button  class="botones-modals" onClick="BuscarCategoria(${categoria.id})"> 
+                                <i class="fa-solid fa-gear"></i>
                                 </button>
                                 </td>
                             </tr>`);
@@ -72,7 +78,7 @@ function BuscarCategoria(Id) {
             if (Categoria.length == 1) {
                 let categoria = Categoria[0];
                 $("#lbl-error").text("");
-                $("#h1Categoria").text("E D I T A R");
+                $("#h1Categoria").text("Editar Categoría");
                 $("#Id").val(`${Categoria[0].id}`);
                 $("#form-categoria input[name='Nombre']").val(`${categoria.nombre}`);
                 if (!categoria.eliminado) {
@@ -103,12 +109,27 @@ function BuscarCategoria(Id) {
 function GuardarCategoria() {
     let Id = $("#Id").val();
     let Nombre = $("#form-categoria input[name='Nombre']").val().toUpperCase();
+
+    if (Nombre === "") {
+        // alert("El campo de nombre está vacío. Por favor, ingrese un nombre válido.");
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'El campo de nombre está vacío. Por favor, ingrese un nombre válido.',
+            showConfirmButton: false,
+            timer: 1500
+                    })
+        return; // Detener la función si el campo está vacío
+    }
+
+
+
     $.ajax({
         // la URL para la petición
         url: '../../Categoria/GuardarCategoria',
         // la información a enviar
         // (también es posible utilizar una cadena de datos)
-        data: { id: Id, nombre: Nombre },
+        data: { id: Id, nombre: Nombre},
         // especifica si será una petición POST o GET
         type: 'POST',
         // el tipo de información que se espera de respuesta
@@ -116,27 +137,53 @@ function GuardarCategoria() {
         // código a ejecutar si la petición es satisfactoria;
         // la respuesta es pasada como argumento a la función
         success: function (resultado) {
-            if (resultado.nonError) {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Categoria Creada',
-                    showConfirmButton: false,
-                    timer: 1500
-                            })
-                $("#ModalCategoria").modal("hide");
-                BuscarCategorias();
+
+            if(Id == 0){
+                    if (resultado.nonError) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Categoria Creada',
+                            showConfirmButton: false,
+                            timer: 1500
+                                    })
+                        $("#ModalCategoria").modal("hide");
+                        BuscarCategorias();
+                    }
+                    else{
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Ya existe una categoría con ese nombre',
+                            showConfirmButton: false,
+                            timer: 1500
+                                    })
+                    }
             }
-            else {
-                // $("#lbl-error").text(resultado.msjError);
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: 'Es necesario rellenar todos los campos!',
-                    showConfirmButton: false,
-                    timer: 1500
-                            })
+            else
+            {
+                if(resultado.nonError){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Categoria Editada',
+                        showConfirmButton: false,
+                        timer: 1500
+                                })
+                    $("#ModalCategoria").modal("hide");
+                    BuscarCategorias();
+                }
+                else{
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Ha sido imposible editar, ya que ya existe una categoría con ese nombre',
+                        showConfirmButton: false,
+                        timer: 1500
+                                })
+                }
             }
+            
         },
         error: function (xhr, status) {
             alert('Error al cargar categorias');
@@ -246,4 +293,6 @@ $("#textoInput").on("input", function () {
 
     input[0].setSelectionRange(startPosition, startPosition);  // Restaurar la posición del cursor
 });
+
+
 

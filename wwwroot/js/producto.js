@@ -4,7 +4,7 @@ function CrearNuevo() {
   $("#form-producto input[name='Productoid']").val(`0`);
   $(`#CategoriaID`).val('0');
   $("#ModalProducto").modal("show");
-  $("#h1Producto").text("P R O D U C T O");
+  $("#h1Producto").text("Crear Producto");
   $("#form-producto input[name='Nombre']").val("");
   $("#texto-error").text("");
   $("#btnEliminarProducto").hide();
@@ -38,38 +38,45 @@ function BuscarProductos() {
       $.each(productos, function (index, producto) {
         if (producto.eliminado) {
           TablaProducto.append(`
-                        <tr class="bg-danger">
-                            <td class="thcat"> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+                        <tr class="tabla-eliminada">
+                            <td class="thcat"> <a class="btn btn-cat" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
 
-                            <td> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
-
-                            <td> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
-
-                            <td><b>${producto.cantidad}</b></td>
-                            
                             <td>
                             ${producto.imagen == null
-              ? `<img  src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
-              : `<img src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
+              ? `<img  class="radio" src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
+              : `<img class="radio" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
             }
+            <a class="btn btn-cat" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a>
                             </td> 
-                            <td><button onClick="RemoveProducto(${producto.id})"><i class="fa-regular fa-trash-can" style="color: #be540e;"></i></button></td>
+
+                            <td> <a class="btn btn-cat" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
+
+                            <td> <a class="btn btn-cat " onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
+                            <td></td>
+                            <td> <button class="btn botones-modalss" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
+                            
+                            <td> <button class="btn botones-modalss" onClick="BuscarProducto(${producto.id})"><i class="fa-solid fa-gear"></i></button></td>
+                            
+                            z
                         </tr>`);
         } else {
           TablaProducto.append(`
-                        <tr class="fondo-tabla">
-                            <td class="thcat"> <a class="btn btn-producto-cart" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+                        <tr>
+                            <td class="thcat"> <a class="btn btn-cat" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
                             <td>
                             ${producto.imagen == null
                               ? `<img class="radio" src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
                               : `<img class="radio" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
                             } 
-                            <a class=" btn btn-producto-cart " onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
-                            <td> <a class="btn btn-producto-cart " onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
-                            <td><b>${producto.cantidad}</b></td>
-                            <td> <button class="btn btn-producto-cart" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>>
-                            <td class="tdbasura"><button class="delete-button btn btn-producto-cart" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
-                        </tr>`);
+                            <a class=" btn btn-cat " onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
+                            <td> <a class="btn btn-cat " onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
+                            <td> <a class="btn btn-cat " onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
+                            <td> <button class="btn botones-modalss" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>
+
+                            <td> <button class="btn botones-modalss" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
+                            <td> <button class="btn botones-modalss" onClick="BuscarProducto(${producto.id})"><i class="fa-solid fa-gear"></i></button></td>
+                        </tr>
+                        `);
         }
       })
     },
@@ -87,11 +94,25 @@ function GuardarProducto() {
     async: false,
     success: function (resultado) {
       if (resultado.nonError) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Producto creado correctamente',
+          showConfirmButton: false,
+          timer: 1500
+                  })
         $("#ModalProducto").modal("hide");
         BuscarProductos();
       }
       else {
-        $("#texto-error").text(resultado.msjError);
+        //  $("#texto-error").text(resultado.msjError);
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Es necesario rellenar todos los campos!',
+          showConfirmButton: false,
+          timer: 1500
+                  })
       }
     },
     cache: false,
@@ -118,7 +139,7 @@ function BuscarProducto(ID) {
       if (productos.length = 1) {
         let producto = productos[0];
         $("#texto-error").text("");
-        $("#h1Producto").text("E D I T A R")
+        $("#h1Producto").text("Editar Producto")
         $("#form-producto input[name='Productoid']").val(producto.id);
         $("#btnCrear").show();
         $("#form-producto input[name='Nombre']").val(producto.nombre);
@@ -202,11 +223,26 @@ function RemoveProducto(id) {
     // la respuesta es pasada como argumento a la función
     success: function (resultado) {
       if (resultado.nonError) {
-        alert(resultado.msjError)
+        // alert(resultado.msjError)
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Producto eliminado correctamente ',
+          showConfirmButton: false,
+          timer: 1500
+                  })
         BuscarProductos();
       }
       else {
-        alert(resultado.msjError)
+        // alert(resultado.msjError)
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: 'Para eliminar este producto, primero eliminelo de su carrito. ',
+          showConfirmButton: false,
+          timer: 1500
+                  })
+
       }
     },
     // código a ejecutar si la petición falla;
