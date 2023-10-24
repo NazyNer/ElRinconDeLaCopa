@@ -57,7 +57,7 @@ function BuscarProductos() {
                             
                             <td> <button class="btn botones-modalss" onClick="BuscarProducto(${producto.id})"><i class="fa-solid fa-gear"></i></button></td>
                             
-                            z
+                            
                         </tr>`);
         } else {
           TablaProducto.append(`

@@ -62,15 +62,17 @@ function AbrirCarrito(){
                         
                         `
                         <div class="form-row imagen-div-carrito">
-                        <header><td class="thcat"> <a class="btn btn-producto-cart carritonombre">${producto.nombre}</a></td></header>
+                        <header>
+                        <td class="thcat"> <a class="btn btn-producto-cart carritonombre producto-name">${producto.nombre}</a></td>
+                        <td><img class="radio-carrito" src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 80px;" alt="${producto.nombre}"/></td>
+                        </header>
                         <tr>
                         <body>
-                        <td><img class="radio-carrito" src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 80px;" alt="${producto.nombre}"/></td>
-                        <td><p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
+                        <td><p class="cantidadcarrito carritonombre" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
                         </body>
-                        <footer>
-                        <td><button class="btn botones-modalss" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
-                        <td><button class="btn botones-modalss" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button></td>
+                        <footer class="footer-carrito">
+                        <td><button class="btn botones-modals-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
+                        <td><button class="btn botones-modals-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button></td>
                         </footer>
                         </tr>
                         
