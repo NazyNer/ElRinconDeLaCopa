@@ -63,8 +63,8 @@ left: 34%;
   background-color: white;
 }
 
-.bodytable{
-    text-align: center;
+.bodytable {
+  text-align: center;
 }
 
 .form-control{
@@ -80,9 +80,10 @@ left: 34%;
     }
   }
 
+    
 
-.categoriah1{
-    margin-top: 100px;
+.categoriah1 {
+  margin-top: 100px;
 }
 
 
@@ -105,10 +106,11 @@ left: 34%;
   border-radius: .8rem !important;
 }
 
-.createbutton1{
+.createbutton1 {
   text-align: center;
   margin: 30px;
 }
+
 .createbutton {
   --bg: #ce996f;
   --text-color: #fff;
@@ -133,24 +135,10 @@ left: 34%;
 
 .createbutton:active {
   top: 4px;
-  box-shadow: #2d1a16 0px 3px 2px,#000 0px 3px 5px;
+  box-shadow: #2d1a16 0px 3px 2px, #000 0px 3px 5px;
 }
 
-
-
-
-
-/* .crearcatbutton{
-    text-align: center;
-}
-.divcolor .colorh2:hover{
-    background-color: #2d1a16;
-    color: #E9E3D7;
-    transition: all 300ms;
-} */
-
-
-.categoriah1{
+.categoriah1 {
   font-size: 2em;
   text-decoration: none;
   font-weight: bold;
@@ -166,8 +154,9 @@ left: 34%;
     box-shadow: 0px 0px 9px 5px #2d1a16a2;
     transition: box-shadow .5s ease;
 }
-.box-shadowBtn:hover{
-    box-shadow: 0px 0px 9px 5px #ffffff;
+
+.box-shadowBtn:hover {
+  box-shadow: 0px 0px 9px 5px #ffffff;
 }
 
 /* @media (hover: hover) {
