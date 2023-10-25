@@ -45,19 +45,19 @@ function BuscarProductos() {
           // Agregar fila para productos eliminados
           TablaProducto.append(`
                         <tr class="tabla-eliminada">
-                            <td class="thcat"> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+                            <td class="thcat"> <a class="btn botones-modalss-none altura" role="button">${producto.nombreCategoria}</a></td>
 
                             <td>
                             ${producto.imagen == null
               ? `<img  class="imagen-producto" src="/img/productos/fotodefaullt.jpg" style="width: 70px;"/>`
               : `<img class="imagen-producto" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 70px;"/>`
             }
-            <a class="btn botones-modalss" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a>
+            <a class="btn botones-modalss-none" role="button">${producto.nombre}</a>
                             </td> 
 
-                            <td> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
+                            <td> <a class="btn botones-modalss-none altura"  role="button">${producto.precio}</a></td>
 
-                            <td> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
+                            <td> <a class="btn botones-modalss-none altura"  role="button">${producto.cantidad}</a></td>
                             <td></td>
                             <td> <button class="btn botones-modalss altura" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
                             
@@ -69,15 +69,15 @@ function BuscarProductos() {
           // Agregar fila para productos no eliminados (disponibles)
           TablaProducto.append(`
                         <tr>
-                            <td class="thcat"> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+                            <td class="thcat"> <a class="btn botones-modalss-none altura" role="button">${producto.nombreCategoria}</a></td>
                             <td>
                             ${producto.imagen == null
                               ? `<img class="imagen-producto" src="/img/productos/fotodefaullt.jpg" style="width: 70px;"/>`
                               : `<img class="imagen-producto" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 70px;"/>`
                             } 
-                            <a class=" btn botones-modalss " onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
-                            <td> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
-                            <td> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
+                            <a class=" btn botones-modalss-none" role="button">${producto.nombre}</a></td>
+                            <td> <a class="btn botones-modalss-none altura"  role="button">${producto.precio}</a></td>
+                            <td> <a class="btn botones-modalss-none altura" role="button">${producto.cantidad}</a></td>
                             <td> <button class="btn botones-modalss altura" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>
 
                             <td> <button class="btn botones-modalss altura" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>

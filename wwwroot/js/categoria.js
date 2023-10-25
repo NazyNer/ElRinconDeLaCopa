@@ -37,7 +37,7 @@ function BuscarCategorias() {
                     TablaCategoria.append(`
 
                     <tr class="tabla-eliminada">
-                    <td> <a class="btn btn-cat" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
+                    <td> <a class="btn btn-cat" role="button">${categoria.nombre}</a></td>
                     <td class="Botones-max-width"> 
                     <button class="botones-modals" onClick="RemoveCategoria(${categoria.id})"> 
                     <i class="fa-solid fa-trash"></i>
@@ -50,7 +50,7 @@ function BuscarCategorias() {
                 } else {
                     TablaCategoria.append(`
                             <tr class="fondo-tabla">
-                                <td> <a class="btn btn-cat" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
+                                <td> <a class="btn btn-cat" role="button">${categoria.nombre}</a></td>
                                 <td class="Botones-max-width"> 
                                 <button class="botones-modals" onClick="RemoveCategoria(${categoria.id})"> 
                                 <i class="fa-solid fa-trash"></i>
