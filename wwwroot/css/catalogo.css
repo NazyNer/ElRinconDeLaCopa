@@ -1,3 +1,26 @@
+.cards{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-content: center;
+}
+.ArticuloCategoria{
+    background-color: #fff;
+}
+.Article{
+    display: flex;
+    margin-bottom: 20px;
+}
+.Cards{
+    display: flex;
+    flex-wrap: wrap;
+    height: 350px;
+    overflow: hidden;
+}
+.carousel-item{
+    margin-right: 0;
+}
+
 .catalogo{
     flex-wrap: wrap;
 }
@@ -24,11 +47,19 @@ body{
 }
 .card{
     padding: .2rem;
-    margin-top: 20px;
+    margin-top: 0;
+    width: 12rem;
+    margin-left: 20px!important;
+}
+.carousel{
+    width: 105%;
 }
 .card-title{
     text-align: center;
 }
 .card-img-top{
     border-radius: 0px 25px;
+}
+.H1Catalogo{
+    width: 100%;
 }
