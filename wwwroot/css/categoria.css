@@ -1,20 +1,4 @@
-@media (min-width: 360px){
-  .createbutton1{
-    margin: 30px 0px 30px 0px;
-  }
 
-  .divtable .table{
-    background-color: rgb(255, 255, 255);
-    border-radius: 1.3rem;
-    overflow: hidden;
-  }
-}
-@media (min-width: 820px) {
-  .Botones-max-width{
-    display: flex;
-    justify-content: flex-end;
-  }
-}
 
 .name{
   color: #000;
@@ -27,6 +11,8 @@
 .modal-title{
 color: rgb(0, 0, 0);
 font-style: italic;
+position: relative;
+left: 11rem;
 }
 .cerrar-modal{
   background-color: rgba(255, 0, 0, 0.627);
@@ -47,20 +33,33 @@ left: 34%;
   color: #2d1a16c0;
   font-size: 25px;
   text-align: center;
+  top: 5rem;
+  position: relative;
+  margin-bottom: 8rem;
+}
+.btn-centrado{
+position: relative;
+left: -40%;
 }
 .modalnombre{
   text-align: left;
   color: black;
   font-size: 1.2rem;
-  margin-bottom: -0.8rem;
-  margin-left: 1rem;
+  margin-bottom: 0rem;
   font-style: italic;
   font-weight: 500;
 }
  .modal-header{
     background-color: #dcdae7;
     color: white; 
-} 
+}
+.modal-header .svg-inline--fa {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  color: rgb(0, 0, 0);
+  position: relative;
+  left: 34%;
+}
 .modal-footer{
   background-color: #dcdae7;
 }
@@ -75,6 +74,8 @@ left: 34%;
 .form-control{
   background-color:#dcdae7 !important;  
   color: #000000;
+  font-style: italic;
+  font-weight: 600;
 }
 
 .categoriah1 {
@@ -250,5 +251,88 @@ left: 34%;
   box-shadow: none;
   transform: translateY(0);
  }
+
+ @media (min-width: 360px){
+  .createbutton1{
+    margin: 30px 0px 30px 0px;
+  }
+  .waviy{
+    top: 7rem;
+  }
+  .divtable .table{
+    background-color: rgb(255, 255, 255);
+    border-radius: 1.3rem;
+    overflow: hidden;
+  }
+  .modal-title{
+    left: 5rem;
+  }
+  .modal-header .svg-inline--fa{
+    left: 5rem;
+  }
+  .btn-centrado{
+    left: -8rem;
+  }
+  .modalnombre{
+    position: relative;
+    left: 8rem;
+    top: -0.5rem;
+  }
+  #btnEliminar{
+    margin-left: -3rem;
+  }
+  #btnHabilitar{
+    left: -30%;
+  }
+}
+@media (min-width: 820px) {
+  .Botones-max-width{
+    display: flex;
+    justify-content: flex-end;
+  }
+  .modal-header .svg-inline--fa{
+    left: 9rem;
+  }
+  .modal-title{
+    left: 9rem;
+  }
+  .modalnombre{
+    left: 11rem;
+  }
+  .btn-centrado{
+    left: -11.5rem;
+  }
+  #btnEliminar{
+    margin-left: 1.5rem;
+  }
+  #btnHabilitar{
+    left: -37%;
+  }
+}
+@media (min-width: 992px) {
+  .Botones-max-width{
+    display: flex;
+    justify-content: flex-end;
+  }
+  .modal-header .svg-inline--fa{
+    left: 11rem;
+  }
+  .modal-title{
+    left: 11rem;
+  }
+  .modalnombre{
+    left: 13.5rem;
+  }
+  .btn-centrado{
+    left: -13.5rem;
+  }
+  #btnEliminar{
+    margin-left: 2.5rem;
+  }
+  #btnHabilitar{
+    left: -37%;
+  }
+}
+
 
 

@@ -39,42 +39,42 @@ function BuscarProductos() {
         if (producto.eliminado) {
           TablaProducto.append(`
                         <tr class="tabla-eliminada">
-                            <td class="thcat"> <a class="btn btn-cat" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+                            <td class="thcat"> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
 
                             <td>
                             ${producto.imagen == null
-              ? `<img  class="radio" src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
-              : `<img class="radio" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
+              ? `<img  class="imagen-producto" src="/img/productos/fotodefaullt.jpg" style="width: 70px;"/>`
+              : `<img class="imagen-producto" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 70px;"/>`
             }
-            <a class="btn btn-cat" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a>
+            <a class="btn botones-modalss" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a>
                             </td> 
 
-                            <td> <a class="btn btn-cat" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
+                            <td> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
 
-                            <td> <a class="btn btn-cat " onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
+                            <td> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
                             <td></td>
-                            <td> <button class="btn botones-modalss" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
+                            <td> <button class="btn botones-modalss altura" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
                             
-                            <td> <button class="btn botones-modalss" onClick="BuscarProducto(${producto.id})"><i class="fa-solid fa-gear"></i></button></td>
+                            <td> <button class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})"><i class="fa-solid fa-gear"></i></button></td>
                             
                             
                         </tr>`);
         } else {
           TablaProducto.append(`
                         <tr>
-                            <td class="thcat"> <a class="btn btn-cat" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
+                            <td class="thcat"> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
                             <td>
                             ${producto.imagen == null
-                              ? `<img class="radio" src="/img/productos/fotodefaullt.jpg" style="width: 40px;"/>`
-                              : `<img class="radio" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 40px;"/>`
+                              ? `<img class="imagen-producto" src="/img/productos/fotodefaullt.jpg" style="width: 70px;"/>`
+                              : `<img class="imagen-producto" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 70px;"/>`
                             } 
-                            <a class=" btn btn-cat " onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
-                            <td> <a class="btn btn-cat " onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
-                            <td> <a class="btn btn-cat " onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
-                            <td> <button class="btn botones-modalss" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>
+                            <a class=" btn botones-modalss " onClick="BuscarProducto(${producto.id})" role="button">${producto.nombre}</a></td>
+                            <td> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.precio}</a></td>
+                            <td> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.cantidad}</a></td>
+                            <td> <button class="btn botones-modalss altura" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>
 
-                            <td> <button class="btn botones-modalss" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
-                            <td> <button class="btn botones-modalss" onClick="BuscarProducto(${producto.id})"><i class="fa-solid fa-gear"></i></button></td>
+                            <td> <button class="btn botones-modalss altura" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
+                            <td> <button class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})"><i class="fa-solid fa-gear"></i></button></td>
                         </tr>
                         `);
         }

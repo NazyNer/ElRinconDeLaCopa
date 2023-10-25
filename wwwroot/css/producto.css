@@ -1,8 +1,95 @@
+/*---------------------------------------------------*/
+/*---------------SECCION PRODUCTO TABLA--------------*/
+/*---------------------------------------------------*/
+.table .tabla-eliminada{
+  background-color: #ffc10775;
+}
+.table th{
+  background-color: #dcdae7;
+  color: #000;
+  border-bottom: #fff;
+}
+.createbutton1-producto{
+  text-align: center;
+}
+.waviy-producto{
+  color: #2d1a16c0;
+  font-size: 25px;
+  text-align: center;
+  top: 2rem;
+  position: relative;
+  margin-bottom: 5rem;
+}
+.divcolor-producto{
+  background-color: #2d1a16c0;
+}
 #h1Producto{
   color: #2d1a16c0;
   font-size: 25px;
   text-align: center;
   }
+
+.table .botones-modalss{
+  padding-left: 2rem;
+  padding-right: 2rem;
+  position: relative;
+  left: 1rem;
+}
+.createbutton-producto {
+  --bg: #ce996f;
+  --text-color: #fff;
+  position: relative;
+  width: 150px;
+  border: none;
+  background: var(--bg);
+  color: var(--text-color);
+  padding: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.2s;
+  border-radius: 5px;
+  opacity: 0.8;
+  letter-spacing: 1px;
+  box-shadow: #2d1a16 0px 7px 2px, #000 0px 8px 5px;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/*---------------------------------------------------*/
+/*---------------SECCION PRODUCTO TABLA--------------*/
+/*---------------------------------------------------*/
+
+
+
+
+
+
+/*---------------------------------------------------*/
+/*---------------SECCION PRODUCTO MODAL--------------*/
+/*---------------------------------------------------*/
+#h1Producto .svg-inline--fa{
+  position: relative;
+  left: 10%;
+}
+#ModalProducto .modal-header {
+  background-color:#dcdae7;
+}
+#ModalProducto .modal-footer {
+  background-color:#dcdae7;
+}
+.form-control{
+  background-color:#dcdae7 !important;  
+  color: #000000;
+}
+.modalnombre-producto{
+  text-align: left;
+  color: black;
+  font-size: 1.2rem;
+  margin-bottom: -1rem;
+  font-style: italic;
+  font-weight: 500;
+  margin-left: 1rem;
+}
 .modal-content{
   text-align: center;
   }
@@ -13,58 +100,84 @@
     font-style: italic;
     font-weight: 600;
 }
-.table .botones-modalss{
-  padding-left: 2rem;
-  padding-right: 2rem;
-  position: relative;
-  left: 1rem;
+.modal-body{
+  padding: 1.5rem;
 }
+.input-imagen{
+width: 100%;
+position: relative;
+left: 1rem;
+}
+.div-imagen{
+ position: relative;
+ left: 2rem;
+
+}
+.imagen-title{
+  position: relative;
+  left: 10rem;
+}
+.imagen-div input{
+  background-color: white !important;
+}
+.juntos{
+  display: flex;
+  margin-left: -1.5rem;
+  margin-right: -0.4rem;
+}
+.inputs-titles{
+  text-align: left;
+  color: black;
+  font-size: 1.2rem;
+  margin-bottom: -0.8rem;
+  margin-left: 1rem;
+  font-style: italic;
+  font-weight: 500;
+}
+.modal-header .svg-inline--fa {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  color: rgb(0, 0, 0);
+  position: relative;
+  left: 34%;
+}
+
+.imagen-div{
+  border-radius: 1.3rem;
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: 0px 0px 7px 0px rgb(0 0 0 / 40%);
+}
+.imagen-producto{
+  border-radius: 0px 16px;
+  box-shadow: 0px 0px 7px 0px #0c0b0b;
+}
+.altura{
+  position: relative;
+  top: 1.2rem;
+}
+.imgPreview{
+  width: 202px;
+  height: 202px;
+  border-radius: 0px 25px;
+  box-shadow: 0px 0px 7px 0px #0c0b0b;
+}
+/*---------------------------------------------------*/
+/*---------------SECCION PRODUCTO MODAL--------------*/
+/*---------------------------------------------------*/
+
+
+
+
+/*MEDIAQUIERIES*/
 @media (max-width: 610px) {
     .thcat{
         display: none;
     }
   }
-  .modal-body{
-    padding: 1.5rem;
-  }
-  .input-imagen{
-  width: 100%;
-  position: relative;
-  left: 1rem;
-  }
-  .div-imagen{
-   position: relative;
-   left: 2rem;
+  /*MEDIAQUIERIES*/
 
-  }
-  .imagen-title{
-    position: relative;
-    left: 10rem;
-  }
-  .imagen-div input{
-    background-color: white !important;
-  }
-  .juntos{
-    display: flex;
-    margin-left: -1.5rem;
-    margin-right: -0.4rem;
-  }
-  .inputs-titles{
-    text-align: left;
-    color: black;
-    font-size: 1.2rem;
-    margin-bottom: -0.8rem;
-    margin-left: 1rem;
-    font-style: italic;
-    font-weight: 500;
-  }
-  .modal-header .svg-inline--fa {
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
-    color: rgb(0, 0, 0);
-    position: relative;
-    left: 34%;
-}
+  
 .tabla-carrito th .svg-inline--fa {
   font-size: 1.5rem;
   margin-right: 0.5rem;
@@ -77,10 +190,9 @@
   background-color: rgb(255, 255, 255);
   border-radius: 1.3rem !important;
   overflow: hidden;
-  width: 70%;
   position: relative;
-  left: 13rem;
 }
+
 #nombreImagen{
   left: -0.8rem;
   position: relative;
@@ -97,18 +209,7 @@
     color: black;
     font-family: sans-serif;
   }
-  .imagen-div{
-    border-radius: 1.3rem;
-    padding: 1rem;
-    margin: 1rem;
-    box-shadow: 0px 0px 7px 0px rgb(0 0 0 / 40%);
-  }
-.imgPreview{
-    width: 202px;
-    height: 202px;
-    border-radius: 0px 25px;
-    box-shadow: 0px 0px 7px 0px #0c0b0b;
-}
+
 
 
 
@@ -135,7 +236,16 @@
   right: 40%;
   font-style: italic;
  }
- 
+
+ .Carrito{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.7em;
+  color: white;
+  position: relative;
+  top: 7;
+}
  .botones-modalss:disabled {
   pointer-events: none;
  }
@@ -160,15 +270,44 @@
   left: 0rem;
   background-color: #ffc10775;
 }
-
+.cerrar-modal{
+  background-color: rgba(255, 0, 0, 0.627);
+}
 #btnHabilitarProducto {
   position: relative;
   background-color: rgba(0, 128, 0, 0.454);
   left: -37%;
 }
 .tabla-carrito{
-  left: -11.5rem;
   position: relative;
+}
+.tabla-carrito header{
+  background-color: #1A1A1A;
+  position: relative;
+  margin-bottom: 0.5rem;
+  display: inline-grid;
+}
+.tabla-carrito footer{
+  background-color: #1A1A1A;
+  position: relative;
+  display: flex;
+}
+@media (min-width: 360px){
+  .createbutton1{
+    margin: 30px 0px 30px 0px;
+  }
+
+  .divtable .table{
+    background-color: rgb(255, 255, 255);
+    border-radius: 1.3rem;
+    overflow: hidden;
+  }
+}
+@media (min-width: 820px) {
+  .Botones-max-width{
+    display: flex;
+    justify-content: flex-end;
+  }
 }
   
 

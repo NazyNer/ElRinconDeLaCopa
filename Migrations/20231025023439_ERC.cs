@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElRinconDeLaCopa.Migrations
 {
-    public partial class carrito : Migration
+    public partial class ERC : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

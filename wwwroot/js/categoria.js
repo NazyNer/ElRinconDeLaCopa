@@ -34,7 +34,7 @@ function BuscarCategorias() {
                     TablaCategoria.append(`
                     <tr class="tabla-eliminada">
                     <td> <a class="btn btn-cat" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
-                    <td> 
+                    <td class="Botones-max-width"> 
                     <button class="botones-modals" onClick="RemoveCategoria(${categoria.id})"> 
                     <i class="fa-solid fa-trash"></i>
                     </button>
