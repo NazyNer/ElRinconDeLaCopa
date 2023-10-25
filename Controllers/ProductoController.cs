@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using ElRinconDeLaCopa.Data;
 using ElRinconDeLaCopa.Models;
+using System.Dynamic;
 
 namespace ElRinconDeLaCopa.Controllers
 {
@@ -54,7 +55,8 @@ namespace ElRinconDeLaCopa.Controllers
 
         public JsonResult BuscarProductos(int Id = 0)
         {
-
+            dynamic Catalogo = new ExpandoObject();
+            dynamic rol = new ExpandoObject();
             var productos = _context.Productos?.ToList();
             if (Id > 0)
             {
@@ -67,7 +69,14 @@ namespace ElRinconDeLaCopa.Controllers
                     producto.ImagenString = System.Convert.ToBase64String(producto.Imagen);
                 }
             }
-            return Json(productos);
+            ((IDictionary<string, object>)Catalogo)["Productos"] = productos;
+            rol.validacion = true;
+            if(User.IsInRole("Empleado") || User.IsInRole("Administrador"))
+            {
+                rol.validacion = false;
+            }
+            ((IDictionary<string, object>)Catalogo)["Rol"] = rol;
+            return Json(Catalogo);
         }
         public JsonResult GuardarProducto(int CategoriaID, decimal Precio, int Cantidad, IFormFile imagen, string Nombre, int Productoid)
         {
@@ -204,7 +213,7 @@ namespace ElRinconDeLaCopa.Controllers
             {
                 //BUSCAMOS EN LA TABLA SI EXISTE UNA CON EL MISMO ID
                 var productoOriginal = _context.Productos.Find(Id);
-                    //SI LA CATEGORIA NO ESTE ELIMINADA PROCEDEMOS A HACERLO
+                    //SI EL PRODUCTO NO ESTE ELIMINADO PROCEDEMOS A HACERLO
                     if(productoOriginal?.Eliminado == false)
                     {
                         productoOriginal.Eliminado = true;
@@ -238,11 +247,20 @@ namespace ElRinconDeLaCopa.Controllers
                 if(productoOriginal != null){
                     if (productoOriginal.Cantidad == 0)
                     {
-                        _context.Remove(productoOriginal);
-                        _context.SaveChanges();
-                        resultado.nonError = true;
-                        resultado.MsjError = "Producto " + productoOriginal.Nombre + " eliminado correctamente";
-                        return Json(resultado);
+                        var transaccionesCompra = _context.DetalleCompra?.Where( d => d.ProductoID == productoOriginal.ID).ToList();
+                        var transaccionesVenta = _context.DetallesDePedidos.Where( d => d.ProductoID == productoOriginal.ID).ToList();
+                        if(transaccionesCompra == null && transaccionesVenta == null){
+                            _context.Remove(productoOriginal);
+                            _context.SaveChanges();
+                            resultado.nonError = true;
+                            resultado.MsjError = "Producto " + productoOriginal.Nombre + " eliminado correctamente";
+                            return Json(resultado);
+                        }else
+                        {
+                            productoOriginal.Eliminado = true;
+                            _context.SaveChanges();
+                            resultado.MsjError = "El Producto " + productoOriginal.Nombre + " Tiene movimientos de stock (Por este motivo no se podra eliminar de la base de datos) lo hemos desabilitado por usted.";
+                        }
                     }
                     else
                     {

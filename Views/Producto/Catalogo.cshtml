@@ -1,102 +1,61 @@
 @model IEnumerable<ElRinconDeLaCopa.Models.Producto>
+
 @section Styles {
     <link rel="stylesheet" href="~/css/catalogo.css" asp-append-version="true" />
 }
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+
 @{
     ViewData["Title"] = "Catalogo";
 }
+<div class="modal fade" id="ModalCarrito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 id="h1Producto" class="modal-title fs-5" >C A R R I T O</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="CarritoProductos">
+                <div id="Cart-Contain">
+                </div>
+                <h1 id="Total" class="cantidadcarrito"></h1>
+            </div>
+            <div class="modal-body" id="CarritoForm">
+                <div id="Form-Contain">
+                    <form class="form-group">
+                        <span style="color: white;">Completar campos obligatorios(*)</span> <br>
+                        <label class="modalnombre2">Calle*</label>
+                        <input id="Calle" class="form-control" type="text">
+                        <label class="modalnombre2">Numero*</label>
+                        <input id="Numero" class="form-control" type="number">
+                        <label class="modalnombre2" >N° Departamento</label>
+                        <input id="Depto" class="form-control" type="number"></input>
+                        @* <input type="checkbox"><label class="modalnombre2" >guardar datos</label> *@
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="Guardarstock" class="btn botones-modals" onclick="CompletePurchaseProduct()">Siguiente</button>
+                <button id="GuardarCompra" class="btn botones-modals" onclick="CompletePurchase()">Comprar</button>
+                <button type="button" class="btn botones-modals" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@if(@User.IsInRole("Usuario") || @User.IsInRole("Cliente")){
+    <div class="Carrito" id="cart">
+        <button onclick="MostrarPedido()"><i class="fa-solid fa-cart-shopping"></i>
+            <span id="Cart"></span>
+        </button>
+    </div>
+}
 <div id="catalogo" class="cards catalogo m-0">
-    @* <div class="card m-1">
-        <img src="~/img/productos/cerveza.jfif" class="card-img-top" alt="Cerveza Bramia">
-        <div class="card-body">
-            <h5 class="card-title">Cerveza Bramia</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Precio: <b>$750</b></li>
-            <li class="list-group-item">Fermentadas</li>
-            <li class="list-group-item text-center"><a class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
-        </ul>
-    </div>
-    <div class="card m-1">
-        <img src="~/img/productos/Fernet menta.jfif" class="card-img-top" alt="Fernet Menta">
-        <div class="card-body">
-            <h5 class="card-title">Fernet Menta</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Precio: <b>$1800</b></li>
-            <li class="list-group-item">Fortificada</li>
-            <li class="list-group-item text-center"><a class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
-        </ul>
-    </div>
-    <div class="card m-1">
-        <img src="~/img/productos/fernet.jfif" class="card-img-top" alt="Fernet">
-        
-        <div class="card-body">
-            <h5 class="card-title">Fernet</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Precio: <b>$2000</b></li>
-            <li class="list-group-item">Fortificada</li>
-            <li class="list-group-item text-center"><a class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
-        </ul>
-    </div>
-    <div class="card m-1">
-        <img src="~/img/productos/whisky.jfif" class="card-img-top" alt="Whisky WH">
-        <div class="card-body">
-            <h5 class="card-title">Whisky WH</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Precio: <b>$2500</b></li>
-            <li class="list-group-item">Destiladas</li>
-            <li class="list-group-item text-center"><a class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
-        </ul>
-    </div>
-    <div class="card m-1">
-        <img src="~/img/productos/cerveza.jfif" class="card-img-top" alt="Cerveza Bramia">
-        <div class="card-body">
-            <h5 class="card-title">Cerveza Bramia</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Precio: <b>$750</b></li>
-            <li class="list-group-item">Fermentadas</li>
-            <li class="list-group-item text-center"><a class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
-        </ul>
-    </div>
-    <div class="card m-1">
-        <img src="~/img/productos/Fernet menta.jfif" class="card-img-top" alt="Fernet Menta">
-        <div class="card-body">
-            <h5 class="card-title">Fernet Menta</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Precio: <b>$1800</b></li>
-            <li class="list-group-item">Fortificada</li>
-            <li class="list-group-item text-center"><a class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
-        </ul>
-    </div>
-    <div class="card m-1">
-        <img src="~/img/productos/fernet.jfif" class="card-img-top" alt="Fernet">
-        
-        <div class="card-body">
-            <h5 class="card-title">Fernet</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Precio: <b>$2000</b></li>
-            <li class="list-group-item">Fortificada</li>
-            <li class="list-group-item text-center"><a class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
-        </ul>
-    </div>
-    <div class="card m-1">
-        <img src="~/img/productos/whisky.jfif" class="card-img-top" alt="Whisky WH">
-        <div class="card-body">
-            <h5 class="card-title">Whisky WH</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Precio: <b>$2500</b></li>
-            <li class="list-group-item">Destiladas</li>
-            <li class="list-group-item text-center"><a class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
-        </ul>
-    </div> *@
+    
 </div>
 @section Scripts {
     <script src="~/js/catalogo.js"></script>
+    <script src="~/js/pedidos.js"></script>
 }

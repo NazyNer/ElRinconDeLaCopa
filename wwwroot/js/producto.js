@@ -1,6 +1,9 @@
+// Asignar la función BuscarProductos al evento onload de la ventana
 window.onload = BuscarProductos();
 
+// Función para crear un nuevo producto
 function CrearNuevo() {
+  // Configurar los campos del formulario y mostrar el modal
   $("#form-producto input[name='Productoid']").val(`0`);
   $(`#CategoriaID`).val('0');
   $("#ModalProducto").modal("show");
@@ -15,28 +18,31 @@ function CrearNuevo() {
   $("#form-producto input[name='Precio']").val(``);
   $("#selectorImagen").val("");
   $("#nombreImagen").text("Imagen por defecto");
-  $("#imagenSeleccionada").attr("src", "/img/productos/fotodefaullt.jpg")
+  $("#imagenSeleccionada").attr("src", "/img/productos/fotodefaullt.jpg");
 }
 
+// Función para buscar productos
 function BuscarProductos() {
+  // Seleccionar la tabla de productos
   let TablaProducto = $("#tbody-productos");
   TablaProducto.empty();
+  
   $.ajax({
     // la URL para la petición
     url: '../../Producto/BuscarProductos',
     // la información a enviar
-    // (también es posible utilizar una cadena de datos)
     data: {},
     // especifica si será una petición POST o GET
     type: 'GET',
     // el tipo de información que se espera de respuesta
     dataType: 'json',
-    // código a ejecutar si la petición es satisfactoria;
-    // la respuesta es pasada como argumento a la función
+    // código a ejecutar si la petición es satisfactoria
     success: function (productos) {
       TablaProducto.empty();
-      $.each(productos, function (index, producto) {
+      
+      $.each(productos.Productos, function (index, producto) {
         if (producto.eliminado) {
+          // Agregar fila para productos eliminados
           TablaProducto.append(`
                         <tr class="tabla-eliminada">
                             <td class="thcat"> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
@@ -60,6 +66,7 @@ function BuscarProductos() {
                             
                         </tr>`);
         } else {
+          // Agregar fila para productos no eliminados (disponibles)
           TablaProducto.append(`
                         <tr>
                             <td class="thcat"> <a class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})" role="button">${producto.nombreCategoria}</a></td>
@@ -83,10 +90,12 @@ function BuscarProductos() {
   })
 }
 
+// Función para guardar un producto
 function GuardarProducto() {
   $("#lbl-error").text("");
   let form = $("form#form-producto");
   let formData = new FormData(form[0])
+  
   $.ajax({
     url: '../../Producto/GuardarProducto',
     type: 'POST',
@@ -121,23 +130,21 @@ function GuardarProducto() {
   });
 }
 
+// Función para buscar un producto por ID
 function BuscarProducto(ID) {
-
   $.ajax({
     // la URL para la petición
     url: '../../Producto/BuscarProductos',
     // la información a enviar
-    // (también es posible utilizar una cadena de datos)
     data: { Id: ID },
     // especifica si será una petición POST o GET
     type: 'GET',
     // el tipo de información que se espera de respuesta
     dataType: 'json',
-    // código a ejecutar si la petición es satisfactoria;
-    // la respuesta es pasada como argumento a la función
+    // código a ejecutar si la petición es satisfactoria
     success: function (productos) {
-      if (productos.length = 1) {
-        let producto = productos[0];
+      if (productos.Productos.length == 1) {
+        let producto = productos.Productos[0];
         $("#texto-error").text("");
         $("#h1Producto").text("Editar Producto")
         $("#form-producto input[name='Productoid']").val(producto.id);
@@ -160,8 +167,7 @@ function BuscarProducto(ID) {
           $("#btnHabilitarProducto").hide();
           $("#btnCrear").show();
           $("#btnCrear").text("Editar");
-        }
-        else {
+        } else {
           $("#btnHabilitarProducto").show();
           $("#btnEliminarProducto").hide();
           $("#btnCrear").hide();
@@ -170,37 +176,30 @@ function BuscarProducto(ID) {
       }
     },
   })
-
 }
 
+// Función para eliminar un producto
 function eliminarProducto() {
-
-  //JAVASCRIPT
   let Id = $("#form-producto input[name='Productoid']").val();
   $.ajax({
     // la URL para la petición
     url: '../../Producto/EliminarProducto',
     // la información a enviar
-    // (también es posible utilizar una cadena de datos)
     data: { Id: Id },
     // especifica si será una petición POST o GET
     type: 'POST',
     // el tipo de información que se espera de respuesta
     dataType: 'json',
-    // código a ejecutar si la petición es satisfactoria;
-    // la respuesta es pasada como argumento a la función
+    // código a ejecutar si la petición es satisfactoria
     success: function (resultado) {
       if (resultado.nonError) {
         $("#ModalProducto").modal("hide");
         BuscarProductos();
-      }
-      else {
+      } else {
         $("#lbl-error").text(resultado.msjError);
       }
     },
-    // código a ejecutar si la petición falla;
-    // son pasados como argumentos a la función
-    // el objeto de la petición en crudo y código de estatus de la petición
+    // código a ejecutar si la petición falla
     error: function (xhr, status) {
       alert('Disculpe, existió un problema');
       $("#ModalProducto").modal("hide");
@@ -208,19 +207,19 @@ function eliminarProducto() {
     }
   });
 }
+
+// Función para eliminar un producto (versión alternativa)
 function RemoveProducto(id) {
   $.ajax({
     // la URL para la petición
     url: '../../Producto/RemoveProducto',
     // la información a enviar
-    // (también es posible utilizar una cadena de datos)
     data: { ID: id },
     // especifica si será una petición POST o GET
     type: 'POST',
     // el tipo de información que se espera de respuesta
     dataType: 'json',
-    // código a ejecutar si la petición es satisfactoria;
-    // la respuesta es pasada como argumento a la función
+    // código a ejecutar si la petición es satisfactoria
     success: function (resultado) {
       if (resultado.nonError) {
         // alert(resultado.msjError)
@@ -245,9 +244,7 @@ function RemoveProducto(id) {
 
       }
     },
-    // código a ejecutar si la petición falla;
-    // son pasados como argumentos a la función
-    // el objeto de la petición en crudo y código de estatus de la petición
+    // código a ejecutar si la petición falla
     error: function (xhr, status) {
       alert('Disculpe, existió un problema');
       $("#ModalProducto").modal("hide");
@@ -256,6 +253,7 @@ function RemoveProducto(id) {
   });
 }
 
+// Función para convertir a mayúsculas cuando se escribe en el campo de texto "textoInput"
 $("#textoInput").on("input", function () {
   var input = $(this);
   var startPosition = input[0].selectionStart;  // Guardar la posición del cursor
@@ -265,6 +263,7 @@ $("#textoInput").on("input", function () {
   input[0].setSelectionRange(startPosition, startPosition);  // Restaurar la posición del cursor
 });
 
+// Función para manejar el cambio de imagen seleccionada en el campo "selectorImagen"
 $("#selectorImagen").change(function () {
   var inputFile = $(this)[0];
   if (inputFile.files.length > 0) {

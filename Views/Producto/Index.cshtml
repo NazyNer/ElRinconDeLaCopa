@@ -1,15 +1,18 @@
+
 @section Styles {
     <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/carrito.css" asp-append-version="true" />
 }
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Productos";
 }
 <!-- Modal -->
 <div class="modal fade" id="ModalProducto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+
                 <i class="fa-solid fa-wine-bottle"></i><h1 id="h1Producto" class="modal-title fs-5" >Crear Producto</h1>
                 <button type="button" class="btn-close cerrar-modal" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -56,14 +59,10 @@
                     </footer>
                     </div>
                         </div>
-                    
-
                         </div>
-                    
-                    
                 </form>
             </div>
-            
+
             <div class="modal-footer">
                 <button id="btnCrear" type="button" class="btn btn-crear botones-modalss" onclick="GuardarProducto()"></button>
                 <input id="btnEliminarProducto" type="button" onclick="eliminarProducto()" class="btn botones-modalss" value="Deshabilitar" />
@@ -77,10 +76,8 @@
         <div class="modal-content">
 
             <div class="modal-header">
-
                 <h1 id="h1Carrito" class="modal-title fs-5" ><i class="fa-solid fa-cart-shopping"></i> Carrito</h1>
                 <button type="button" class="btn-close cerrar-modal" data-bs-dismiss="modal" aria-label="Close"></button>
-
             </div>
 
             <div class="modal-body">

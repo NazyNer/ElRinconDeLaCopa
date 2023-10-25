@@ -4,11 +4,11 @@
 }
 <ul class="nav nav-pills flex-column fondo">
     <li class="nav-item"><a class="managehover nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Perfil</a></li>
-    <li class="nav-item"><a class="managehover nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
     <li class="nav-item"><a class="managehover nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Contraseña</a></li>
     @if (hasExternalLogins)
     {
         <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
     }
+    <li class="nav-item" ><a class="managehover nav-link" onclick="CompletarDatosVista()" id="datos">Datos personales</a></li>
 </ul>
 <link rel="stylesheet" href="~/css/manage.css"/>

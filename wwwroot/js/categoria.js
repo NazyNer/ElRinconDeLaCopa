@@ -1,6 +1,10 @@
+// Esta función se ejecuta cuando la ventana se carga por completo
 window.onload = BuscarCategorias();
+
+// Esta función se llama cuando se quiere crear una nueva categoría
 function CrearNueva() {
-    $("#Id").val(`0`)
+    // Establecer valores iniciales en el formulario de categoría
+    $("#Id").val(`0`);
     $("#ModalCategoria").modal("show");
     $("#h1Categoria").text("Crear Categoría");
     $("#form-categoria input[name='Nombre']").val("")
@@ -10,28 +14,28 @@ function CrearNueva() {
     $("#btn-crear").show();
     $("#btn-crear").text("Crear");
 }
+
+// Esta función busca y muestra todas las categorías
 function BuscarCategorias() {
     $("#btnEliminar").hide();
     let TablaCategoria = $("#tbody-categorias");
     TablaCategoria.empty();
+
+    // Realizar una solicitud AJAX para obtener las categorías
     $.ajax({
-        // la URL para la petición
         url: '../../Categoria/BuscarCategorias',
-        // la información a enviar
-        // (también es posible utilizar una cadena de datos)
         data: {},
-        // especifica si será una petición POST o GET
         type: 'GET',
-        // el tipo de información que se espera de respuesta
         dataType: 'json',
-        // código a ejecutar si la petición es satisfactoria;
-        // la respuesta es pasada como argumento a la función
         success: function (categorias) {
             TablaCategoria.empty();
-            $.each(categorias, function (index, categoria) {
 
+            // Iterar a través de las categorías y mostrarlas en una tabla
+            $.each(categorias, function (index, categoria) {
                 if (categoria.eliminado) {
+                    // Mostrar categorías eliminadas de manera diferente
                     TablaCategoria.append(`
+
                     <tr class="tabla-eliminada">
                     <td> <a class="btn btn-cat" onClick="BuscarCategoria(${categoria.id})" role="button">${categoria.nombre}</a></td>
                     <td class="Botones-max-width"> 
@@ -58,21 +62,19 @@ function BuscarCategorias() {
                             </tr>`);
                 }
             })
-
         },
     })
 }
+
+// Esta función busca una categoría específica por ID
 function BuscarCategoria(Id) {
     $("#lbl-error").text("");
+
+    // Realizar una solicitud AJAX para obtener la categoría por ID
     $.ajax({
-        // la URL para la petición
         url: '../../Categoria/BuscarCategorias',
-        // la información a enviar
-        // (también es posible utilizar una cadena de datos)
         data: { Id: Id },
-        // especifica si será una petición POST o GET
         type: 'GET',
-        // el tipo de información que se espera de respuesta
         dataType: 'json',
         success: function (Categoria) {
             if (Categoria.length == 1) {
@@ -86,30 +88,24 @@ function BuscarCategoria(Id) {
                     $("#btnHabilitar").hide();
                     $("#btn-crear").show();
                     $("#btn-crear").text("Editar");
-                }
-                else {
+                } else {
                     $("#btnEliminar").hide();
                     $("#btnHabilitar").show();
                     $("#btn-crear").hide();
                 }
-
                 $("#ModalCategoria").modal("show");
             }
         },
         error: function (xhr, status) {
-            alert('Error al cargar categorias');
+            alert('Error al cargar categorías');
         },
-
-        // código a ejecutar sin importar si la petición falló o no
-        complete: function (xhr, status) {
-            //alert('Petición realizada');
-        }
     })
 }
+
+// Esta función guarda una nueva categoría o actualiza una existente
 function GuardarCategoria() {
     let Id = $("#Id").val();
     let Nombre = $("#form-categoria input[name='Nombre']").val().toUpperCase();
-
     if (Nombre === "") {
         // alert("El campo de nombre está vacío. Por favor, ingrese un nombre válido.");
         Swal.fire({
@@ -121,23 +117,12 @@ function GuardarCategoria() {
                     })
         return; // Detener la función si el campo está vacío
     }
-
-
-
     $.ajax({
-        // la URL para la petición
         url: '../../Categoria/GuardarCategoria',
-        // la información a enviar
-        // (también es posible utilizar una cadena de datos)
         data: { id: Id, nombre: Nombre},
-        // especifica si será una petición POST o GET
         type: 'POST',
-        // el tipo de información que se espera de respuesta
         dataType: 'json',
-        // código a ejecutar si la petición es satisfactoria;
-        // la respuesta es pasada como argumento a la función
         success: function (resultado) {
-
             if(Id == 0){
                     if (resultado.nonError) {
                         Swal.fire({
@@ -182,35 +167,26 @@ function GuardarCategoria() {
                         timer: 1500
                                 })
                 }
+
             }
             
         },
         error: function (xhr, status) {
-            alert('Error al cargar categorias');
+            alert('Error al cargar categorías');
         },
-
-        // código a ejecutar sin importar si la petición falló o no
-        complete: function (xhr, status) {
-            //alert('Petición realizada');
-        }
     });
 }
 
+// Esta función elimina una categoría
 function eliminarCategoria() {
-    //JAVASCRIPT
     let Id = $("#Id").val();
+
+    // Realizar una solicitud AJAX para eliminar la categoría
     $.ajax({
-        // la URL para la petición
         url: '../../Categoria/eliminarCategoria',
-        // la información a enviar
-        // (también es posible utilizar una cadena de datos)
         data: { Id: Id },
-        // especifica si será una petición POST o GET
         type: 'POST',
-        // el tipo de información que se espera de respuesta
         dataType: 'json',
-        // código a ejecutar si la petición es satisfactoria;
-        // la respuesta es pasada como argumento a la función
         success: function (resultado) {
             if (resultado.nonError) {
                 $("#ModalCategoria").modal("hide");
@@ -225,12 +201,9 @@ function eliminarCategoria() {
                     showConfirmButton: false,
                     timer: 1500
                             })
-                
+
             }
         },
-        // código a ejecutar si la petición falla;
-        // son pasados como argumentos a la función
-        // el objeto de la petición en crudo y código de estatus de la petición
         error: function (xhr, status) {
             alert('Disculpe, existió un problema');
             $("#ModalCategoria").modal("hide");
@@ -239,19 +212,14 @@ function eliminarCategoria() {
     });
 }
 
+// Esta función remueve una categoría
 function RemoveCategoria(Id) {
+    // Realizar una solicitud AJAX para remover la categoría
     $.ajax({
-        // la URL para la petición
         url: '../../Categoria/removeCategoria',
-        // la información a enviar
-        // (también es posible utilizar una cadena de datos)
         data: { Id: Id },
-        // especifica si será una petición POST o GET
         type: 'POST',
-        // el tipo de información que se espera de respuesta
         dataType: 'json',
-        // código a ejecutar si la petición es satisfactoria;
-        // la respuesta es pasada como argumento a la función
         success: function (resultado) {
             if (resultado.nonError) {
                 // alert(resultado.msjError)
@@ -275,24 +243,18 @@ function RemoveCategoria(Id) {
                             })
             }
         },
-        // código a ejecutar si la petición falla;
-        // son pasados como argumentos a la función
-        // el objeto de la petición en crudo y código de estatus de la petición
         error: function (xhr, status) {
             alert('Disculpe, existió un problema');
             $("#ModalCategoria").modal("hide");
             BuscarCategorias();
         }
     });
-};
+}
+
+// Esta función convierte el texto de entrada en mayúsculas mientras se escribe
 $("#textoInput").on("input", function () {
     var input = $(this);
-    var startPosition = input[0].selectionStart;  // Guardar la posición del cursor
-
-    input.val(input.val().toUpperCase());  // Convertir texto a mayúsculas
-
-    input[0].setSelectionRange(startPosition, startPosition);  // Restaurar la posición del cursor
+    var startPosition = input[0].selectionStart;
+    input.val(input.val().toUpperCase());
+    input[0].setSelectionRange(startPosition, startPosition);
 });
-
-
-
