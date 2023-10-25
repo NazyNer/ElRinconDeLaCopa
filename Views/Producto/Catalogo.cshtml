@@ -1,6 +1,12 @@
 @model IEnumerable<ElRinconDeLaCopa.Models.Producto>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/catalogo.css" asp-append-version="true" />
+}
+
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> UserManager
+
 
 @{
     ViewData["Title"] = "Catalogo";

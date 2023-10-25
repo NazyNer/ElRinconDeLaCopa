@@ -9,10 +9,17 @@ function AgregarAlDetalle(Id) {
         type: 'POST',
         dataType: 'json',
         success: function (resultado) {
+            console.log("godines")
             if (resultado.nonError) {
-                ProductCart();
-                alert("Producto agregado al carrito");
-            } else {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Producto agregado al carrito!',
+                    showConfirmButton: false,
+                    timer: 1500
+                            })
+                ProuctCart();
+            }else{
                 alert(resultado.msjError);
             }
         },
@@ -36,29 +43,59 @@ function AbrirCarrito() {
                 btnGuardar.show();
                 carritoDiv.empty();
                 $.each(Carrito.productos, function (index, producto) {
-                    carritoDiv.append(`
-                    <div class="producto">
-                        <h3>${producto.nombre}</h3>
-                        ${
-                            producto.imagen != null ?
-                                `<img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br>` :
-                                `<img src="/img/productos/fotodefaullt.jpg" style="width: 100px;" alt="${producto.nombre}"/> <br>`
-                            
-                            
-                        }
-                        <button class="delete-button-carrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button> <br>
-                        <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
-                        <button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
-                        <button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i> </button>
-                    </div>
-                    `);
+                    carritoDiv.append(
+                        
+                        `
+                        <div class="form-row imagen-div-carrito">
+                        <header>
+                        <td class="thcat"> <a class="btn btn-producto-cart carritonombre producto-name">${producto.nombre}</a></td>
+                        </header>
+                        <tr>
+                        <body>
+
+                        <td><img class="radio-carrito" src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 120px;" alt="${producto.nombre}"/></td>
+                        <td><p class="cantidadcarrito carritonombre" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
+
+                        </body>
+                        </tr>
+                        <footer>
+                        <td><button class="btn botones-modals-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
+                        <td><button class="btn botones-modals-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button></td>
+                        </footer>
+                        
+                        
+                        </div>
+                        `
+                    //(
+                     //`  
+                        //<tr>
+                       // <td class="thcat back"> <a class="btn btn-producto-cart">${producto.nombre}</a></td>
+                       // <td><img class="radio" src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 40px;" alt="${producto.nombre}"/></td>
+                       // <td><p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
+                            //<td><button class="btn botones-modalss" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
+                            //<td><button class="btn botones-modalss" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button></td>
+                        //</tr>
+                        
+                        //`
+                        
+                        )
+                    
                 });
                 $("#ModalCarrito").modal("show");
-            } else {
+            }
+            else{
+                // console.log(Carrito.resultado);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'warning',
+                    title: 'No hay productos en el carrito',
+                    showConfirmButton: false,
+                    timer: 1500
+                            })
                 carritoDiv.empty();
-                carritoDiv.append(`<h1 style="color: white;">${Carrito.resultado.msjError}</h1>`);
-                btnGuardar.hide();
-                $("#ModalCarrito").modal("show");
+                carritoDiv.append(`<h1 style="color: white;">${Carrito.resultado.msjError}</h1>`)
+                btnGuardar.hide()
+                // $("#ModalCarrito").modal("show");
             }
         },
         error: function (xhr, status) {
@@ -145,8 +182,14 @@ function CompletePurchase() {
                 }
             }
         });
-    } else {
-        alert("Compra cancelada correctamente");
+    }else{
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Cancelado correctamente',
+            showConfirmButton: false,
+            timer: 1500
+                    });
     }
 }
 

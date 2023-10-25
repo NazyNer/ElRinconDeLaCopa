@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElRinconDeLaCopa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230831222602_carrito")]
-    partial class carrito
+    [Migration("20231025023439_ERC")]
+    partial class ERC
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
