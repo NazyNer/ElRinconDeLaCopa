@@ -1,21 +1,33 @@
+@section Styles {
+    <link rel="stylesheet" href="~/css/usuario.css" asp-append-version="true" />
+}
 @{
-  ViewData["Title"] = "Usuarios";
+  ViewData["Title"] = "";
 }
 
-<h1 class="text-white">@ViewData["Title"]</h1>
+
+
+
+ <div class="waviy-usuario">
+   <span style="--i:1">U</span>
+   <span style="--i:2">S</span>
+   <span style="--i:3">U</span>
+   <span style="--i:4">A</span>
+   <span style="--i:5">R</span>
+   <span style="--i:6">I</span>
+   <span style="--i:7">O</span>
+   <span style="--i:8">S</span>
+  </div>
+
+<div class="divcolor-usuario container w-90  mt-5  rounded shadow "> 
+    <div class="row align-items-stretch justify-content-center box-shadowTable">
 <div class="divtable col bg  d-lg-block rounded">
   <table class="table text-white rounded">
     <thead>
       <tr>
-        <th>
-          N O M B R E
-        </th>
-        <th>
-          E M A I L
-        </th>
-        <th>
-          R O L
-        </th>
+        <th><i class="fa-solid fa-file-signature"></i> Nombre</th>
+        <th><i class="fa-solid fa-envelope"></i> Email</th>
+        <th class="th-rol"><i class="fa-solid fa-person"></i> Rol</th>
         <th></th>
       </tr>
     </thead>
@@ -24,6 +36,16 @@
     </tbody>
   </table>
 </div>
+        
+    </div>
+</div>
+
+
+
+
+
+
+
 @section Scripts {
   <script src="~/js/usuarios.js"></script>
 

@@ -13,11 +13,11 @@ function CompletarTabla() {
           if (usuario.Email != "admin@delacopa.com") {
             tabla.append(`
             <tr class="">
-              <td>${usuario.Nombre}</td>
-              <td>${usuario.Email}</td>
+            <td> <a class="btn boton-none"  role="button">${usuario.Nombre}</a></td>
+            <td> <a class="btn boton-none"  role="button">${usuario.Email}</a></td>
               <td class="tdRol">
                 <input type="number" disabled id="idUsuario" placeholder="${usuario.Id}">
-                <select class="select-element">
+                <select class="select-element boton-yes">
                   ${usuarios.Roles.map((rol, index)=>(
                     rol.id == usuario.rolID ? `<option value='${rol.name}' selected>${rol.name}</option>` : `<option value='${rol.name}'>${rol.name}</option>`
                   ))}
