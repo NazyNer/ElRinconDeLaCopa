@@ -226,7 +226,7 @@
             doc.putTotalPages(totalPagesExp)
         }
         var dia = new Date();
-        dia = `${dia.getDate()}${dia.getMonth() + 1}${dia.getYear()}`;
+        dia = `${dia.getDate()}-${dia.getMonth() + 1}-${dia.getYear()}`;
         doc.save(`Producto${dia}.pdf`);
 
     }
