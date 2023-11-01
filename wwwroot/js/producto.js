@@ -26,7 +26,7 @@ function BuscarProductos() {
   // Seleccionar la tabla de productos
   let TablaProducto = $("#tbody-productos");
   TablaProducto.empty();
-  
+
   $.ajax({
     // la URL para la petición
     url: '../../Producto/BuscarProductos',
@@ -39,7 +39,7 @@ function BuscarProductos() {
     // código a ejecutar si la petición es satisfactoria
     success: function (productos) {
       TablaProducto.empty();
-      
+
       $.each(productos.Productos, function (index, producto) {
         if (producto.eliminado) {
           // Agregar fila para productos eliminados
@@ -48,11 +48,13 @@ function BuscarProductos() {
                             <td class="thcat"> <a class="btn botones-modalss-none altura" role="button">${producto.nombreCategoria}</a></td>
 
                             <td>
-                            ${producto.imagen == null
-              ? `<img  class="imagen-producto" src="/img/productos/fotodefaullt.jpg" style="width: 70px;"/>`
-              : `<img class="imagen-producto" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 70px;"/>`
-            }
-            <a class="btn botones-modalss-none" role="button">${producto.nombre}</a>
+                              ${producto.imagen == null
+                                ? `<img  class="imagen-producto" src="/img/productos/fotodefaullt.jpg" style="width: 70px;"/>`
+                                : `<img class="imagen-producto" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 70px;"/>`
+                              }
+                            </td>
+                            <td>
+                              <a class="btn botones-modalss-none" role="button">${producto.nombre}</a>
                             </td> 
 
                             <td> <a class="btn botones-modalss-none altura"  role="button">${producto.precio}</a></td>
@@ -71,11 +73,12 @@ function BuscarProductos() {
                         <tr>
                             <td class="thcat"> <a class="btn botones-modalss-none altura" role="button">${producto.nombreCategoria}</a></td>
                             <td>
-                            ${producto.imagen == null
-                              ? `<img class="imagen-producto" src="/img/productos/fotodefaullt.jpg" style="width: 70px;"/>`
-                              : `<img class="imagen-producto" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 70px;"/>`
-                            } 
-                            <a class=" btn botones-modalss-none" role="button">${producto.nombre}</a></td>
+                              ${producto.imagen == null
+                                ? `<img  class="imagen-producto" src="/img/productos/fotodefaullt.jpg" style="width: 70px;"/>`
+                                : `<img class="imagen-producto" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 70px;"/>`
+                              }
+                            </td>
+                            <td><a class=" btn botones-modalss-none" role="button">${producto.nombre}</a></td>
                             <td> <a class="btn botones-modalss-none altura"  role="button">${producto.precio}</a></td>
                             <td> <a class="btn botones-modalss-none altura" role="button">${producto.cantidad}</a></td>
                             <td> <button class="btn botones-modalss altura" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>
@@ -95,7 +98,7 @@ function GuardarProducto() {
   $("#lbl-error").text("");
   let form = $("form#form-producto");
   let formData = new FormData(form[0])
-  
+
   $.ajax({
     url: '../../Producto/GuardarProducto',
     type: 'POST',
@@ -109,7 +112,7 @@ function GuardarProducto() {
           title: 'Producto creado correctamente',
           showConfirmButton: false,
           timer: 1500
-                  })
+        })
         $("#ModalProducto").modal("hide");
         BuscarProductos();
       }
@@ -121,7 +124,7 @@ function GuardarProducto() {
           title: 'Es necesario rellenar todos los campos!',
           showConfirmButton: false,
           timer: 1500
-                  })
+        })
       }
     },
     cache: false,
@@ -229,7 +232,7 @@ function RemoveProducto(id) {
           title: 'Producto eliminado correctamente ',
           showConfirmButton: false,
           timer: 1500
-                  })
+        })
         BuscarProductos();
       }
       else {
@@ -240,7 +243,7 @@ function RemoveProducto(id) {
           title: 'Para eliminar este producto, primero eliminelo de su carrito. ',
           showConfirmButton: false,
           timer: 1500
-                  })
+        })
 
       }
     },
@@ -278,3 +281,16 @@ $("#selectorImagen").change(function () {
     $("#nombreImagen").text(imagenGuardadaNombre);
   }
 });
+
+// function CrearPDF(){
+//   var doc = new jspdf.jsPDF();
+
+//   doc.autoTable({
+//     html: '#tableproduct',
+//     columns: [{dataKey: 'Categoría', title: 'Categoría'}]
+//   });
+//   var dia = new date();
+//   dia = `${dia.getDate()}${dia.getMonth()}${dia.getFullYear()}`;
+//   doc.save(`Producto${dia}.pdf`);
+
+// }

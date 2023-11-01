@@ -132,14 +132,16 @@
 <div class="divcolor-producto container w-90  mt-5  rounded shadow "> 
     <div class="row align-items-stretch justify-content-center box-shadowTable">
         <p class="createbutton1-producto">
-<button type="button" class="createbutton-producto" onclick="CrearNuevo()">Crear Nuevo</button>
-</p>
+            <button type="button" class="createbutton-producto" onclick="CrearNuevo()">Crear Nuevo</button>
+        </p>
+        <button onclick="CrearPDF()">PDF</button>
+
         <div class="divtable col bg  d-lg-block">
-            <table class="table text-white radio">
+            <table id="tableproduct" class="table text-white radio">
                 <thead>
                     <tr>
                         <th class="name"><i class="fa-solid fa-tag"></i> Categoría</th>
-
+                        <th class="name">Imagen</th>
                         <th class="name"><i class="fa-solid fa-file-signature"></i> Nombre</th>
 
                         <th class="name"><i class="fa-solid fa-dollar-sign"></i> Precio($ars)</th>
@@ -163,6 +165,69 @@
 </div>
 
 @section Scripts {
+    <script src="~/lib/jspdf/jspdf.umd.js"></script>
+    <script src="~/lib/jspdf/jspdf.plugin.autotable.js"></script>
     <script src="~/js/producto.js"></script>
     <script src="~/js/carritoCompra.js"></script>
+
 }
+
+<script>
+    function CrearPDF(){
+        var doc = new jspdf.jsPDF();
+        var totalPagesExp = '{total_pages_count_string}';
+
+        doc.autoTable({
+            html: '#tableproduct',
+            willDrawPage: function (data) {
+                // Header
+                doc.setFontSize(20)
+                doc.setTextColor(40)
+                doc.text('Productos', data.settings.margin.left + 15, 22)
+            },
+            columns: [
+            {dataKey: 'Categoría', title: 'Categoría'},
+            {dataKey: 'Nombre', title: 'Nombre'},
+            {dataKey: 'Precio($ars)', title: 'Precio($ars)'},
+            {dataKey: 'Stock', title: 'Stock'},
+            {dataKey: 'Imagen', title: 'Imagen'}
+            ],
+            bodyStyles: {minCellHeight: 25},
+            theme:'grid',
+            headStyles: { fillColor: [45, 26, 22] },
+            columnStyles: { 1: { halign: 'center'} },
+            didDrawCell:function (data){ 
+                if(data.column.index === 1 && data.cell.section === "body"){
+                    var td = data.cell.raw;
+                    var img = td.getElementsByTagName("img")[0];
+                    var dim = 20;
+                    var xPosition = data.cell.x + 2.5;
+                    var yPosition = data.cell.y + 2.5;
+                    doc.addImage(img.src, xPosition, yPosition, dim, dim);
+                }
+            },
+            didDrawPage: function (data) {
+                // Footer
+                var str = 'pagina ' + doc.internal.getNumberOfPages()
+                // Total page number plugin only available in jspdf v1.0+
+                if (typeof doc.putTotalPages === 'function') {
+                    str = str + ' de ' + totalPagesExp
+                }
+                doc.setFontSize(10)
+
+                // jsPDF 1.4+ uses getHeight, <1.4 uses .height
+                var pageSize = doc.internal.pageSize
+                var pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight()
+                doc.text(str, data.settings.margin.left, pageHeight - 10)
+            },
+            margin: { top: 30 }
+        });
+        if (typeof doc.putTotalPages === 'function') {
+            doc.putTotalPages(totalPagesExp)
+        }
+        var dia = new Date();
+        dia = `${dia.getDate()}${dia.getMonth() + 1}${dia.getYear()}`;
+        doc.save(`Producto${dia}.pdf`);
+
+    }
+</script>
