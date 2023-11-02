@@ -37,9 +37,13 @@ namespace ElRinconDeLaCopa.Controllers
     public class PedidoGrafico
     {
       public DateTime FechaPedido { get; set; }
+
+      public string FechaPedidoString { get; set; }
+
       public int Cantidad { get; set; }
     }
-    public class IngresoStockFormateado{
+    public class IngresoStockFormateado
+    {
       public string? EmailUsuario { get; set; }
       public DateTime FechaPedido { get; set; }
       public List<ProductoPedido>? Productos { get; set; }
@@ -56,19 +60,42 @@ namespace ElRinconDeLaCopa.Controllers
       return View();
     }
 
-    public JsonResult Pedidos(){
+    public JsonResult Pedidos(int Mes, int Anio)
+    {
+      //PRIMERO INICIALIZAMOS EL LISTADO
       var pedidosForGraph = new List<PedidoGrafico>();
-      var pedidos = _context.PedidosClientes.Where(p => p.Estado != EstadoPedido.Cancelado && p.Estado != EstadoPedido.Incompleto).ToList();
+
+      int diasEnElMes = System.DateTime.DaysInMonth(Anio, Mes);
+      for (int i = 1; i <= diasEnElMes; i++)
+      {
+          var Info = new PedidoGrafico
+          {
+            FechaPedido = Convert.ToDateTime(i + "/" + Mes +"/" + Anio),
+            FechaPedidoString = i + "/" + Mes +"/" + Anio,
+            Cantidad = 0
+          };
+          pedidosForGraph.Add(Info);
+      }
+
+      //LUEGO BUSCAMOS LOS PEDIDOS DE ACUERDO AL ESTADO QUE DEBERIAN SER TENIDOS EN CUENTA
+      var pedidos = _context.PedidosClientes.Where(p => p.Estado != EstadoPedido.Cancelado && p.Estado != EstadoPedido.Incompleto
+      && p.FechaActual.Month == Mes && p.FechaActual.Year == Anio).ToList();
+
       foreach (var pedido in pedidos)
       {
-        var Info = new PedidoGrafico();
-        Info.FechaPedido = pedido.FechaActual;
+        int cantidad = 0;
         var detallesPedido = _context.DetallesDePedidos.Where(d => d.PedidoID == pedido.PedidoID).ToList();
         foreach (var detalle in detallesPedido)
         {
-          Info.Cantidad += detalle.Cantidad;
+          cantidad += detalle.Cantidad;
         }
-        pedidosForGraph.Add(Info);
+
+        var existeDia = pedidosForGraph.Where(p => p.FechaPedido.Date == pedido.FechaActual.Date).SingleOrDefault();
+        if (existeDia != null)
+        {
+          existeDia.Cantidad += cantidad;
+        }
+
       }
       return Json(pedidosForGraph);
     }

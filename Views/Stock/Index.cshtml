@@ -42,66 +42,78 @@
 </div>
 
 @section Scripts {
-    <script src="~/lib/chartJS/chart.js"></script>
-    <script src="~/js/stock.js"></script>
+  <script src="~/lib/chartJS/chart.js"></script>
+  <script src="~/js/stock.js"></script>
 
 
-<script>
-  function MostrarGrafico(){
-    $.ajax({
-      url: '../../Stock/Pedidos',
-      type: 'GET',
-      success: function (Pedidos){
-        let MesActual = new Date().getMonth();
-        let añoActual = new Date().getFullYear();
-        let DiasDelMes = new Date(añoActual,MesActual,0).getDate();
-        let ArregloPedidos = [];
-        let ArregloDeDias = [];
-        let ArregloDefinitivo = [];
-        for(var i = 1; i <= DiasDelMes; i++){
-          let dia = `${i}/${MesActual}`;
-          ArregloDeDias.push(dia)
-        }
-        $.each(Pedidos, function (indice, pedido){
-          let PedidoMes = new Date(pedido.fechaPedido).getMonth() + 1;
-          let PedidoDia = new Date(pedido.fechaPedido).getDate();
-          let fecha = `${PedidoDia}/${PedidoMes}`;
-          let resultado = ArregloPedidos.find(item => item.Fecha === fecha);
-          if(!resultado){
-            var PedidoFormat = {Fecha: fecha, Productos: pedido.cantidad};
-            ArregloPedidos.push(PedidoFormat);
-          }else{
-            resultado.Productos += pedido.cantidad;
-          }
-          $.each(ArregloDeDias, function (indice, dia){
-            let pedido = ArregloPedidos.find(item => item.Fecha === dia);
-            if(!pedido){
-              ArregloDefinitivo[dia] = 0;
-            }else{
-              ArregloDefinitivo[dia] = pedido.Productos;
-            }
+  <script>
+
+    window.onload = MostrarGrafico();
+
+    var myLineChart; // Declara una variable global para el gráfico
+
+    function MostrarGrafico() {
+      //myLineChart.destroy();
+      $.ajax({
+        url: '../../Stock/Pedidos',
+        data: { Mes: 10, Anio: 2023 },
+        type: 'GET',
+        success: function (pedidosForGraph) {
+
+          let ArregloCantidades = [];
+          let ArregloDeDias = [];
+             var fondo = [];
+
+          $.each(pedidosForGraph, function (indice, pedido) {
+            ArregloDeDias.push(pedido.fechaPedidoString);
+            ArregloCantidades.push(pedido.cantidad);
+
+                 var color = colorAleatorio();
+                fondo.push(color);
           });
-          var Fecha = Object.keys(ArregloDefinitivo);
-          var Cantidad = Object.values(ArregloDefinitivo);
 
           const ctx = document.getElementById('grafico');
-          const myLineChart = new Chart(ctx, {
+          myLineChart = new Chart(ctx, {
             type: 'bar',
             data: {
-              label: Fecha,
-              datasets:[{
+              labels: ArregloDeDias,
+              datasets: [{
                 label: 'Cantidad de productos',
-                data: Cantidad,
+                lineTension: 0.3,
+                backgroundColor: fondo,
+                borderColor: "rgba(2,117,216,1)",
+                pointRadius: 5,
+                pointBackgroundColor: "rgba(2,117,216,1)",
+                pointBorderColor: "rgba(255,255,255,0.8)",
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                pointHitRadius: 50,
+                pointBorderWidth: 2,
+                data: ArregloCantidades,
               }]
             }
-          });
-        })
-      }
-    });
-  }
 
-  MostrarGrafico();
+          })
+        }
+      });
+    }
 
-</script>
+function aleatorio(inferior, superior) {
+    let numPosibilidades = superior - inferior;
+    let aleatorio = Math.random() * numPosibilidades;
+    aleatorio = Math.floor(aleatorio);
+    return parseInt(inferior) + aleatorio;
 }
 
+function colorAleatorio() {
+    let hexadecimal = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F")
+    let color_aleatorio = "#";
+    for (i = 0; i < 6; i++) {
+      let posarray = aleatorio(0, hexadecimal.length)
+      color_aleatorio += hexadecimal[posarray]
+    }
+    return color_aleatorio
+}
+
+  </script>
+}
