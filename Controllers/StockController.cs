@@ -34,6 +34,11 @@ namespace ElRinconDeLaCopa.Controllers
       public List<ProductoPedido>? Productos { get; set; }
       public EstadoPedido Estado { get; set; }
     }
+    public class PedidoGrafico
+    {
+      public DateTime FechaPedido { get; set; }
+      public int Cantidad { get; set; }
+    }
     public class IngresoStockFormateado{
       public string? EmailUsuario { get; set; }
       public DateTime FechaPedido { get; set; }
@@ -51,12 +56,29 @@ namespace ElRinconDeLaCopa.Controllers
       return View();
     }
 
+    public JsonResult Pedidos(){
+      var pedidosForGraph = new List<PedidoGrafico>();
+      var pedidos = _context.PedidosClientes.Where(p => p.Estado != EstadoPedido.Cancelado && p.Estado != EstadoPedido.Incompleto).ToList();
+      foreach (var pedido in pedidos)
+      {
+        var Info = new PedidoGrafico();
+        Info.FechaPedido = pedido.FechaActual;
+        var detallesPedido = _context.DetallesDePedidos.Where(d => d.PedidoID == pedido.PedidoID).ToList();
+        foreach (var detalle in detallesPedido)
+        {
+          Info.Cantidad += detalle.Cantidad;
+        }
+        pedidosForGraph.Add(Info);
+      }
+      return Json(pedidosForGraph);
+    }
+
     public async Task<JsonResult> Stock()
     {
       dynamic resultado = new ExpandoObject();
       var pedidosFormateados = new List<PedidoFormateado>();
       var ingresosDeStock = new List<IngresoStockFormateado>();
-      var pedidos = _context.PedidosClientes.ToList();
+      var pedidos = _context.PedidosClientes.Where(p => p.Estado != EstadoPedido.Cancelado && p.Estado != EstadoPedido.Incompleto).ToList();
 
       foreach (var pedido in pedidos)
       {

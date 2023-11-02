@@ -37,7 +37,71 @@
     </tbody>
   </table>
 </div>
+<div>
+  <canvas id="grafico"></canvas>
+</div>
 
 @section Scripts {
+    <script src="~/lib/chartJS/chart.js"></script>
     <script src="~/js/stock.js"></script>
+
+
+<script>
+  function MostrarGrafico(){
+    $.ajax({
+      url: '../../Stock/Pedidos',
+      type: 'GET',
+      success: function (Pedidos){
+        let MesActual = new Date().getMonth();
+        let añoActual = new Date().getFullYear();
+        let DiasDelMes = new Date(añoActual,MesActual,0).getDate();
+        let ArregloPedidos = [];
+        let ArregloDeDias = [];
+        let ArregloDefinitivo = [];
+        for(var i = 1; i <= DiasDelMes; i++){
+          let dia = `${i}/${MesActual}`;
+          ArregloDeDias.push(dia)
+        }
+        $.each(Pedidos, function (indice, pedido){
+          let PedidoMes = new Date(pedido.fechaPedido).getMonth() + 1;
+          let PedidoDia = new Date(pedido.fechaPedido).getDate();
+          let fecha = `${PedidoDia}/${PedidoMes}`;
+          let resultado = ArregloPedidos.find(item => item.Fecha === fecha);
+          if(!resultado){
+            var PedidoFormat = {Fecha: fecha, Productos: pedido.cantidad};
+            ArregloPedidos.push(PedidoFormat);
+          }else{
+            resultado.Productos += pedido.cantidad;
+          }
+          $.each(ArregloDeDias, function (indice, dia){
+            let pedido = ArregloPedidos.find(item => item.Fecha === dia);
+            if(!pedido){
+              ArregloDefinitivo[dia] = 0;
+            }else{
+              ArregloDefinitivo[dia] = pedido.Productos;
+            }
+          });
+          var Fecha = Object.keys(ArregloDefinitivo);
+          var Cantidad = Object.values(ArregloDefinitivo);
+
+          const ctx = document.getElementById('grafico');
+          const myLineChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              label: Fecha,
+              datasets:[{
+                label: 'Cantidad de productos',
+                data: Cantidad,
+              }]
+            }
+          });
+        })
+      }
+    });
+  }
+
+  MostrarGrafico();
+
+</script>
 }
+
