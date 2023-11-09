@@ -6,10 +6,12 @@
 }
 .ArticuloCategoria{
     background-color: #fff;
+    padding: 1rem;
 }
 .Article{
     display: flex;
     margin-bottom: 20px;
+    width: 100%;
 }
 .Cards{
     display: flex;
