@@ -34,7 +34,7 @@ namespace ElRinconDeLaCopa.Controllers
             var categorias = _context.Categorias?.ToList();
             if (Id > 0)
             {
-                categorias = categorias?.Where(c => c.ID == Id).OrderBy(c => c.Nombre).ToList();
+                categorias = categorias?.Where(c => c.ID == Id).ToList();
             }
             return Json(categorias);
         }
