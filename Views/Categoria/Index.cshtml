@@ -1,4 +1,6 @@
-
+@section Styles {
+    <link rel="stylesheet" href="~/css/categoria.css" asp-append-version="true" />
+}
 @{
     ViewData["Title"] = "Index";
 }
@@ -6,25 +8,22 @@
 <div class="modal fade" id="ModalCategoria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header" id="header">
-        <h1 id="h1Categoria" class="modal-title fs-5 ">C A T E G O R I A</h1>
+      <div class="modal-header">
+        <i class="fa-solid fa-tag"></i><h1 id="h1Categoria" class="modal-title fs-5 ">Crear Categoría</h1>
         <input type="Hidden" id="Id" type="number" value="0" disabled/>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close cerrar-modal" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
          <div id="form-categoria" class="form-group">
-                @* <label class="control-label">Nombre</label> *@
-                <p class="modalnombre">N O M B R E</p>
+                <p class="modalnombre"><i class="fa-solid fa-file-signature"></i> Nombre</p>
                 <input name="Nombre" class="form-control" autocomplete="off" id="textoInput"/>
                 <span class="text-danger" id="lbl-error"></span>
             </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn botones-modals " data-bs-dismiss="modal">Cerrar</button>
-        <button id="btn-crear" onclick="GuardarCategoria()"type="button" class="btn botones-modals"></button>
+          <button id="btn-crear" onclick="GuardarCategoria()"type="button" class="btn botones-modals btn-centrado"></button>
         <input id="btnEliminar" type="button" onclick="eliminarCategoria()" class="btn botones-modals" value="Deshabilitar" />
         <input id="btnHabilitar" type="button" onclick="eliminarCategoria()" class="btn botones-modals" value="Habilitar" />
-
       </div>
     </div>
   </div>
@@ -43,22 +42,19 @@
    <span style="--i:10">S</span>
   </div>
 
-
-
 <div class="divcolor container w-90  mt-5 rounded shadow"> 
 
-<div class="row align-items-stretch justify-content-center box-shadowTable rounded">
+<div class="row align-items-stretch justify-content-center box-shadowTable">
 <p class="createbutton1">
 <button type="button" class="createbutton" onclick="CrearNueva()">Crear Nueva</button>
 </p>
 
-    <div class="divtable col bg  d-lg-block rounded">
-        <table class="table text-white rounded">
+    <div class="divtable col bg  d-lg-block">
+        <table class="table text-white">
             <thead>
                 <tr>
-                    <th>
-                        N O M B R E
-                    </th>
+                <th class="name"><i class="fa-solid fa-file-signature"></i> Nombre</th>
+   
                     <th></th>
                 </tr>
             </thead>

@@ -9,11 +9,6 @@
     <link rel="stylesheet" href="~/lib/fontawesome-free-6.4.0-web/css/all.min.css">
     <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/categoria.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/loginyregister.css" asp-append-version="true" />
-
-    <link rel="stylesheet" href="~/css/carrito.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @RenderSection("Styles", false)
     @ViewData["LinkCss"]
@@ -27,17 +22,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" id="header">
-                    <h1 id="h1Categoria" class="modal-title fs-5 ">Datos personales</h1>
+                    <h1 id="h1Categoria" class="modal-title fs-5 "><i class="fa-solid fa-user"></i> Datos personales</h1>
                 </div>
                 <div class="modal-body">
                     <div id="form-categoria" class="form-group">
-                        <p class="text-white">por favor complete con su nombre completo para continuar</p>
+                        <p class="nombre-completo"><i class="fa-solid fa-file-signature"></i> Nombre Completo</p>
                         <input name="Nombre" class="form-control" autocomplete="off" id="NombreCompleto" />
                         <span class="text-danger" id="lbl-error"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="w-100 btn btn-lg btn-primary" onclick="GuardarDatos()">Guardar</button>
+                    <button class="btn boton" onclick="GuardarDatos()">Guardar</button>
                 </div>
             </div>
         </div>

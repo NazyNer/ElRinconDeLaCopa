@@ -1,3 +1,69 @@
+#ModalUsuario .modal-content{
+  background-color: rgb(255, 255, 255);
+  border-radius: 1.3rem;
+  overflow: hidden;
+}
+#ModalUsuario .modal-header{
+  background-color: #dcdae7;
+}
+#ModalUsuario .form-control{
+  background-color: #dcdae7;
+  font-style: italic;
+  font-weight: 500;
+}
+#ModalUsuario .modal-title{
+  color: black;
+  font-style: italic;
+  position: relative;
+  left: 11rem;
+}
+#ModalUsuario p {
+  color: #000;
+  font-weight: 500;
+  position: relative;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.boton {
+  appearance: none;
+  background-color: transparent;
+  border: 0.125em solid #1A1A1A;
+  border-radius: 0.9375em;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600; 
+  line-height: normal;
+  margin: 0;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);;
+  touch-action: manipulation;
+  will-change: transform;
+  position: relative;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  right: 37%;
+  font-style: italic;
+ }
+ 
+ 
+ .boton:disabled {
+  pointer-events: none;
+ }
+ 
+ .boton:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+ }
+ 
+ .boton:active {
+  box-shadow: none;
+  transform: translateY(0);
+ }
+
 html {
   font-size: 14px;
 }

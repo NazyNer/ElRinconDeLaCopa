@@ -295,8 +295,13 @@ namespace ElRinconDeLaCopa.Controllers
                             resultado.MsjError = "El Producto " + productoOriginal.Nombre + " Tiene movimientos de stock (Por este motivo no se podra eliminar de la base de datos) lo hemos desabilitado por usted.";
                         }
                     }
-                    resultado.MsjError = "El Producto " + productoOriginal.Nombre + " Tiene stock (Asegurese de que la cantidad del producto sea 0 y volver a intentar).";
-                    return Json(resultado);
+                    else
+                    {
+                        resultado.nonError = false;
+                        resultado.MsjError = "El Producto " + productoOriginal.Nombre + " Tiene stock (Asegurese de que la cantidad del producto sea 0 y volver a intentar).";
+                        return Json(resultado);
+                    }
+                    
                 }
                 resultado.MsjError = "No se encuentra el producto seleccionado";
                 return Json(resultado);

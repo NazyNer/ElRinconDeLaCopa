@@ -23,3 +23,6 @@ body{
   width: 15rem;
   margin-top: 20px;
 }
+.carousel-inner{
+  margin-top: 4rem;
+}

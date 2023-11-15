@@ -1,3 +1,9 @@
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/carrito.css" asp-append-version="true" />
+}
+
 @{
     ViewData["Title"] = "Productos";
 }
@@ -6,36 +12,61 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 id="h1Producto" class="modal-title fs-5">P R O D U C T O</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                <i class="fa-solid fa-wine-bottle"></i><h1 id="h1Producto" class="modal-title fs-5" >Crear Producto</h1>
+                <button type="button" class="btn-close cerrar-modal" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="form-producto" class="form-group" method="post" enctype="multipart/form-data">
-                    <input type="Hidden" name="Productoid" type="number" value="0" />
-                    <p class="modalnombre">N O M B R E</p>
-                    <input id="textoInput" class="form-control" placeholder="Nombre" name="Nombre" />
-                    <p class="modalnombre2">C A T E G O R I A</p>
-                    @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control"})
-                    <p class="modalnombre2">P R E C I O</p>
-                    <input type="number" placeholder="Precio" class="form-control" name="Precio">
-                    <p class="modalnombre2">C A N T I D A D</p>
-                    <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
-                    <p class="modalnombre2">I M A G E N</p>
-                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen" id="selectorImagen">
-                    <span id="texto-error" class="text-danger"></span>
-                    <label id="nombreImagen"></label>
-                    <img id="imagenSeleccionada" class="imgPreview" src="~/img/productos/fotodefaullt.jpg"
-                        alt="Imagen seleccionada">
+                    <input type="Hidden" name="Productoid" type="number" value="0"/>
+
+                    <div class="form-row juntos">
+
+                        <div class="form-group col-sm-6">
+                                <p class="modalnombre-producto"><i class="fa-solid fa-file-signature"></i> Nombre</p>
+                        <input id="textoInput" class="form-control" placeholder="Nombre" name="Nombre"/>
+                        </div>
+                        <div class="form-group col-sm-6">
+                                <p class="modalnombre-producto"><i class="fa-solid fa-tag"></i> Categoría</p>
+                        @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control"})
+                        </div>
+
+                    </div>
+
+                    <div class="form-row juntos">
+
+                        <div class="form-group col-md-6">
+                                <p class="modalnombre-producto"><i class="fa-solid fa-dollar-sign"></i> Precio</p>
+                        <input type="number" placeholder="Precio" class="form-control" name="Precio">
+                        </div>
+                        <div class="form-group col-md-6">
+                                <p class="modalnombre-producto"><i class="fa-solid fa-pen-to-square"></i> Cantidad</p>
+                        <input type="number" placeholder="Cantidad" class="form-control" name="Cantidad" disabled>
+                       </div>
+                    </div>
+                    <div class="form-row juntos imagen-div">
+                        <div class="form-group">
+                            <p class="modalnombre-producto imagen-title"><i class="fa-regular fa-image"></i> Imagen</p>
+                            <input type="file" accept="image/jpeg" class="form-control input-imagen" name="Imagen" id="selectorImagen" >
+                            <div class="div-imagen">
+                        <header></header>
+                    <body>
+                        <img id="imagenSeleccionada" class="imgPreview" src="~/img/productos/fotodefaullt.jpg" alt="Imagen seleccionada">
+                    </body>
+                    <footer>
+                        <span id="texto-error" class="text-danger"></span>
+                        <label class="modalnombre-producto" id="nombreImagen" ></label>
+                    </footer>
+                    </div>
+                        </div>
+                        </div>
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button id="btnCrear" type="button" class="btn btn-crear" onclick="GuardarProducto()"></button>
-                <input id="btnEliminarProducto" type="button" onclick="eliminarProducto()" class="btn btn-danger"
-                    value="Deshabilitar" />
-                <input id="btnHabilitarProducto" type="button" onclick="eliminarProducto()" class="btn btn-success"
-                    value="Habilitar" />
+                <button id="btnCrear" type="button" class="btn btn-crear botones-modalss" onclick="GuardarProducto()"></button>
+                <input id="btnEliminarProducto" type="button" onclick="eliminarProducto()" class="btn botones-modalss" value="Deshabilitar" />
+                <input id="btnHabilitarProducto" type="button" onclick="eliminarProducto()" class="btn botones-modalss" value="Habilitar" />
             </div>
         </div>
     </div>
@@ -43,67 +74,87 @@
 <div class="modal fade" id="ModalCarrito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h1 id="h1Producto" class="modal-title fs-5">C A R R I T O</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 id="h1Carrito" class="modal-title fs-5" ><i class="fa-solid fa-cart-shopping"></i> Carrito</h1>
+                <button type="button" class="btn-close cerrar-modal" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
-                <div id="Cart-Contain">
-                </div>
+
+           
+            <div class="divtable col bg  d-lg-block rounded tabla-carrito">
+            <table class="table text-white rounded">
+                <thead>
+                    <tr>
+                        <th class="thcat"><i class="fa-solid fa-wine-bottle"></i> Producto</th>
+                        <th>
+                            Cantidad
+                        </th>
+                        <th>
+                            Manejo
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="Cart-Contain">
+                    <h1 id="errorTable"></h1>
+                </tbody>
+            </table>
+        </div> 
+                
             </div>
             <div class="modal-footer">
-                <button id="Guardarstock" class="btn botones-modals" onclick="CompletePurchase()">Listo</button>
-                <button type="button" class="btn botones-modals" data-bs-dismiss="modal">Cerrar</button>
+                <button id="Guardarstock" class="btn botones-modalss" onclick="CompletePurchase()">Listo</button>
             </div>
         </div>
     </div>
 </div>
 
 <div class="Carrito" id="cart">
-    <button onclick="AbrirCarrito()"><i class="fa-solid fa-cart-shopping"></i>
+    <button class="abrir-carrito" onclick="AbrirCarrito()"><i class="fa-solid fa-cart-shopping"></i>
         <span id="ProductCart"></span>
     </button>
 </div>
 
-<div class="waviy">
-    <span style="--i:1">P</span>
-    <span style="--i:2">R</span>
-    <span style="--i:3">O</span>
-    <span style="--i:4">D</span>
-    <span style="--i:5">U</span>
-    <span style="--i:6">C</span>
-    <span style="--i:7">T</span>
-    <span style="--i:8">O</span>
-    <span style="--i:9">S</span>
-</div>
-<div class="divcolor container w-90  mt-5 rounded shadow">
-    <div class="row align-items-stretch justify-content-center box-shadowTable rounded">
-        <p class="createbutton1">
-            <button type="button" class="createbutton" onclick="CrearNuevo()">Crear Nuevo</button>
-        </p>
-        <div class="divtable col bg  d-lg-block rounded">
-            <table class="table text-white">
+ <div class="waviy-producto">
+   <span style="--i:1">P</span>
+   <span style="--i:2">R</span>
+   <span style="--i:3">O</span>
+   <span style="--i:4">D</span>
+   <span style="--i:5">U</span>
+   <span style="--i:6">C</span>
+   <span style="--i:7">T</span>
+   <span style="--i:8">O</span>
+   <span style="--i:9">S</span>
+  </div>
+<div class="divcolor-producto container w-90  mt-5  rounded shadow "> 
+    <div class="row align-items-stretch justify-content-center box-shadowTable">
+        <p class="createbutton1-producto">
+<button type="button" class="createbutton-producto" onclick="CrearNuevo()">Crear Nuevo</button>
+</p>
+        <div class="divtable col bg  d-lg-block">
+            <table class="table text-white radio">
                 <thead>
                     <tr>
-                        <th class="thcat">
-                            Categoria
-                        </th>
-                        <th>
-                            Nombre
-                        </th>
-                        <th>
-                            Precio($ars)
-                        </th>
-                        <th>
-                            Stock
-                        </th>
-                        <th>
-                            Imagen
-                        </th>
+                        <th class="name"><i class="fa-solid fa-tag"></i> Categoría</th>
+
+                        <th class="name"><i class="fa-solid fa-file-signature"></i> Nombre</th>
+
+                        <th class="name"><i class="fa-solid fa-dollar-sign"></i> Precio($ars)</th>
+
+                        <th class="name"><i class="fa-solid fa-pen-to-square"></i> Stock</th>
+                        
                         <th></th>
+                        <th class="name opciones-title"><i class="fa-solid fa-gear"></i> Opciones</th>
+                        <th></th>
+                   
+
+                        
                     </tr>
                 </thead>
-                <tbody id="tbody-productos">
+                <tbody class="divtable4" id="tbody-productos">
                     <h1 id="errorTable"></h1>
                 </tbody>
             </table>

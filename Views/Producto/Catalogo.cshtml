@@ -1,4 +1,9 @@
 @model IEnumerable<ElRinconDeLaCopa.Models.Producto>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/catalogo.css" asp-append-version="true" />
+}
+
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> UserManager
 @section Styles {
@@ -57,33 +62,6 @@
         <h1>Catalgo</h1>
     </header>
     <main id="catalogo">
-        <article class="ArticuloCategoria">
-            <header id="HeaderCategoria">
-                <h2>WHISKY</h2>
-            </header>
-            <main class="Cards">
-                <div class="Article">
-                    @* <div class="card mx-auto">
-                        <img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto" />
-                        <div class="card-body">
-                            <h5 class="card-title">Red Label</h5>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Precio: <b>$18000</b></li>
-                            <li class="list-group-item">Whisky</li <li class="list-group-item text-center"><a
-                                onClick="AgregarAlPedido(${producto.id})" class="btn btn-marron"><i
-                                    class="fa-solid fa-cart-plus"></i></a></li>
-                        </ul>
-                    </div> *@
-                </div>
-            </main>
-            <footer>
-                <p class="text-center">
-                    Mas Productos <br>
-                <i class="fa-solid fa-angles-down"></i>
-                </p>
-            </footer>
-        </article>
     </main>
     
 </section>
