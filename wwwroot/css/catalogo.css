@@ -1,3 +1,29 @@
+.cards{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-content: center;
+}
+.ArticuloCategoria{
+    background-color: #fff;
+    padding: 1rem;
+    margin: 1.5rem;
+}
+.Article{
+    display: flex;
+    margin-bottom: 20px;
+    width: 100%;
+}
+.Cards{
+    display: flex;
+    flex-wrap: wrap;
+    height: 350px;
+    overflow: hidden;
+}
+.carousel-item{
+    margin-right: 0;
+}
+
 .catalogo{
     flex-wrap: wrap;
 }
@@ -11,7 +37,9 @@
     color: #2d1a16;
 }
 
-
+.card-body{
+    padding: 0;
+}
 body{
     margin-top: 90px;
 }
@@ -24,11 +52,25 @@ body{
 }
 .card{
     padding: .2rem;
-    margin-top: 20px;
+    margin-top: 0;
+    width: 12rem;
+    height: 310px;
+    margin-left: 20px!important;
+}
+.carousel{
+    width: 105%;
 }
 .card-title{
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .card-img-top{
     border-radius: 0px 25px;
+    width: 11.5rem;
+    height: 150px;
+}
+.H1Catalogo{
+    width: 100%;
 }

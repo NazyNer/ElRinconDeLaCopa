@@ -29,7 +29,7 @@ function BuscarProductos() {
   
   $.ajax({
     // la URL para la petición
-    url: '../../Producto/BuscarProductos',
+    url: '../../Producto/BuscarProductosTabla',
     // la información a enviar
     data: {},
     // especifica si será una petición POST o GET
@@ -39,8 +39,8 @@ function BuscarProductos() {
     // código a ejecutar si la petición es satisfactoria
     success: function (productos) {
       TablaProducto.empty();
-      
-      $.each(productos.Productos, function (index, producto) {
+      console.log(productos);
+      $.each(productos, function (index, producto) {
         if (producto.eliminado) {
           // Agregar fila para productos eliminados
           TablaProducto.append(`
@@ -134,7 +134,7 @@ function GuardarProducto() {
 function BuscarProducto(ID) {
   $.ajax({
     // la URL para la petición
-    url: '../../Producto/BuscarProductos',
+    url: '../../Producto/BuscarProductosTabla',
     // la información a enviar
     data: { Id: ID },
     // especifica si será una petición POST o GET

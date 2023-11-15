@@ -6,16 +6,18 @@
 
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> UserManager
-
-
+@section Styles {
+    <link rel="stylesheet" href="~/css/catalogo.css" asp-append-version="true" />
+}
 @{
     ViewData["Title"] = "Catalogo";
 }
+
 <div class="modal fade" id="ModalCarrito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 id="h1Producto" class="modal-title fs-5" >C A R R I T O</h1>
+                <h1 id="h1Producto" class="modal-title fs-5">C A R R I T O</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="CarritoProductos">
@@ -31,31 +33,40 @@
                         <input id="Calle" class="form-control" type="text">
                         <label class="modalnombre2">Numero*</label>
                         <input id="Numero" class="form-control" type="number">
-                        <label class="modalnombre2" >N° Departamento</label>
+                        <label class="modalnombre2">N° Departamento</label>
                         <input id="Depto" class="form-control" type="number"></input>
                         @* <input type="checkbox"><label class="modalnombre2" >guardar datos</label> *@
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="Guardarstock" class="btn botones-modals" onclick="CompletePurchaseProduct()">Siguiente</button>
+                <button id="Guardarstock" class="btn botones-modals"
+                    onclick="CompletePurchaseProduct()">Siguiente</button>
                 <button id="GuardarCompra" class="btn botones-modals" onclick="CompletePurchase()">Comprar</button>
                 <button type="button" class="btn botones-modals" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
-@if(@User.IsInRole("Usuario") || @User.IsInRole("Cliente")){
-    <div class="Carrito" id="cart">
+
+@if (@User.IsInRole("Usuario") || @User.IsInRole("Cliente"))
+{
+    <aside class="Carrito" id="cart">
         <button onclick="MostrarPedido()"><i class="fa-solid fa-cart-shopping"></i>
             <span id="Cart"></span>
         </button>
-    </div>
+    </aside>
 }
-<div id="catalogo" class="cards catalogo m-0">
-    
-</div>
+<section   class="cards catalogo m-0">
+    <header class="H1Catalogo">
+        <h1>Catalgo</h1>
+    </header>
+    <main id="catalogo">
+    </main>
+</section>
+
 @section Scripts {
     <script src="~/js/catalogo.js"></script>
     <script src="~/js/pedidos.js"></script>
+
 }

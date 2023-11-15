@@ -52,31 +52,64 @@ namespace ElRinconDeLaCopa.Controllers
         {
             return View();
         }
-
-        public JsonResult BuscarProductos(int Id = 0)
-        {
-            dynamic Catalogo = new ExpandoObject();
-            dynamic rol = new ExpandoObject();
-            var productos = _context.Productos?.ToList();
-            if (Id > 0)
+        public JsonResult BuscarProductosTabla (int Id = 0){
+            var productos = _context.Productos?.OrderByDescending(P => P.Cantidad).ToList();
+            if (productos != null)
             {
-                productos = productos?.Where(c => c.ID == Id).OrderBy(c => c.Nombre).ToList();
-            }
-            foreach(var producto in productos)
-            {
-                if (producto.Imagen != null && producto.Imagen?.Length > 0)
+                if (Id > 0)
                 {
-                    producto.ImagenString = System.Convert.ToBase64String(producto.Imagen);
+                    productos = productos.Where(c => c.ID == Id).ToList();
+                }
+                foreach (var producto in productos)
+                {
+                    if (producto.Imagen != null)
+                    {
+                        producto.ImagenString = System.Convert.ToBase64String(producto.Imagen);
+                    }
                 }
             }
-            ((IDictionary<string, object>)Catalogo)["Productos"] = productos;
-            rol.validacion = true;
-            if(User.IsInRole("Empleado") || User.IsInRole("Administrador"))
+            return Json(productos);
+        }
+        public JsonResult BuscarProductos(int Id = 0)
+        {
+            List<Catalogo> catalogo = new List<Catalogo>();
+            var Categorias = _context.Categorias.Where(c => c.Eliminado == false).OrderBy(c => c.Nombre).ToList();
+            foreach(var categoria in Categorias)
             {
-                rol.validacion = false;
+                var productos = _context.Productos?.Where(p => p.IDCategoria == categoria.ID && p.Cantidad > 0).ToList();
+                var Catalogo = new Catalogo();
+                Catalogo.CategoriaId = categoria.ID;
+                Catalogo.Categoria = categoria.Nombre;
+                if (productos.Count > 0)
+                {
+                    var ListaProductos = new List<ProductoEnCatalogo>();
+                    if (Id > 0)
+                    {
+                        productos = productos?.Where(c => c.ID == Id).ToList();
+                    }
+                    foreach(var producto in productos)
+                    {
+                        var ProductoCatalogo = new ProductoEnCatalogo{
+                            Productoid = producto.ID,
+                            Nombre = producto.Nombre,
+                            Precio = producto.Precio,
+                        };
+                        if (producto.Imagen != null && producto.Imagen?.Length > 0)
+                        {
+                            ProductoCatalogo.Imagen = System.Convert.ToBase64String(producto.Imagen);
+                        }
+                        ListaProductos.Add(ProductoCatalogo);
+                    }
+                    Catalogo.Productos = ListaProductos;
+                    Catalogo.Rol = true;
+                    if(User.IsInRole("Empleado") || User.IsInRole("Administrador"))
+                    {
+                        Catalogo.Rol = false;
+                    }
+                }
+                catalogo.Add(Catalogo);
             }
-            ((IDictionary<string, object>)Catalogo)["Rol"] = rol;
-            return Json(Catalogo);
+            return Json(catalogo);
         }
         public JsonResult GuardarProducto(int CategoriaID, decimal Precio, int Cantidad, IFormFile imagen, string Nombre, int Productoid)
         {
