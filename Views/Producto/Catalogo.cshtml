@@ -52,101 +52,44 @@
         </button>
     </aside>
 }
-<section id="catalogo" class="cards catalogo m-0">
+<section   class="cards catalogo m-0">
     <header class="H1Catalogo">
         <h1>Catalgo</h1>
     </header>
-
-    <article class="ArticuloCategoria">
-        <header id="HeaderCategoria">
-            <h2>WHISKY</h2>
-        </header>
-        <main class="Cards">
-            <div class="Article">
-                <div class="card mx-auto">
-                    <img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto" />
-                    <div class="card-body">
-                        <h5 class="card-title">Red Label</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Precio: <b>$18000</b></li>
-                        <li class="list-group-item">Whisky</li <li class="list-group-item text-center"><a
-                            onClick="AgregarAlPedido(${producto.id})" class="btn btn-marron"><i
-                                class="fa-solid fa-cart-plus"></i></a></li>
-                    </ul>
+    <main id="catalogo">
+        <article class="ArticuloCategoria">
+            <header id="HeaderCategoria">
+                <h2>WHISKY</h2>
+            </header>
+            <main class="Cards">
+                <div class="Article">
+                    @* <div class="card mx-auto">
+                        <img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto" />
+                        <div class="card-body">
+                            <h5 class="card-title">Red Label</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Precio: <b>$18000</b></li>
+                            <li class="list-group-item">Whisky</li <li class="list-group-item text-center"><a
+                                onClick="AgregarAlPedido(${producto.id})" class="btn btn-marron"><i
+                                    class="fa-solid fa-cart-plus"></i></a></li>
+                        </ul>
+                    </div> *@
                 </div>
-                <div class="card mx-auto">
-                    <img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto" />
-                    <div class="card-body">
-                        <h5 class="card-title">Red Label</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Precio: <b>$18000</b></li>
-                        <li class="list-group-item">Whisky</li <li class="list-group-item text-center"><a
-                            onClick="AgregarAlPedido(${producto.id})" class="btn btn-marron"><i
-                                class="fa-solid fa-cart-plus"></i></a></li>
-                    </ul>
-                </div>
-                <div class="card mx-auto">
-                    <img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto" />
-                    <div class="card-body">
-                        <h5 class="card-title">Red Label</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Precio: <b>$18000</b></li>
-                        <li class="list-group-item">Whisky</li <li class="list-group-item text-center"><a
-                            onClick="AgregarAlPedido(${producto.id})" class="btn btn-marron"><i
-                                class="fa-solid fa-cart-plus"></i></a></li>
-                    </ul>
-                </div>
-                <div class="card mx-auto">
-                    <img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto" />
-                    <div class="card-body">
-                        <h5 class="card-title">Red Label</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Precio: <b>$18000</b></li>
-                        <li class="list-group-item">Whisky</li <li class="list-group-item text-center"><a
-                            onClick="AgregarAlPedido(${producto.id})" class="btn btn-marron"><i
-                                class="fa-solid fa-cart-plus"></i></a></li>
-                    </ul>
-                </div>
-                <div class="card mx-auto">
-                    <img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto" />
-                    <div class="card-body">
-                        <h5 class="card-title">Red Label</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Precio: <b>$18000</b></li>
-                        <li class="list-group-item">Whisky</li <li class="list-group-item text-center"><a
-                            onClick="AgregarAlPedido(${producto.id})" class="btn btn-marron"><i
-                                class="fa-solid fa-cart-plus"></i></a></li>
-                    </ul>
-                </div>
-                <div class="card mx-auto">
-                    <img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto" />
-                    <div class="card-body">
-                        <h5 class="card-title">Red Label</h5>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Precio: <b>$18000</b></li>
-                        <li class="list-group-item">Whisky</li <li class="list-group-item text-center"><a
-                            onClick="AgregarAlPedido(${producto.id})" class="btn btn-marron"><i
-                                class="fa-solid fa-cart-plus"></i></a></li>
-                    </ul>
-                </div>
-        </main>
-        <footer>
-            <p class="text-center">
-                Mas Productos <br>
-            <i class="fa-solid fa-angles-down"></i>
-            </p>
-        </footer>
-    </article>
+            </main>
+            <footer>
+                <p class="text-center">
+                    Mas Productos <br>
+                <i class="fa-solid fa-angles-down"></i>
+                </p>
+            </footer>
+        </article>
+    </main>
+    
 </section>
 
 @section Scripts {
     <script src="~/js/catalogo.js"></script>
     <script src="~/js/pedidos.js"></script>
-    <script src="~/js/carrouselCatalogo.js"></script>
+
 }
