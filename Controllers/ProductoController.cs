@@ -70,10 +70,14 @@ namespace ElRinconDeLaCopa.Controllers
             }
             return Json(productos);
         }
-        public JsonResult BuscarProductos(int Id = 0)
+        public JsonResult BuscarProductos(int CategoriaId = 0,int Id = 0)
         {
             List<Catalogo> catalogo = new List<Catalogo>();
             var Categorias = _context.Categorias.Where(c => c.Eliminado == false).OrderBy(c => c.Nombre).ToList();
+            if (CategoriaId > 0)
+            {
+                Categorias = Categorias.Where(c => c.ID == CategoriaId).ToList();
+            }
             foreach(var categoria in Categorias)
             {
                 var productos = _context.Productos?.Where(p => p.IDCategoria == categoria.ID && p.Cantidad > 0).ToList();

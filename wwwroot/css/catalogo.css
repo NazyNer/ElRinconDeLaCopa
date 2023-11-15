@@ -36,7 +36,9 @@
     transition: all .5s ease-in-out;
     color: #2d1a16;
 }
-
+.footerBtn{
+    cursor: pointer;
+}
 .card-body{
     padding: 0;
 }
@@ -57,6 +59,11 @@ body{
     width: 12rem;
     height: 310px;
     margin-left: 20px!important;
+}
+.CardsCategoria{
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
 }
 .carousel{
     width: 105%;

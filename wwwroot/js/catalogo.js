@@ -30,7 +30,7 @@ function BuscarProductos() {
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Precio: <b>$${producto.precio}</b></li>
                     <li class="list-group-item">${categoria.categoria}</li>
-                    <li class="list-group-item text-center"><a onClick="AgregarAlPedido(${producto.productoid})" class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a></li>
+                    <li class="list-group-item text-center">${validacion ? `<a onClick="AgregarAlPedido(${producto.productoid})" class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a>` : ``}</li>
                 </ul>
               </div>
               `);
@@ -38,7 +38,6 @@ function BuscarProductos() {
               count++
           }
         })
-        console.log(categoria.productos);
         if (categoria.productos) {
           if (categoria.productos.length <= 6) {
             ListaProductos = (`
@@ -62,7 +61,7 @@ function BuscarProductos() {
                 <main class="Cards">
                 ${articulo.html()}
                 </main>
-                <footer>
+                <footer class="footerBtn" onClick="BuscarProductosCategoria(${categoria.categoriaId})">
                     <p class="text-center">
                         Mas Productos <br>
                     <i class="fa-solid fa-angles-down"></i>
@@ -77,4 +76,60 @@ function BuscarProductos() {
     }
   })
 }
+function BuscarProductosCategoria(categoriaId) {
+  console.log(categoriaId);
+  let CatalogoVista = $("#catalogo");
+  CatalogoVista.empty();
+  $.ajax({
+    url: '../../Producto/BuscarProductos',
+    data: {CategoriaId: categoriaId},
+    type: 'GET',
+    dataType: 'json',
+    success: function (Catalogo){
+      console.log(Catalogo);
+      let validacion = Catalogo[0].rol;
+      $.each(Catalogo, (index, categoria) => {
+        let ListaProductos = (``);
+        let articulo = $(`<div class="Article"></div>`)
+        $.each(categoria.productos, (index, producto) => {
+          if (producto) {
+              articulo.append(`
+              <div class="card mx-auto">
+                ${producto.imagen == null
+                  ? `<img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto"/>`
+                  : `<img src="data:${producto.tipoImagen};base64, ${producto.imagen}" class="card-img-top" alt="${producto.nombreCategoria} ${producto.nombre}"/>`
+                }
+                <div class="card-body">
+                    <h5 class="card-title">${producto.nombre}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Precio: <b>$${producto.precio}</b></li>
+                    <li class="list-group-item">${categoria.categoria}</li>
+                    <li class="list-group-item text-center">${validacion ? `<a onClick="AgregarAlPedido(${producto.productoid})" class="btn btn-marron"><i class="fa-solid fa-cart-plus"></i></a>` : ``}</li>
+                </ul>
+              </div>
+              `);
+          }
+        })
+        if (categoria.productos) {
+            ListaProductos = (`
+              <article class="ArticuloCategoria">
+                <header id="HeaderCategoria" class="d-flex justify-content-between align-items-center">
+                    <h2>${categoria.categoria}</h2>
+                    <a onClick="BuscarProductos()" class="btn btn-danger">Cerrar</a>
+                </header>
+                <main class="CardsCategoria">
+                ${articulo.html()}
+                </main>
+                <footer>
+                </footer>
+              </article>
+            `)
+        }
+        CatalogoVista.append(ListaProductos);
+      });
+    }
+  })
+}
+
 
