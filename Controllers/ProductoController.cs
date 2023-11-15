@@ -76,7 +76,7 @@ namespace ElRinconDeLaCopa.Controllers
             var Categorias = _context.Categorias.Where(c => c.Eliminado == false).OrderBy(c => c.Nombre).ToList();
             foreach(var categoria in Categorias)
             {
-                var productos = _context.Productos?.Where(p => p.IDCategoria == categoria.ID).ToList();
+                var productos = _context.Productos?.Where(p => p.IDCategoria == categoria.ID && p.Cantidad > 0).ToList();
                 var Catalogo = new Catalogo();
                 Catalogo.CategoriaId = categoria.ID;
                 Catalogo.Categoria = categoria.Nombre;
