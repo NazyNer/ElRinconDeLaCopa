@@ -14,8 +14,10 @@ function BuscarProductos() {
       $.each(Catalogo, (index, categoria) => {
         let ListaProductos = (``);
         let articulo = $(`<div class="Article"></div>`)
+        let count = 1;
         $.each(categoria.productos, (index, producto) => {
           if (producto) {
+            if (count <= 6) {
               articulo.append(`
               <div class="card mx-auto">
                 ${producto.imagen == null
@@ -32,6 +34,8 @@ function BuscarProductos() {
                 </ul>
               </div>
               `);
+            }
+              count++
           }
         })
         console.log(categoria.productos);

@@ -53,6 +53,7 @@ body{
 .card{
     padding: .2rem;
     margin-top: 0;
+    margin-bottom: 50px;
     width: 12rem;
     height: 310px;
     margin-left: 20px!important;
