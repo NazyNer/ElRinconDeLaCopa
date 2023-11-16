@@ -29,8 +29,7 @@ function AgregarAlDetalle(Id) {
     });
 }
 
-// <img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br> 
-// Esta función abre el carrito de compras
+
 function AbrirCarrito() {
     let carritoDiv = $("#Cart-Contain");
     let btnGuardar = $("#Guardarstock");
@@ -66,17 +65,7 @@ function AbrirCarrito() {
                         
                         </div>
                         `
-                    //(
-                     //`  
-                        //<tr>
-                       // <td class="thcat back"> <a class="btn btn-producto-cart">${producto.nombre}</a></td>
-                       // <td><img class="radio" src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 40px;" alt="${producto.nombre}"/></td>
-                       // <td><p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p></td>
-                            //<td><button class="btn botones-modalss" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button></td>
-                            //<td><button class="btn botones-modalss" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button></td>
-                        //</tr>
-                        
-                        //`
+
                         
                         )
                     
@@ -176,6 +165,7 @@ function CompletePurchase() {
                     $("#ModalCarrito").modal("hide");
                     alert(resultado.msjError);
                     BuscarProductos();
+                    location.reload();
                 } else {
                     alert(resultado.msjError);
                     BuscarProductos();
