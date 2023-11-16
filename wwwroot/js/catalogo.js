@@ -10,7 +10,8 @@ function BuscarProductos() {
     type: 'GET',
     dataType: 'json',
     success: function (Catalogo) {
-      let validacion = Catalogo[0].rol;
+      let validacion = Catalogo[1].rol;
+      console.log(validacion);
       $.each(Catalogo, (index, categoria) => {
         let ListaProductos = (``);
         let articulo = $(`<div class="Article"></div>`)
@@ -88,6 +89,7 @@ function BuscarProductosCategoria(categoriaId) {
     success: function (Catalogo){
       console.log(Catalogo);
       let validacion = Catalogo[0].rol;
+      console.log(validacion);
       $.each(Catalogo, (index, categoria) => {
         let ListaProductos = (``);
         let articulo = $(`<div class="Article"></div>`)
