@@ -31,13 +31,15 @@ namespace ElRinconDeLaCopa.Controllers
         {
             var Categoria = _context.Categorias?.Where(c => c.Eliminado == false).ToList();
             ViewBag.CategoriaID = new SelectList(Categoria?.OrderBy(p => p.Nombre), "ID", "Nombre");
-            
+
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
                 var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
-                if (carritoCreado == null){
-                    carritoCreado = new CarritoCompra{
+                if (carritoCreado == null)
+                {
+                    carritoCreado = new CarritoCompra
+                    {
                         FechaActual = DateTime.Now,
                         UsuarioID = user.Id,
                         Estado = 0
@@ -52,7 +54,8 @@ namespace ElRinconDeLaCopa.Controllers
         {
             return View();
         }
-        public JsonResult BuscarProductosTabla (int Id = 0){
+        public JsonResult BuscarProductosTabla(int Id = 0)
+        {
             var productos = _context.Productos?.OrderByDescending(P => P.Cantidad).ToList();
             if (productos != null)
             {
@@ -70,7 +73,7 @@ namespace ElRinconDeLaCopa.Controllers
             }
             return Json(productos);
         }
-        public JsonResult BuscarProductos(int CategoriaId = 0,int Id = 0)
+        public JsonResult BuscarProductos(int CategoriaId = 0, int Id = 0)
         {
             List<Catalogo> catalogo = new List<Catalogo>();
             var Categorias = _context.Categorias.Where(c => c.Eliminado == false).OrderBy(c => c.Nombre).ToList();
@@ -78,7 +81,7 @@ namespace ElRinconDeLaCopa.Controllers
             {
                 Categorias = Categorias.Where(c => c.ID == CategoriaId).ToList();
             }
-            foreach(var categoria in Categorias)
+            foreach (var categoria in Categorias)
             {
                 var productos = _context.Productos?.Where(p => p.IDCategoria == categoria.ID && p.Cantidad > 0).ToList();
                 var Catalogo = new Catalogo();
@@ -91,12 +94,13 @@ namespace ElRinconDeLaCopa.Controllers
                     {
                         productos = productos?.Where(c => c.ID == Id).ToList();
                     }
-                    foreach(var producto in productos)
+                    foreach (var producto in productos)
                     {
-                        var ProductoCatalogo = new ProductoEnCatalogo{
+                        var ProductoCatalogo = new ProductoEnCatalogo
+                        {
                             Productoid = producto.ID,
                             Nombre = producto.Nombre,
-                            Precio = producto.Precio,
+                            Precio = producto.PrecioDeVenta,
                         };
                         if (producto.Imagen != null && producto.Imagen?.Length > 0)
                         {
@@ -106,7 +110,7 @@ namespace ElRinconDeLaCopa.Controllers
                     }
                     Catalogo.Productos = ListaProductos;
                     Catalogo.Rol = true;
-                    if(User.IsInRole("Empleado") || User.IsInRole("Administrador"))
+                    if (User.IsInRole("Empleado") || User.IsInRole("Administrador"))
                     {
                         Catalogo.Rol = false;
                     }
@@ -115,7 +119,7 @@ namespace ElRinconDeLaCopa.Controllers
             }
             return Json(catalogo);
         }
-        public JsonResult GuardarProducto(int CategoriaID, decimal Precio, int Cantidad, IFormFile imagen, string Nombre, int Productoid)
+        public JsonResult GuardarProducto(int PrecioXPack, int CategoriaID, decimal Precio, int Cantidad, IFormFile imagen, string Nombre, int Productoid)
         {
             var resultado = new ValidacionError();
             //El nombre del producto no se encuentra
@@ -123,6 +127,12 @@ namespace ElRinconDeLaCopa.Controllers
             {
                 resultado.nonError = false;
                 resultado.MsjError = "No se agrego un nombre a la producto";
+                return Json(resultado);
+            }
+            if (PrecioXPack <= 0)
+            {
+                resultado.nonError = false;
+                resultado.MsjError = "No se agrego un precio de compra al producto";
                 return Json(resultado);
             }
             //Si no es mayor a 0 o es 0 no se agrego ningun precio
@@ -157,8 +167,9 @@ namespace ElRinconDeLaCopa.Controllers
                             IDCategoria = CategoriaID,
                             NombreCategoria = categoriaSeleccionada.Nombre,
                             Nombre = Nombre,
-                            Precio = Precio,
-                            Cantidad = Cantidad,
+                            PrecioDeCompra = PrecioXPack,
+                            PrecioDeVenta = Precio,
+                            CantidadXPack = Cantidad,
                             Categoria = categoriaSeleccionada
                         };
                         //Si no es mayor a 0 y es null no se agrego una imagen
@@ -178,21 +189,25 @@ namespace ElRinconDeLaCopa.Controllers
                         _context.Add(productoGuardar);
                         _context.SaveChanges();
                         resultado.nonError = true;
-                        resultado.MsjError = "";   
+                        resultado.MsjError = "";
                     }
                 }
             }
-            else{
+            else
+            {
                 var ProductoOriginal = _context.Productos?.Where(p => p.Nombre == Nombre && p.ID != Productoid).FirstOrDefault();
                 if (ProductoOriginal != null)
                 {
                     resultado.nonError = false;
                     resultado.MsjError = "El producto " + Nombre + " ya existe, por favor ingrese otro nombre";
                     return Json(resultado);
-                }else{
+                }
+                else
+                {
                     //BUSCAMOS EL PRODUCTO A EDITAR
                     var productoEditar = _context.Productos?.Find(Productoid);
-                    if(productoEditar != null){
+                    if (productoEditar != null)
+                    {
                         if (productoEditar.Eliminado == true)
                         {
                             resultado.nonError = false;
@@ -201,31 +216,33 @@ namespace ElRinconDeLaCopa.Controllers
                         }
                         //BUSCAMOS LA CATEGORIA SELECCIONADA
                         var categoriaSeleccionada = _context.Categorias?.Where(c => c.ID == CategoriaID).FirstOrDefault();
-                        if (categoriaSeleccionada != null){
-                                productoEditar.Nombre = Nombre;
-                                productoEditar.IDCategoria = CategoriaID;
-                                productoEditar.NombreCategoria = categoriaSeleccionada.Nombre;
-                                productoEditar.Precio = Precio;
-                                productoEditar.Cantidad = Cantidad;
-                                productoEditar.Categoria = categoriaSeleccionada;
-                                //Si no es mayor a 0 y es null no se agrego una imagen
-                                if (imagen != null || imagen?.Length > 0)
+                        if (categoriaSeleccionada != null)
+                        {
+                            productoEditar.Nombre = Nombre;
+                            productoEditar.IDCategoria = CategoriaID;
+                            productoEditar.NombreCategoria = categoriaSeleccionada.Nombre;
+                            productoEditar.PrecioDeVenta = Precio;
+                            productoEditar.PrecioDeCompra = PrecioXPack;
+                            productoEditar.CantidadXPack = Cantidad;
+                            productoEditar.Categoria = categoriaSeleccionada;
+                            //Si no es mayor a 0 y es null no se agrego una imagen
+                            if (imagen != null || imagen?.Length > 0)
+                            {
+                                byte[]? imagenBinaria = null;
+                                using (var fs1 = imagen?.OpenReadStream())
+                                using (var ms1 = new MemoryStream())
                                 {
-                                    byte[]? imagenBinaria = null;
-                                    using (var fs1 = imagen?.OpenReadStream())
-                                    using (var ms1 = new MemoryStream())
-                                    {
-                                        fs1?.CopyTo(ms1);
-                                        imagenBinaria = ms1.ToArray();
-                                    }
-                                    productoEditar.Imagen = imagenBinaria;
-                                    productoEditar.TipoImagen = imagen?.ContentType;
-                                    productoEditar.NombreImagen = imagen?.FileName;
+                                    fs1?.CopyTo(ms1);
+                                    imagenBinaria = ms1.ToArray();
                                 }
-                                _context.SaveChanges();
-                                resultado.nonError = true;
-                                resultado.MsjError = "";
-                                return Json(resultado);
+                                productoEditar.Imagen = imagenBinaria;
+                                productoEditar.TipoImagen = imagen?.ContentType;
+                                productoEditar.NombreImagen = imagen?.FileName;
+                            }
+                            _context.SaveChanges();
+                            resultado.nonError = true;
+                            resultado.MsjError = "";
+                            return Json(resultado);
                         }
                         resultado.nonError = false;
                         resultado.MsjError = "No existe la categoria seleccionada";
@@ -240,59 +257,67 @@ namespace ElRinconDeLaCopa.Controllers
         }
 
 
-        public JsonResult EliminarProducto(int Id){
-        var resultado = new ValidacionError();
-        resultado.nonError = false;
-        resultado.MsjError = "No se selecciono ningun producto";
-        // bool resultado = false;
-            //SI ES DISTINTO A 0 QUIERE DECIR QUE ESTA ELIMINANDO LA CATEGORIA
-            if(Id != 0)
-            {
-                //BUSCAMOS EN LA TABLA SI EXISTE UNA CON EL MISMO ID
-                var productoOriginal = _context.Productos.Find(Id);
-                    //SI EL PRODUCTO NO ESTE ELIMINADO PROCEDEMOS A HACERLO
-                    if(productoOriginal?.Eliminado == false)
-                    {
-                        productoOriginal.Eliminado = true;
-                        _context.SaveChanges();
-                        resultado.nonError = true;
-                    }
-                    else{
-                        var categoriaRelacionada = _context.Categorias?.Find(productoOriginal?.IDCategoria);
-                        if(categoriaRelacionada.Eliminado == false)
-                        {
-                            productoOriginal.Eliminado = false;
-                            _context.SaveChanges();
-                            resultado.nonError= true;
-                        }else{
-                            categoriaRelacionada.Eliminado = false;
-                            productoOriginal.Eliminado = false;
-                            _context.SaveChanges();
-                            resultado.nonError= true;
-                        }
-                    }
-            }
-            return Json(resultado);
-        }
-        public JsonResult RemoveProducto(int ID){
+        public JsonResult EliminarProducto(int Id)
+        {
             var resultado = new ValidacionError();
             resultado.nonError = false;
             resultado.MsjError = "No se selecciono ningun producto";
-            if(ID > 0)
+            // bool resultado = false;
+            //SI ES DISTINTO A 0 QUIERE DECIR QUE ESTA ELIMINANDO LA CATEGORIA
+            if (Id != 0)
+            {
+                //BUSCAMOS EN LA TABLA SI EXISTE UNA CON EL MISMO ID
+                var productoOriginal = _context.Productos.Find(Id);
+                //SI EL PRODUCTO NO ESTE ELIMINADO PROCEDEMOS A HACERLO
+                if (productoOriginal?.Eliminado == false)
+                {
+                    productoOriginal.Eliminado = true;
+                    _context.SaveChanges();
+                    resultado.nonError = true;
+                }
+                else
+                {
+                    var categoriaRelacionada = _context.Categorias?.Find(productoOriginal?.IDCategoria);
+                    if (categoriaRelacionada.Eliminado == false)
+                    {
+                        productoOriginal.Eliminado = false;
+                        _context.SaveChanges();
+                        resultado.nonError = true;
+                    }
+                    else
+                    {
+                        categoriaRelacionada.Eliminado = false;
+                        productoOriginal.Eliminado = false;
+                        _context.SaveChanges();
+                        resultado.nonError = true;
+                    }
+                }
+            }
+            return Json(resultado);
+        }
+        public JsonResult RemoveProducto(int ID)
+        {
+            var resultado = new ValidacionError();
+            resultado.nonError = false;
+            resultado.MsjError = "No se selecciono ningun producto";
+            if (ID > 0)
             {
                 var productoOriginal = _context.Productos?.Find(ID);
-                if(productoOriginal != null){
+                if (productoOriginal != null)
+                {
                     if (productoOriginal.Cantidad == 0)
                     {
-                        var transaccionesCompra = _context.DetalleCompra?.Where( d => d.ProductoID == productoOriginal.ID).ToList();
-                        var transaccionesVenta = _context.DetallesDePedidos.Where( d => d.ProductoID == productoOriginal.ID).ToList();
-                        if(transaccionesCompra == null && transaccionesVenta == null){
+                        var transaccionesCompra = _context.DetalleCompra?.Where(d => d.ProductoID == productoOriginal.ID).ToList();
+                        var transaccionesVenta = _context.DetallesDePedidos.Where(d => d.ProductoID == productoOriginal.ID).ToList();
+                        if (transaccionesCompra == null && transaccionesVenta == null)
+                        {
                             _context.Remove(productoOriginal);
                             _context.SaveChanges();
                             resultado.nonError = true;
                             resultado.MsjError = "Producto " + productoOriginal.Nombre + " eliminado correctamente";
                             return Json(resultado);
-                        }else
+                        }
+                        else
                         {
                             productoOriginal.Eliminado = true;
                             _context.SaveChanges();
@@ -305,39 +330,43 @@ namespace ElRinconDeLaCopa.Controllers
                         resultado.MsjError = "El Producto " + productoOriginal.Nombre + " Tiene stock (Asegurese de que la cantidad del producto sea 0 y volver a intentar).";
                         return Json(resultado);
                     }
-                    
+
                 }
                 resultado.MsjError = "No se encuentra el producto seleccionado";
                 return Json(resultado);
-            } 
-            return Json(resultado);   
-        }        
-        public async Task<JsonResult> AgregarDetalle(int Id){
+            }
+            return Json(resultado);
+        }
+        public async Task<JsonResult> AgregarDetalle(int Id)
+        {
 
             var resultado = new ValidacionError();
             resultado.nonError = false;
             resultado.MsjError = "No se selecciono ningun producto";
 
             var productoSeleccionado = _context.Productos?.Find(Id);
-            if(productoSeleccionado != null){
+            if (productoSeleccionado != null)
+            {
                 resultado.nonError = true;
                 resultado.MsjError = "";
                 var user = await _userManager.GetUserAsync(User);
                 var carrito = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
                 var detalleCreado = _context.DetalleCompra?.Where(d => d.CarritoID == carrito.CarritoID && d.ProductoID == Id).FirstOrDefault();
-                if(detalleCreado == null)
+                if (detalleCreado == null)
                 {
                     var Detalle = new DetalleCompra
                     {
-                        CarritoID = carrito.CarritoID,                   
-                        ProductoID = Id,                
+                        CarritoID = carrito.CarritoID,
+                        ProductoID = Id,
                         Cantidad = 1
-                    };               
+                    };
                     _context.Add(Detalle);
                     _context.SaveChanges();
                     resultado.nonError = true;
                     resultado.MsjError = "";
-                }else{
+                }
+                else
+                {
                     detalleCreado.Cantidad += 1;
                     _context.SaveChanges();
                 }

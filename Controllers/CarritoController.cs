@@ -11,6 +11,7 @@ using ElRinconDeLaCopa.Data;
 using ElRinconDeLaCopa.Models;
 using System.Dynamic;
 using NuGet.Protocol.Core.Types;
+using System.ComponentModel;
 
 namespace ElRinconDeLaCopa.Controllers
 {
@@ -109,10 +110,13 @@ namespace ElRinconDeLaCopa.Controllers
           var user = await _userManager.GetUserAsync(User);
           var carritoCreado = _context.CarritoCompra?.Where(c => c.UsuarioID == user.Id && c.Estado == 0).FirstOrDefault();
           var DetalleCarrito = _context.DetalleCompra?.Where(c => c.CarritoID == carritoCreado.CarritoID).ToList();
-           foreach (var item in DetalleCarrito)
+          foreach (var item in DetalleCarrito)
             {
               var producto = _context.Productos?.Where(p => p.ID == item.ProductoID).FirstOrDefault();
-              producto.Cantidad += item.Cantidad;
+              item.PrecioPorUnidad = producto.PrecioDeCompra / producto.CantidadXPack;
+              producto.Cantidad += item.Cantidad * producto.CantidadXPack;
+              item.Subtotal = item.Cantidad * producto.PrecioDeCompra;
+              carritoCreado.Total += item.Subtotal;
               _context.SaveChanges();
               resultado.nonError = true;
               resultado.MsjError = "Compra realizada correctamente";

@@ -1,18 +1,21 @@
 /*---------------------------------------------------*/
 /*---------------SECCION PRODUCTO TABLA--------------*/
 /*---------------------------------------------------*/
-.table .tabla-eliminada{
+.table .tabla-eliminada {
   background-color: #ffc10775;
 }
-.table th{
+
+.table th {
   background-color: #dcdae7;
   color: #000;
   border-bottom: #fff;
 }
-.createbutton1-producto{
+
+.createbutton1-producto {
   text-align: center;
 }
-.waviy-producto{
+
+.waviy-producto {
   color: #2d1a16c0;
   font-size: 25px;
   text-align: center;
@@ -20,21 +23,25 @@
   position: relative;
   margin-bottom: 5rem;
 }
-.divcolor-producto{
+
+.divcolor-producto {
   background-color: #2d1a16c0;
 }
-#h1Producto{
+
+#h1Producto {
   color: #2d1a16c0;
   font-size: 25px;
   text-align: center;
-  }
-.table .botones-modalss-none{
+}
+
+.table .botones-modalss-none {
   padding-left: 2rem;
   padding-right: 2rem;
   position: relative;
   left: 1rem
 }
-.table .botones-modalss{
+
+.table .botones-modalss {
   padding-left: 2rem;
   padding-right: 2rem;
   position: relative;
@@ -73,22 +80,25 @@
 /*---------------------------------------------------*/
 /*---------------SECCION PRODUCTO MODAL--------------*/
 /*---------------------------------------------------*/
-#h1Producto .svg-inline--fa{
+#h1Producto .svg-inline--fa {
   position: relative;
   left: 10%;
 }
+
 #ModalProducto .modal-header {
-  background-color:#dcdae7;
+  background-color: #dcdae7;
 }
+
 #ModalProducto .modal-footer {
-  background-color:#dcdae7;
+  background-color: #dcdae7;
 }
-.form-control{
-  background-color:#dcdae7 !important;  
+
+.form-control {
+  background-color: #dcdae7 !important;
   color: #000000;
 }
 
-.modalnombre-producto{
+.modalnombre-producto {
   text-align: left;
   color: black;
   font-size: 1.2rem;
@@ -97,42 +107,40 @@
   font-weight: 500;
   margin-left: 1rem;
 }
-.modal-content{
-  text-align: center;
-  }
 
-.form-control{
-    margin: 1rem !important;
-    width: 95%;
-    font-style: italic;
-    font-weight: 600;
+.modal-content {
+  text-align: center;
 }
-.modal-body{
+
+.form-control {
+  margin: 1rem !important;
+  width: 95%;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.modal-body {
   padding: 1.5rem;
 }
-.input-imagen{
-width: 100%;
-position: relative;
-left: 1rem;
-}
-.div-imagen{
- position: relative;
- left: 2rem;
 
-}
-.imagen-title{
+
+.imagen-title {
   position: relative;
   left: 10rem;
 }
-.imagen-div input{
+
+.imagen-div input {
   background-color: white !important;
 }
-.juntos{
+
+.juntos {
   display: flex;
   margin-left: -1.5rem;
   margin-right: -0.4rem;
+  flex-wrap: wrap;
 }
-.inputs-titles{
+
+.inputs-titles {
   text-align: left;
   color: black;
   font-size: 1.2rem;
@@ -141,6 +149,7 @@ left: 1rem;
   font-style: italic;
   font-weight: 500;
 }
+
 .modal-header .svg-inline--fa {
   font-size: 1.5rem;
   margin-right: 0.5rem;
@@ -149,26 +158,30 @@ left: 1rem;
   left: 34%;
 }
 
-.imagen-div{
+.imagen-div {
   border-radius: 1.3rem;
   padding: 1rem;
   margin: 1rem;
   box-shadow: 0px 0px 7px 0px rgb(0 0 0 / 40%);
 }
-.imagen-producto{
+
+.imagen-producto {
   border-radius: 0px 16px;
   box-shadow: 0px 0px 7px 0px #0c0b0b;
 }
-.altura{
+
+.altura {
   position: relative;
   top: 1.2rem;
 }
-.imgPreview{
+
+.imgPreview {
   width: 202px;
   height: 202px;
   border-radius: 0px 25px;
   box-shadow: 0px 0px 7px 0px #0c0b0b;
 }
+
 /*---------------------------------------------------*/
 /*---------------SECCION PRODUCTO MODAL--------------*/
 /*---------------------------------------------------*/
@@ -178,13 +191,14 @@ left: 1rem;
 
 /*MEDIAQUIERIES*/
 @media (max-width: 610px) {
-    .thcat{
-        display: none;
-    }
+  .thcat {
+    display: none;
   }
-  /*MEDIAQUIERIES*/
+}
 
-  
+/*MEDIAQUIERIES*/
+
+
 .tabla-carrito th .svg-inline--fa {
   font-size: 1.5rem;
   margin-right: 0.5rem;
@@ -192,7 +206,9 @@ left: 1rem;
   position: relative;
   left: 34%;
 }
-.tabla-carrito th{}
+
+.tabla-carrito th {}
+
 .divtable .table {
   background-color: rgb(255, 255, 255);
   border-radius: 1.3rem !important;
@@ -200,26 +216,27 @@ left: 1rem;
   position: relative;
 }
 
-#nombreImagen{
+#nombreImagen {
   left: -0.8rem;
   position: relative;
   margin-top: 0.8rem;
 }
-  #h1Producto{
-    color: rgb(0, 0, 0);
-    position: relative;
-    left: 34%;
-    font-style: italic;
-    }
 
-  .thcat{
-    color: black;
-    font-family: sans-serif;
-  }
+#h1Producto {
+  color: rgb(0, 0, 0);
+  position: relative;
+  left: 34%;
+  font-style: italic;
+}
+
+.thcat {
+  color: black;
+  font-family: sans-serif;
+}
 
 
 
-.abrir-carrito{
+.abrir-carrito {
   appearance: none;
   background-color: transparent;
   border: 0.125em solid #1A1A1A;
@@ -227,12 +244,13 @@ left: 1rem;
   box-sizing: border-box;
   color: #ffffff;
   cursor: pointer;
-  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 1.5rem;
-  font-weight: 600; 
+  font-weight: 600;
   line-height: normal;
   margin: 0;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  ;
   touch-action: manipulation;
   will-change: transform;
   position: relative;
@@ -242,23 +260,24 @@ left: 1rem;
   height: 3rem;
 
 }
+
 .abrir-carrito:disabled {
   pointer-events: none;
- }
- 
- .abrir-carrito:hover {
+}
+
+.abrir-carrito:hover {
   color: #fff;
   background-color: #1A1A1A;
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
- }
- 
- .abrir-carrito:active {
+}
+
+.abrir-carrito:active {
   box-shadow: none;
   transform: translateY(0);
- }
+}
 
- .botones-modalss-none {
+.botones-modalss-none {
   appearance: none;
   background-color: #1A1A1A;
   border: 0.125em solid #1A1A1A;
@@ -266,12 +285,13 @@ left: 1rem;
   box-sizing: border-box;
   color: #ffffff;
   cursor: pointer;
-  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
-  font-weight: 600; 
+  font-weight: 600;
   line-height: normal;
   margin: 0;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  ;
   touch-action: manipulation;
   will-change: transform;
   position: relative;
@@ -279,14 +299,15 @@ left: 1rem;
   padding-right: 2rem;
   right: 40%;
   font-style: italic;
- }
- .botones-modalss-none:hover{
+}
+
+.botones-modalss-none:hover {
   color: white;
   background-color: #1A1A1A;
   cursor: default;
- }
- 
- .Carrito{
+}
+
+.Carrito {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -295,6 +316,7 @@ left: 1rem;
   position: relative;
   top: 7;
 }
+
 .botones-modalss {
   appearance: none;
   background-color: transparent;
@@ -303,12 +325,13 @@ left: 1rem;
   box-sizing: border-box;
   color: #000000;
   cursor: pointer;
-  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
-  font-weight: 600; 
+  font-weight: 600;
   line-height: normal;
   margin: 0;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  ;
   touch-action: manipulation;
   will-change: transform;
   position: relative;
@@ -316,74 +339,78 @@ left: 1rem;
   padding-right: 2rem;
   right: 40%;
   font-style: italic;
- }
- 
- 
- .botones-modalss:disabled {
+}
+
+
+.botones-modalss:disabled {
   pointer-events: none;
- }
- 
- .botones-modalss:hover {
+}
+
+.botones-modalss:hover {
   color: #fff;
   background-color: #1A1A1A;
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
- }
- 
- .botones-modalss:active {
+}
+
+.botones-modalss:active {
   box-shadow: none;
   transform: translateY(0);
- }
- .opciones-title{
+}
+
+.opciones-title {
   position: relative;
   text-align: center;
- }
- #btnEliminarProducto {
+}
+
+#btnEliminarProducto {
   position: relative;
   left: 0rem;
   background-color: #ffc10775;
 }
-.cerrar-modal{
+
+.cerrar-modal {
   background-color: rgba(255, 0, 0, 0.627);
 }
+
 #btnHabilitarProducto {
   position: relative;
   background-color: rgba(0, 128, 0, 0.454);
   left: -37%;
 }
-.tabla-carrito{
+
+.tabla-carrito {
   position: relative;
 }
-.tabla-carrito header{
+
+.tabla-carrito header {
   background-color: #1A1A1A;
   position: relative;
   margin-bottom: 0.5rem;
   display: inline-grid;
 }
-.tabla-carrito footer{
+
+.tabla-carrito footer {
   background-color: #1A1A1A;
   position: relative;
   display: flex;
 }
-@media (min-width: 360px){
-  .createbutton1{
+
+@media (min-width: 360px) {
+  .createbutton1 {
     margin: 30px 0px 30px 0px;
   }
 
-  .divtable .table{
+  .divtable .table {
     background-color: rgb(255, 255, 255);
     border-radius: 1.3rem;
     overflow: hidden;
   }
 }
+
 @media (min-width: 820px) {
-  .Botones-max-width{
+  .Botones-max-width {
     display: flex;
     justify-content: flex-end;
   }
 }
-  
-
-
-
-   

@@ -1,6 +1,8 @@
 // Asignar la función BuscarProductos al evento onload de la ventana
 window.onload = BuscarProductos();
-
+var ArregloEnteroProductos = [];
+var CantidadDeDatos = 5;
+var ultimaPagina = 1;
 // Función para crear un nuevo producto
 function CrearNuevo() {
   // Configurar los campos del formulario y mostrar el modal
@@ -16,13 +18,54 @@ function CrearNuevo() {
   $("#btnCrear").text("Crear");
   $("#form-producto input[name='Cantidad']").val(``);
   $("#form-producto input[name='Precio']").val(``);
+  $("#form-producto input[name='PrecioXPack']").val(``);
   $("#selectorImagen").val("");
   $("#nombreImagen").text("Imagen por defecto");
   $("#imagenSeleccionada").attr("src", "/img/productos/fotodefaullt.jpg");
 }
 
+
+
+
+function BuscarProductoPorNombre(){
+  let Buscador = $("#NombreCategoria").val();
+  if (Buscador.length >= 2) {
+    ArregloEnteroProductos = ArregloEnteroProductos.filter(categoria => categoria.nombre.includes(Buscador.toUpperCase()));
+      ultimaPagina = Math.ceil(ArregloEnteroProductos.length / CantidadDeDatos);
+      console.log(ultimaPagina);
+      Paginacion(1, ultimaPagina)
+  }else{
+      ultimaPagina = Math.ceil(ArregloEnteroProductos.length / CantidadDeDatos);
+      Paginacion(1, ultimaPagina)
+  }
+  BuscarProductos(1, ultimaPagina)
+}
+function Paginacion(pagina, UltimaPagina = ultimaPagina) {
+  let PaginaActiva = $("#PaginaActiva");
+  let btnAnterior = $("#PaginaAnterior");
+  let btnSiguiente = $("#PaginaSiguiente");
+  PaginaActiva.text(pagina), ultimaPagina;
+  if (pagina == 1) {
+      btnAnterior.attr("disabled", true);
+      btnSiguiente.attr("disabled", false);
+      if (pagina >= UltimaPagina) {
+          btnSiguiente.attr("disabled", true);
+      }
+      btnSiguiente.attr("onclick", `BuscarProductos(${pagina + 1})`);
+  }else{
+      btnAnterior.attr("disabled", false);
+      btnSiguiente.attr("disabled", false);
+      btnAnterior.attr("onclick", `BuscarProductos(${pagina - 1})`);
+      btnSiguiente.attr("onclick", `BuscarProductos(${pagina + 1})`);
+      if (pagina >= UltimaPagina) {
+          btnSiguiente.attr("disabled", true);
+      }
+  }
+}
+
 // Función para buscar productos
-function BuscarProductos() {
+function BuscarProductos(pagina = 1, UltimaPagina = ultimaPagina) {
+  let Buscador = $("#NombreCategoria").val();
   // Seleccionar la tabla de productos
   let TablaProducto = $("#tbody-productos");
   TablaProducto.empty();
@@ -39,9 +82,20 @@ function BuscarProductos() {
     // código a ejecutar si la petición es satisfactoria
     success: function (productos) {
       TablaProducto.empty();
-      console.log(productos);
-      $.each(productos, function (index, producto) {
-        if (producto.eliminado) {
+      ArregloEnteroProductos = productos;
+            if (Buscador.length >= 2) {
+              ArregloEnteroProductos = ArregloEnteroProductos.filter(categoria => categoria.nombre.includes(Buscador.toUpperCase()));
+                ultimaPagina = Math.ceil(ArregloEnteroProductos.length / CantidadDeDatos);
+            }else{
+                ultimaPagina = Math.ceil(ArregloEnteroProductos.length / CantidadDeDatos);
+            }
+            Paginacion(pagina, ultimaPagina)
+            var InicioDeTabla = (pagina - 1) * CantidadDeDatos;
+            var FinDeLaTabla = InicioDeTabla + CantidadDeDatos;
+            ultimaPagina = Math.ceil(ArregloEnteroProductos.length / CantidadDeDatos);
+      
+      $.each(ArregloEnteroProductos.slice(InicioDeTabla, FinDeLaTabla), function (index, producto) {
+        if (producto.eliminado || producto.cantidadXPack == 0) {
           // Agregar fila para productos eliminados
           TablaProducto.append(`
                         <tr class="tabla-eliminada">
@@ -55,10 +109,10 @@ function BuscarProductos() {
             <a class="btn botones-modalss-none" role="button">${producto.nombre}</a>
                             </td> 
 
-                            <td> <a class="btn botones-modalss-none altura"  role="button">${producto.precio}</a></td>
+                            <td> <a class="btn botones-modalss-none altura"  role="button">${producto.precioDeVenta}</a></td>
 
                             <td> <a class="btn botones-modalss-none altura"  role="button">${producto.cantidad}</a></td>
-                            <td></td>
+                            <td><a class="btn botones-modalss-none altura"  role="button">${producto.cantidadXPack}</a></td>
                             <td> <button class="btn botones-modalss altura" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
                             
                             <td> <button class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})"><i class="fa-solid fa-gear"></i></button></td>
@@ -76,9 +130,9 @@ function BuscarProductos() {
                               : `<img class="imagen-producto" src="data:${producto.tipoImagen};base64, ${producto.imagenString}" style="width: 70px;"/>`
                             } 
                             <a class=" btn botones-modalss-none" role="button">${producto.nombre}</a></td>
-                            <td> <a class="btn botones-modalss-none altura"  role="button">${producto.precio}</a></td>
+                            <td> <a class="btn botones-modalss-none altura"  role="button">${producto.precioDeVenta}</a></td>
                             <td> <a class="btn botones-modalss-none altura" role="button">${producto.cantidad}</a></td>
-                            <td> <button class="btn botones-modalss altura" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>
+                            <td><a class="btn botones-modalss-none altura"  role="button">${producto.cantidadXPack}</a> <button class="btn botones-modalss altura" onClick="AgregarAlDetalle(${producto.id})"><i class="fa-solid fa-cart-plus"></i></button></td>
 
                             <td> <button class="btn botones-modalss altura" onClick="RemoveProducto(${producto.id})"><i class="fa-solid fa-trash"></i></button></td>
                             <td> <button class="btn botones-modalss altura" onClick="BuscarProducto(${producto.id})"><i class="fa-solid fa-gear"></i></button></td>
@@ -132,6 +186,7 @@ function GuardarProducto() {
 
 // Función para buscar un producto por ID
 function BuscarProducto(ID) {
+  console.log(ID);
   $.ajax({
     // la URL para la petición
     url: '../../Producto/BuscarProductosTabla',
@@ -143,16 +198,17 @@ function BuscarProducto(ID) {
     dataType: 'json',
     // código a ejecutar si la petición es satisfactoria
     success: function (productos) {
-      if (productos.Productos.length == 1) {
-        let producto = productos.Productos[0];
+      if (productos.length == 1) {
+        let producto = productos[0];
         $("#texto-error").text("");
         $("#h1Producto").text("Editar Producto")
         $("#form-producto input[name='Productoid']").val(producto.id);
         $("#btnCrear").show();
         $("#form-producto input[name='Nombre']").val(producto.nombre);
         $(`#CategoriaID`).val(producto.idCategoria);
-        $("#form-producto input[name='Precio']").val(producto.precio);
-        $("#form-producto input[name='Cantidad']").val(producto.cantidad);
+        $("#form-producto input[name='PrecioXPack']").val(producto.precioDeCompra);
+        $("#form-producto input[name='Precio']").val(producto.precioDeVenta);
+        $("#form-producto input[name='Cantidad']").val(producto.cantidadXPack);
         if (producto.imagen == null) {
           var imagenGuardadaBytes = "/img/productos/fotodefaullt.jpg"
           $("#nombreImagen").text("Imagen por defecto");

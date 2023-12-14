@@ -35,7 +35,7 @@ function MostrarPedido() {
                             
                         }
                         <button class="delete-button-carrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button> <br>
-                        <h3 class="cantidadcarrito">Precio: $${producto.precio}</h3>
+                        <h3 class="cantidadcarrito">Precio: $${producto.precioDeVenta}</h3>
                         <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
                         <button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
                         <button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button>
@@ -160,6 +160,27 @@ function CompletePurchaseProduct() {
     let calle = $("#Calle");
     let numero = $("#Numero");
     let depto = $("#Depto");
+    let caracteristica = $("#Caracteristica");
+    let NumeroCel = $("#NumeroCelular");
+    $.ajax({
+        url: '../../Usuarios/BuscarNumeroUsuario',
+        type: 'GET',
+        success: function(Usuario){
+            console.log(Usuario);
+            if (Usuario.numero != null) {
+                numero.val(Usuario.numero);
+                calle.val(Usuario.calle);
+                depto.val(Usuario.depto);
+            }
+            if (Usuario.numeroDeTelefono!= null) {
+                let NumerocelJs = Usuario.numeroDeTelefono.split("");
+                let caracteristicaJs = NumerocelJs.slice(0, -6).join("");
+                NumerocelJs = NumerocelJs.slice(-6).join("");
+                NumeroCel.val(NumerocelJs);
+                caracteristica.val(caracteristicaJs);
+            }
+        }
+    });
     calle.val("");
     numero.val("");
     depto.val("");
@@ -172,12 +193,15 @@ function CompletePurchase(){
     let calle = $("#Calle").val();
     let numero = $("#Numero").val();
     let depto = $("#Depto").val();
+    let caracteristica = $("#Caracteristica").val();
+    let NumeroCel = $("#NumeroCelular").val();
+    let Gurdado = $("#SaveD")[0].checked;
     if (depto == "") {
         depto = "-1";
     }
     $.ajax({
         url: '../../Pedido/CompletePurchase',
-        data: { Calle: calle, Numero: numero, Depto: depto  },
+        data: { Calle: calle, Numero: numero, Depto: depto, GuardarDatos: Gurdado, NumeroCelular: NumeroCel, Caracteristica: caracteristica},
         type: 'POST',
         success: function(resultado) {
             ProductCart();

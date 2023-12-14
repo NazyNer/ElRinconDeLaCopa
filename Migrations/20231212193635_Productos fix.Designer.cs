@@ -4,6 +4,7 @@ using ElRinconDeLaCopa.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElRinconDeLaCopa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231212193635_Productos fix")]
+    partial class Productosfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,9 +37,6 @@ namespace ElRinconDeLaCopa.Migrations
 
                     b.Property<DateTime>("FechaActual")
                         .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UsuarioID")
                         .HasColumnType("nvarchar(max)");
@@ -83,14 +82,8 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<int>("CarritoID")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("PrecioPorUnidad")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("ProductoID")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("Subtotal")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("DetalleCompraID");
 
@@ -154,9 +147,6 @@ namespace ElRinconDeLaCopa.Migrations
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
-
-                    b.Property<string>("NumeroCelular")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
@@ -254,9 +244,6 @@ namespace ElRinconDeLaCopa.Migrations
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
-
-                    b.Property<string>("NumeroDeTelefono")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipoImagen")
                         .HasColumnType("nvarchar(max)");
