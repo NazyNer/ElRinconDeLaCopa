@@ -1,6 +1,8 @@
 // Esta función se ejecuta cuando la ventana se carga por completo
 window.onload = BuscarCategorias();
-
+var ArregloEnteroCategorias = [];
+var CantidadDeDatos = 5;
+var ultimaPagina = 1;
 // Esta función se llama cuando se quiere crear una nueva categoría
 function CrearNueva() {
     // Establecer valores iniciales en el formulario de categoría
@@ -15,12 +17,48 @@ function CrearNueva() {
     $("#btn-crear").text("Crear");
 }
 
+function BuscarCategoriaPorNombre(){
+    let Buscador = $("#NombreCategoria").val();
+    if (Buscador.length >= 2) {
+        ArregloEnteroCategorias = ArregloEnteroCategorias.filter(categoria => categoria.nombre.includes(Buscador.toUpperCase()));
+        ultimaPagina = Math.ceil(ArregloEnteroCategorias.length / CantidadDeDatos);
+        console.log(ultimaPagina);
+        Paginacion(1, ultimaPagina)
+    }else{
+        ultimaPagina = Math.ceil(ArregloEnteroCategorias.length / CantidadDeDatos);
+        Paginacion(1, ultimaPagina)
+    }
+    BuscarCategorias(1, ultimaPagina)
+}
+function Paginacion(pagina, UltimaPagina = ultimaPagina) {
+    let PaginaActiva = $("#PaginaActiva");
+    let btnAnterior = $("#PaginaAnterior");
+    let btnSiguiente = $("#PaginaSiguiente");
+    PaginaActiva.text(pagina), ultimaPagina;
+    if (pagina == 1) {
+        btnAnterior.attr("disabled", true);
+        btnSiguiente.attr("disabled", false);
+        if (pagina >= UltimaPagina) {
+            btnSiguiente.attr("disabled", true);
+        }
+        btnSiguiente.attr("onclick", `BuscarCategorias(${pagina + 1})`);
+    }else{
+        btnAnterior.attr("disabled", false);
+        btnSiguiente.attr("disabled", false);
+        btnAnterior.attr("onclick", `BuscarCategorias(${pagina - 1})`);
+        btnSiguiente.attr("onclick", `BuscarCategorias(${pagina + 1})`);
+        if (pagina >= UltimaPagina) {
+            btnSiguiente.attr("disabled", true);
+        }
+    }
+}
 // Esta función busca y muestra todas las categorías
-function BuscarCategorias() {
+function BuscarCategorias(pagina = 1, UltimaPagina = ultimaPagina) {
+    let Buscador = $("#NombreCategoria").val();
+    
     $("#btnEliminar").hide();
     let TablaCategoria = $("#tbody-categorias");
     TablaCategoria.empty();
-
     // Realizar una solicitud AJAX para obtener las categorías
     $.ajax({
         url: '../../Categoria/BuscarCategorias',
@@ -28,14 +66,23 @@ function BuscarCategorias() {
         type: 'GET',
         dataType: 'json',
         success: function (categorias) {
+            ArregloEnteroCategorias = categorias;
             TablaCategoria.empty();
-
+            if (Buscador.length >= 2) {
+                ArregloEnteroCategorias = ArregloEnteroCategorias.filter(categoria => categoria.nombre.includes(Buscador.toUpperCase()));
+                ultimaPagina = Math.ceil(ArregloEnteroCategorias.length / CantidadDeDatos);
+            }else{
+                ultimaPagina = Math.ceil(ArregloEnteroCategorias.length / CantidadDeDatos);
+            }
+            Paginacion(pagina, ultimaPagina)
+            var InicioDeTabla = (pagina - 1) * CantidadDeDatos;
+            var FinDeLaTabla = InicioDeTabla + CantidadDeDatos;
+            ultimaPagina = Math.ceil(ArregloEnteroCategorias.length / CantidadDeDatos);
             // Iterar a través de las categorías y mostrarlas en una tabla
-            $.each(categorias, function (index, categoria) {
+            $.each(ArregloEnteroCategorias.slice(InicioDeTabla, FinDeLaTabla), function (index, categoria) {
                 if (categoria.eliminado) {
                     // Mostrar categorías eliminadas de manera diferente
                     TablaCategoria.append(`
-
                     <tr class="tabla-eliminada">
                     <td> <a class="btn btn-cat" role="button">${categoria.nombre}</a></td>
                     <td class="Botones-max-width"> 

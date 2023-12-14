@@ -1,15 +1,37 @@
 @{
   ViewData["Title"] = "Index";
 }
-<div class="waviy">
-  <span style="--i:1">S</span>
-  <span style="--i:2">T</span>
-  <span style="--i:3">O</span>
-  <span style="--i:4">C</span>
-  <span style="--i:5">K</span>
+
+<div>
+  <ul class="nav nav-tabs mt-5 pt-5 bg-dark bg-gradient justify-content-around" id="ul_tags">
+    <li class="nav-item">
+      <a class="btn btn-outline-primary active" aria-current="page" id="Ingresos" onclick="location.reload()">Ingresos</a>
+    </li>
+    <li class="nav-item">
+      <a class="btn btn-outline-secondary" id="Gasto" onclick="CompletarTabla(2, 1)">Gasto</a>
+    </li>
+    <li class="nav-item">
+      <a class="btn btn-outline-secondary" id="SinFiltos" onclick="CompletarTabla(0, 3)">Sin filtos</a>
+    </li>
+    <li class="nav-item">
+      <div id="EstadosIngresosDiv" class="form-floating">
+        <select class="form-select visually-hidden bg-dark text-white" name="EstadosIngresos" id="EstadosIngresos" onchange="ChangeEstados()">
+          <option value="0">Todos</option>
+          <option value="1">Completados</option>
+          <option value="2">En Espera</option>
+          <option value="3">Entregados</option>
+          <option value="4">Cancelados</option>
+        </select>
+        <label for="EstadosIngresos">Estado</label>
+      </div>
+    </li>
+    <li class="nav-item">
+      <h4 class="nav-link disabled text-success" aria-disabled="true">Movimiento de Stock</h4>
+    </li>
+  </ul>
 </div>
 <div class="divtable col bg  d-lg-block rounded">
-  <table class="table text-white">
+  <table class="table table-light table-striped-columns table-hover">
     <thead>
       <tr>
         <th class="thcat">
@@ -19,7 +41,7 @@
           Fecha
         </th>
         <th>
-          Ingreso / egreso (stock)
+          Ingreso / egreso (Dinero)
         </th>
         <th>
           productos
@@ -38,6 +60,9 @@
   </table>
 </div>
 
+</div>
+
+
 @section Scripts {
-    <script src="~/js/stock.js"></script>
+  <script src="~/js/stock.js"></script>
 }

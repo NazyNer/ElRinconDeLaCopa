@@ -4,6 +4,7 @@ using ElRinconDeLaCopa.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElRinconDeLaCopa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231213192532_Stock fix")]
+    partial class Stockfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,9 +157,6 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<int>("Numero")
                         .HasColumnType("int");
 
-                    b.Property<string>("NumeroCelular")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
@@ -254,9 +253,6 @@ namespace ElRinconDeLaCopa.Migrations
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
-
-                    b.Property<string>("NumeroDeTelefono")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TipoImagen")
                         .HasColumnType("nvarchar(max)");

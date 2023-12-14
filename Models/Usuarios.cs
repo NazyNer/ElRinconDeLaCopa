@@ -12,6 +12,7 @@ public class Usuario
     public string? TipoImagen { get; set; }
     public bool Eliminado { get; set; }
     public string? IdRol { get; set; }
+    public string? NumeroDeTelefono { get; set; }
     public string? Calle { get; set; }
     public int Numero { get; set; }
     public string? Depto { get; set; } 

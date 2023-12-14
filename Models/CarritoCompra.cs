@@ -13,6 +13,7 @@ namespace ElRinconDeLaCopa.Models
         public DateTime FechaActual { get; set; } // Fecha actual del carrito
         public string? UsuarioID { get; set; } // Agregar el Id del usuario propietario del carrito
         public EstadoCarrito Estado { get; set; }
+        public decimal Total { get; set; } // Total a pagar
         public virtual ICollection<DetalleCompra>? Detalles { get; set; } // Relación uno a muchos con los detalles de compra
         
     }

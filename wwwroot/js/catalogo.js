@@ -78,7 +78,6 @@ function BuscarProductos() {
   })
 }
 function BuscarProductosCategoria(categoriaId) {
-  console.log(categoriaId);
   let CatalogoVista = $("#catalogo");
   CatalogoVista.empty();
   $.ajax({

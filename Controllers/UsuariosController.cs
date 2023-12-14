@@ -30,6 +30,12 @@ namespace ElRinconDeLaCopa.Controllers
       return View();
     }
 
+    public async Task<JsonResult>BuscarNumeroUsuario (){
+      var user = await _userManager.GetUserAsync(User);
+      var usuario = _context.Usuarios?.Where(u => u.IdUsuario == user.Id).FirstOrDefault();
+      return Json(usuario);
+    }
+
     public async Task<JsonResult> CompletarTabla()
     {
       dynamic UsuariosFormateados = new ExpandoObject();

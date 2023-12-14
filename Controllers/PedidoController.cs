@@ -49,8 +49,8 @@ namespace ElRinconDeLaCopa.Controllers
                   PedidoID = Pedido.PedidoID,
                   ProductoID = id,
                   Cantidad = 1,
-                  Precio = Producto.Precio,
-                  Subtotal = Producto.Precio
+                  Precio = Producto.PrecioDeVenta,
+                  Subtotal = Producto.PrecioDeVenta
                 };
                 _context.Add(detalle);
                 _context.SaveChanges();
@@ -166,11 +166,12 @@ namespace ElRinconDeLaCopa.Controllers
           return Json(resultado);
         }
 
-        public async Task<JsonResult>CompletePurchase(string Calle, int Numero, string Depto){
+        public async Task<JsonResult>CompletePurchase(string Calle, int Numero, string Depto, bool GuardarDatos, int NumeroCelular, int Caracteristica){
           var resultado = new ValidacionError();
           resultado.nonError = false;
           resultado.MsjError = "Completar campos obligatorios";
           var user = await _userManager.GetUserAsync(User);
+          var usuariDB = _context.Usuarios.Where(u => u.IdUsuario == user.Id).FirstOrDefault();
           var Pedido = _context.PedidosClientes?.Where(p => p.UsuarioID == user.Id & p.Estado == 0).FirstOrDefault();
           var DetalleCarrito = _context.DetallesDePedidos?.Where(c => c.PedidoID == Pedido.PedidoID).ToList();
           if (!string.IsNullOrEmpty(Calle) && Numero > 0)
@@ -195,6 +196,19 @@ namespace ElRinconDeLaCopa.Controllers
                           // Si no hay suficiente stock, lanzar una excepción y detener la función
                           throw new Exception("No hay suficiente stock para el producto.");
                       }
+                      Pedido.Total += item.Subtotal;
+                  }
+                  if (GuardarDatos)
+                  {
+                    usuariDB.NumeroDeTelefono = Caracteristica.ToString() + NumeroCelular.ToString();
+                    usuariDB.Calle = Calle;
+                    usuariDB.Numero = Numero;
+                    if (Depto == "-1" )
+                    {
+                      usuariDB.Depto = "Estoy en una casa";
+                    }else{
+                      usuariDB.Depto = "Estoy en el departamento "+Depto;
+                    }
                   }
                   Pedido.Calle = Calle;
                   if (Depto == "-1" )
@@ -206,6 +220,7 @@ namespace ElRinconDeLaCopa.Controllers
                   Pedido.FechaActual = DateTime.Now;
                   Pedido.Numero = Numero;
                   Pedido.Estado = EstadoPedido.Completado;
+                  Pedido.NumeroCelular = Caracteristica.ToString() + NumeroCelular.ToString();
                   var usuario = _context.Usuarios.Where(u => u.IdUsuario == user.Id).FirstOrDefault();
                   var nombreRolCrearCliente = _context.Roles.Where(r => r.Name == "Cliente").SingleOrDefault();
                   usuario.Calle = Calle;
