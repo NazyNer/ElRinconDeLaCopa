@@ -1,5 +1,37 @@
 window.onload = ProductCart();
 
+function CompletarCarrito(Carrito) {
+    let carritoDiv = $("#Cart-Contain");
+    let Total = $("#Total");
+    let totalPagar = 0;
+    $.each(Carrito.productos, function (index, producto) {
+        carritoDiv.append(`
+        <div class="producto">
+            <div class="NombreImg">
+                <h3>${producto.nombre}</h3>
+                ${producto.imagen != null ?
+            `<img src="data:${producto.tipoImagen};base64, ${producto.imagen}" alt="${producto.nombre}"/>` :
+            `<img src="/img/productos/fotodefaullt.jpg" alt="${producto.nombre}"/>`
+        }
+            </div>
+            <button class="btn botonesCarrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button>
+            <div class="ContainerCantidad">
+                <h3 class="cantidadcarrito">Precio: $${producto.precioDeVenta}</h3>
+                <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
+            </div>
+            <div class="contenedorbtnCARRITO">
+                <button class="btn botonesCarrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
+                <button class="btn botonesCarrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <h2 class="cantidadcarrito">Subtotal: $${Carrito.detalleCompra[index].subtotal}</h2>
+        </div>
+        `)
+        totalPagar += Carrito.detalleCompra[index].subtotal;
+    });
+    Total.text("Total: $" + totalPagar);
+    $("#ModalCarrito").modal("show");
+}
+
 function MostrarPedido() {
     let carritoDiv = $("#Cart-Contain");
     let btnGuardar = $("#Guardarstock");
@@ -22,32 +54,39 @@ function MostrarPedido() {
                 Total.show();
                 btnGuardar.show();
                 carritoDiv.empty();
-                let totalPagar = 0;
-                $.each(Carrito.productos, function (index, producto) {
-                    carritoDiv.append(`
-                    <div class="producto">
-                        <h3>${producto.nombre}</h3>
-                        ${
-                            producto.imagen != null ?
-                                `<img src="data:${producto.tipoImagen};base64, ${producto.imagen}" style="width: 100px;" alt="${producto.nombre}"/> <br>` :
-                                `<img src="/img/productos/fotodefaullt.jpg" style="width: 100px;" alt="${producto.nombre}"/> <br>`
-                            
-                            
-                        }
-                        <button class="delete-button-carrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button> <br>
-                        <h3 class="cantidadcarrito">Precio: $${producto.precioDeVenta}</h3>
-                        <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
-                        <button class="delete-button-carrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
-                        <button class="delete-button-carrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button>
-                        <h2 class="cantidadcarrito">Subtotal: $${Carrito.detalleCompra[index].subtotal}</h2>
-                    </div>
-                    `)
-                    totalPagar += Carrito.detalleCompra[index].subtotal;
-                });
-                Total.text("Total: $" + totalPagar);
-                $("#ModalCarrito").modal("show");
+                CompletarCarrito(Carrito);
+                // let totalPagar = 0;
+                // $.each(Carrito.productos, function (index, producto) {
+                //     carritoDiv.append(`
+                //     <div class="producto">
+                //         <div class="NombreImg">
+                //             <h3>${producto.nombre}</h3>
+                //             ${
+                //                 producto.imagen != null ?
+                //                     `<img src="data:${producto.tipoImagen};base64, ${producto.imagen}" alt="${producto.nombre}"/>` :
+                //                     `<img src="/img/productos/fotodefaullt.jpg" alt="${producto.nombre}"/>`
+
+
+                //             }
+                //         </div>
+                //         <button class="btn botonesCarrito" onclick="RemoveDetail(${producto.id})"><i class="fa-solid fa-trash"></i></button>
+                //         <div class="ContainerCantidad">
+                //             <h3 class="cantidadcarrito">Precio: $${producto.precioDeVenta}</h3>
+                //             <p class="cantidadcarrito" id="${producto.nombre}">Cantidad: ${Carrito.detalleCompra[index].cantidad} </p> 
+                //         </div>
+                //         <div class="contenedorbtnCARRITO">
+                //             <button class="btn botonesCarrito" onclick="SubtQuantity(${producto.id},${Carrito.detalleCompra[index].cantidad})"><i class="fa-solid fa-minus"></i></button>
+                //             <button class="btn botonesCarrito" onclick="PlusQuantity(${producto.id})"><i class="fa-solid fa-plus"></i></button>
+                //         </div>
+                //         <h2 class="cantidadcarrito">Subtotal: $${Carrito.detalleCompra[index].subtotal}</h2>
+                //     </div>
+                //     `)
+                //     totalPagar += Carrito.detalleCompra[index].subtotal;
+                // });
+                // Total.text("Total: $" + totalPagar);
+                // $("#ModalCarrito").modal("show");
             }
-            else{
+            else {
                 CarritoProductos.show();
                 CarritoForm.hide();
                 Total.text("")
@@ -63,7 +102,7 @@ function MostrarPedido() {
         }
     });
 }
-function AgregarAlPedido(Id){
+function AgregarAlPedido(Id) {
     $.ajax({
         url: '../../Pedido/AgregarDetalle',
         data: { id: Id },
@@ -73,7 +112,7 @@ function AgregarAlPedido(Id){
             if (resultado.nonError) {
                 ProductCart();
                 alert("Producto agregado al carrito");
-            }else{
+            } else {
                 alert(resultado.msjError);
             }
         },
@@ -88,32 +127,32 @@ function ProductCart() {
         url: '../../Pedido/ProductCart',
         type: 'GET',
         dataType: 'json',
-        success: function(resultado) {
+        success: function (resultado) {
             if (resultado != 0) {
                 NumberCart.text(resultado)
             }
-            else{
+            else {
                 NumberCart.text("")
             }
         }
     });
 }
 function SubtQuantity(ProductID, cantidad) {
-    if (cantidad>1) {
+    if (cantidad > 1) {
         $.ajax({
             url: '../../Pedido/SubtQuantity',
             data: { ProductoID: ProductID },
             type: 'POST',
-            success: function(resultado) {
+            success: function (resultado) {
                 if (resultado.nonError) {
                     MostrarPedido();
-                }else{
+                } else {
                     alert(resultado.msjError)
                 }
             }
         });
     }
-    else{
+    else {
         RemoveDetail(ProductID);
     }
 }
@@ -123,10 +162,10 @@ function PlusQuantity(ProductID) {
         url: '../../Pedido/PlusQuantity',
         data: { ProductoID: ProductID },
         type: 'POST',
-        success: function(resultado) {
+        success: function (resultado) {
             if (resultado.nonError) {
                 MostrarPedido();
-            }else{
+            } else {
                 alert(resultado.msjError)
             }
         }
@@ -140,11 +179,11 @@ function RemoveDetail(ProductID) {
             url: '../../Pedido/RemoveDetail',
             data: { ProductoID: ProductID },
             type: 'POST',
-            success: function(resultado) {
+            success: function (resultado) {
                 if (resultado.nonError) {
                     MostrarPedido();
                     ProductCart();
-                }else{
+                } else {
                     alert(resultado.msjError)
                 }
             }
@@ -155,7 +194,7 @@ function RemoveDetail(ProductID) {
 function CompletePurchaseProduct() {
     let btnGuardarstock = $("#Guardarstock");
     let CarritoProductos = $("#CarritoProductos");
-    let CarritoForm =$("#CarritoForm");
+    let CarritoForm = $("#CarritoForm");
     let btnComprar = $("#GuardarCompra");
     let calle = $("#Calle");
     let numero = $("#Numero");
@@ -165,14 +204,14 @@ function CompletePurchaseProduct() {
     $.ajax({
         url: '../../Usuarios/BuscarNumeroUsuario',
         type: 'GET',
-        success: function(Usuario){
+        success: function (Usuario) {
             console.log(Usuario);
             if (Usuario.numero != null) {
                 numero.val(Usuario.numero);
                 calle.val(Usuario.calle);
                 depto.val(Usuario.depto);
             }
-            if (Usuario.numeroDeTelefono!= null) {
+            if (Usuario.numeroDeTelefono != null) {
                 let NumerocelJs = Usuario.numeroDeTelefono.split("");
                 let caracteristicaJs = NumerocelJs.slice(0, -6).join("");
                 NumerocelJs = NumerocelJs.slice(-6).join("");
@@ -189,7 +228,7 @@ function CompletePurchaseProduct() {
     CarritoForm.show();
     btnComprar.show();
 }
-function CompletePurchase(){
+function CompletePurchase() {
     let calle = $("#Calle").val();
     let numero = $("#Numero").val();
     let depto = $("#Depto").val();
@@ -201,9 +240,9 @@ function CompletePurchase(){
     }
     $.ajax({
         url: '../../Pedido/CompletePurchase',
-        data: { Calle: calle, Numero: numero, Depto: depto, GuardarDatos: Gurdado, NumeroCelular: NumeroCel, Caracteristica: caracteristica},
+        data: { Calle: calle, Numero: numero, Depto: depto, GuardarDatos: Gurdado, NumeroCelular: NumeroCel, Caracteristica: caracteristica },
         type: 'POST',
-        success: function(resultado) {
+        success: function (resultado) {
             ProductCart();
             BuscarProductos();
             $("#ModalCarrito").modal("hide");
