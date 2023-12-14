@@ -1,6 +1,7 @@
 // Asignar la función BuscarProductos al evento onload de la ventana
 window.onload = BuscarProductos();
 var ArregloEnteroProductos = [];
+var sinfiltro = []
 var CantidadDeDatos = 5;
 var ultimaPagina = 1;
 // Función para crear un nuevo producto
@@ -30,9 +31,12 @@ function CrearNuevo() {
 function BuscarProductoPorNombre(){
   let Buscador = $("#NombreCategoria").val();
   if (Buscador.length >= 2) {
-    ArregloEnteroProductos = ArregloEnteroProductos.filter(categoria => categoria.nombre.includes(Buscador.toUpperCase()));
+    ArregloEnteroProductos = ArregloEnteroProductos.filter(producto => producto.nombre.includes(Buscador.toUpperCase()));
+    var filtradoNombreCategoria = sinfiltro.filter(producto => producto.nombreCategoria.includes(Buscador.toUpperCase()));
+    for (let i = 0; i < filtradoNombreCategoria.length; i++) {
+      ArregloEnteroProductos.push(filtradoNombreCategoria[i])
+    }
       ultimaPagina = Math.ceil(ArregloEnteroProductos.length / CantidadDeDatos);
-      console.log(ultimaPagina);
       Paginacion(1, ultimaPagina)
   }else{
       ultimaPagina = Math.ceil(ArregloEnteroProductos.length / CantidadDeDatos);
@@ -83,8 +87,13 @@ function BuscarProductos(pagina = 1, UltimaPagina = ultimaPagina) {
     success: function (productos) {
       TablaProducto.empty();
       ArregloEnteroProductos = productos;
+      sinfiltro = productos
             if (Buscador.length >= 2) {
-              ArregloEnteroProductos = ArregloEnteroProductos.filter(categoria => categoria.nombre.includes(Buscador.toUpperCase()));
+              ArregloEnteroProductos = ArregloEnteroProductos.filter(producto => producto.nombre.includes(Buscador.toUpperCase()));
+              var filtradoNombreCategoria = sinfiltro.filter(producto => producto.nombreCategoria.includes(Buscador.toUpperCase()));
+              for (let i = 0; i < filtradoNombreCategoria.length; i++) {
+                ArregloEnteroProductos.push(filtradoNombreCategoria[i])
+              }
                 ultimaPagina = Math.ceil(ArregloEnteroProductos.length / CantidadDeDatos);
             }else{
                 ultimaPagina = Math.ceil(ArregloEnteroProductos.length / CantidadDeDatos);
