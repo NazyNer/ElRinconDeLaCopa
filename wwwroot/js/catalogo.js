@@ -20,10 +20,10 @@ function BuscarProductos() {
           if (producto) {
             if (count <= 6) {
               articulo.append(`
-              <div class="card mx-auto">
+              <div class="card mx-auto ">
                 ${producto.imagen == null
                   ? `<img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto"/>`
-                  : `<img src="data:${producto.tipoImagen};base64, ${producto.imagen}" class="card-img-top" alt="${producto.nombreCategoria} ${producto.nombre}"/>`
+                  : `<img src="data:${producto.tipoImagen};base64, ${producto.imagen}" class="card-img-top bg-white" alt="${producto.nombreCategoria} ${producto.nombre}"/>`
                 }
                 <div class="card-body">
                     <h5 class="card-title">${producto.nombre}</h5>
@@ -43,26 +43,30 @@ function BuscarProductos() {
           if (categoria.productos.length <= 6) {
             ListaProductos = (`
               <article class="ArticuloCategoria">
-                <header id="HeaderCategoria">
-                    <h2>${categoria.categoria}</h2>
+                <header class="HeaderCategoria" id="HeaderCategoria">
+                    <h2 class="TituloCategoria">${categoria.categoria}</h2>
                 </header>
                 <main class="Cards">
                 ${articulo.html()}
                 </main>
-                <footer>
+                <footer class="FooterCard">
+                    <p class="text-center">
+                        No Hay Mas Productos <br>
+                        <i class="fa-solid fa-rectangle-xmark"></i>
+                    </p>
                 </footer>
               </article>
             `)
           }else{
             ListaProductos = (`
               <article class="ArticuloCategoria">
-                <header id="HeaderCategoria">
-                    <h2>${categoria.categoria}</h2>
+                <header class="HeaderCategoria" id="HeaderCategoria">
+                    <h2 class="TituloCategoria">${categoria.categoria}</h2>
                 </header>
                 <main class="Cards">
                 ${articulo.html()}
                 </main>
-                <footer class="footerBtn" onClick="BuscarProductosCategoria(${categoria.categoriaId})">
+                <footer class=" FooterCard footerBtn" onClick="BuscarProductosCategoria(${categoria.categoriaId})">
                     <p class="text-center">
                         Mas Productos <br>
                     <i class="fa-solid fa-angles-down"></i>
@@ -98,7 +102,7 @@ function BuscarProductosCategoria(categoriaId) {
               <div class="card mx-auto">
                 ${producto.imagen == null
                   ? `<img src="/img/productos/fotodefaullt.jpg" class="card-img-top" alt="Foto por defecto"/>`
-                  : `<img src="data:${producto.tipoImagen};base64, ${producto.imagen}" class="card-img-top" alt="${producto.nombreCategoria} ${producto.nombre}"/>`
+                  : `<img src="data:${producto.tipoImagen};base64, ${producto.imagen}" class="card-img-top bg-white" alt="${producto.nombreCategoria} ${producto.nombre}"/>`
                 }
                 <div class="card-body">
                     <h5 class="card-title">${producto.nombre}</h5>

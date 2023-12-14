@@ -12,15 +12,15 @@
 
 <div class="modal fade" id="ModalCarrito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content colorLindo">
             <div class="modal-header">
                 <h1 id="h1Producto" class="modal-title fs-5">C A R R I T O</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="CarritoProductos">
-                <div id="Cart-Contain">
+                <div class="sombra" id="Cart-Contain">
                 </div>
-                <h1 id="Total" class="cantidadcarrito"></h1>
+                <h1 id="Total" class="cantidadcarrito text-center"></h1>
             </div>
             <div class="modal-body" id="CarritoForm">
                 <div id="Form-Contain">
@@ -35,15 +35,17 @@
                         <label class="modalnombre2">N° de celular ej: 3462 481894</label>
                         <input id="Caracteristica" class="form-control" type="number" placeholder="3462"></input>
                         <input id="NumeroCelular" class="form-control" type="number" placeholder="481894"></input>
-                        <input id="SaveD" type="checkbox"><label class="modalnombre2" >guardar datos</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="SaveD">
+                            <label class="form-check-label" for="SaveD">guardar datos</label>
+                        </div>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="Guardarstock" class="btn botones-modals"
-                    onclick="CompletePurchaseProduct()">Siguiente</button>
-                <button id="GuardarCompra" class="btn botones-modals" onclick="CompletePurchase()">Comprar</button>
-                <button type="button" class="btn botones-modals" data-bs-dismiss="modal">Cerrar</button>
+                <button id="Guardarstock" class="btn btn-primary" onclick="CompletePurchaseProduct()">Siguiente</button>
+                <button id="GuardarCompra" class="btn btn-success" onclick="CompletePurchase()">Comprar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -52,7 +54,7 @@
 @if (@User.IsInRole("Usuario") || @User.IsInRole("Cliente"))
 {
     <aside class="Carrito" id="cart">
-        <button onclick="MostrarPedido()"><i class="fa-solid fa-cart-shopping"></i>
+        <button class="abrir-carrito" onclick="MostrarPedido()"><svg class="svg-inline--fa fa-cart-shopping" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cart-shopping" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
             <span id="Cart"></span>
         </button>
     </aside>
