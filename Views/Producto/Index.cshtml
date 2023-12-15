@@ -25,11 +25,11 @@
 
                         <div class="form-group col-sm-6">
                             <p class="modalnombre-producto"><i class="fa-solid fa-file-signature"></i> Nombre</p>
-                            <input id="textoInput" class="form-control" placeholder="Nombre" name="Nombre" />
+                            <input id="textoInput" class="form-control m-3" placeholder="Nombre" name="Nombre" />
                         </div>
                         <div class="form-group col-sm-6">
                             <p class="modalnombre-producto"><i class="fa-solid fa-tag"></i> Categoría</p>
-                            @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control m-3" })
                         </div>
 
                     </div>
@@ -38,15 +38,15 @@
 
                         <div class="form-group col-md-6">
                             <p class="modalnombre-producto"><i class="fa-solid fa-dollar-sign"></i> Precio de venta por unidad</p>
-                            <input type="number" placeholder="Precio" class="form-control" name="Precio">
+                            <input type="number" placeholder="Precio" class="form-control m-3" name="Precio">
                         </div>
                         <div class="form-group col-md-6">
                             <p class="modalnombre-producto"><i class="fa-solid fa-dollar-sign"></i> Precio Por pack</p>
-                            <input type="number" placeholder="Precio" class="form-control" name="PrecioXPack" required>
+                            <input type="number" placeholder="Precio" class="form-control m-3" name="PrecioXPack" required>
                         </div>
                         <div class="form-group col-md-6">
                             <p class="modalnombre-producto"><i class="fa-solid fa-pen-to-square"></i> Cantidad por pack</p>
-                            <input type="number" placeholder="Cantidad por pack" class="form-control" name="Cantidad" required>
+                            <input type="number" placeholder="Cantidad por pack" class="form-control m-3" name="Cantidad" required>
                         </div>
                     </div>
                     <div class="form-row juntos imagen-div">
@@ -54,7 +54,7 @@
                             <div>
                                 <header>
                                     <p class="modalnombre-producto imagen-title"><i class="fa-regular fa-image"></i> Imagen</p>
-                                    <input type="file" accept="image/jpeg" class="form-control" name="Imagen" id="selectorImagen">
+                                    <input type="file" accept="image/jpeg" class="form-control m-3" name="Imagen" id="selectorImagen">
                                 </header>
                                 <body>
                                     <img id="imagenSeleccionada" class="imgPreview"
@@ -133,16 +133,16 @@
             <button type="button" class="createbutton-producto" onclick="CrearNuevo()">Crear Nuevo</button>
         </p>
         <div class="divtable col bg  d-lg-block">
-            <div class="d-flex align-items-center justify-content-end">
-                <button id="PaginaAnterior" class="mx-2">Anterior</button>
+            <div class="d-flex align-items-center justify-content-end pagination">
+                <button id="PaginaAnterior" class="btn btn-anteriorPag text-white mx-2 px-1"> << </button>
                 <h1 id="PaginaActiva" class="mx-2 text-white"></h1>
-                <button id="PaginaSiguiente" class="mx-2">Siguiente</button>
+                <button id="PaginaSiguiente" class="btn btn-siguientePag text-white mx-2 px-1"> >> </button>
             </div>
-            <div class="d-flex align-items-center mb-3 justify-content-start">
-                <label for="NombreCategoria" class="mx-2 text-white">Buscar por Nombre(minimo 2 caracteres)
-                <input onchange="BuscarProductoPorNombre()" id="NombreCategoria" type="text">
+            <div class="d-flex align-items-center mb-3 justify-content-start input-group">
+                <label for="NombreCategoria" class="input-group-text">Buscar por Nombre(minimo 2 caracteres)
+                <input class="form-control mx-1" onchange="BuscarProductoPorNombre()" id="NombreCategoria" type="text">
                 </label>
-                <button>Buscar</button>
+                <button class="btn btn-outline-secondary paddingBtnBuscador">Buscar</button>
             </div>
             <table class="table text-white radio">
                 <thead>

@@ -49,6 +49,33 @@ function GuardarDatos() {
   } 
 }
 
+function showAlertPedidos() {
+  $.ajax({
+    url: '../../Pedido/BuscarPedidoEnEsperaRespuesta',
+    type: 'GET',
+    success: function (resultado) {
+      if (resultado) {
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'info',
+          title: 'Hay pedidos en cola, como completados',
+          showConfirmButton: true,
+          timer: 9999999,
+          timerProgressBar: true,
+          allowOutsideClick: false,
+          confirmButtonText: 'Ir'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/Stock";
+          }
+        });
+      }
+    }
+  });
+}
+
+setInterval(showAlertPedidos, 60000);
+
 function hiddenNav() {
   var nav = $("#navbar");
   nav.attr("hidden",true);

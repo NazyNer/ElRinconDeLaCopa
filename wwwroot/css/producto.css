@@ -113,7 +113,6 @@
 }
 
 .form-control {
-  margin: 1rem !important;
   width: 95%;
   font-style: italic;
   font-weight: 600;
@@ -394,6 +393,17 @@
   background-color: #1A1A1A;
   position: relative;
   display: flex;
+}
+
+.paddingBtnBuscador{
+  padding-top: 0.8rem;
+  padding-bottom: 0.9rem;
+}
+.btn-anteriorPag{
+  background-color: gray;
+}
+.btn-siguientePag{
+  background-color: gray;
 }
 
 @media (min-width: 360px) {
