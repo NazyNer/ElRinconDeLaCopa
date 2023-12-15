@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElRinconDeLaCopa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230902190652_Pedido")]
-    partial class Pedido
+    [Migration("20231215001508_ultima migracion")]
+    partial class ultimamigracion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,9 @@ namespace ElRinconDeLaCopa.Migrations
 
                     b.Property<DateTime>("FechaActual")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UsuarioID")
                         .HasColumnType("nvarchar(max)");
@@ -82,17 +85,18 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<int>("CarritoID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PedidoClientePedidoID")
-                        .HasColumnType("int");
+                    b.Property<decimal>("PrecioPorUnidad")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProductoID")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("DetalleCompraID");
 
                     b.HasIndex("CarritoCompraCarritoID");
-
-                    b.HasIndex("PedidoClientePedidoID");
 
                     b.ToTable("DetalleCompra");
                 });
@@ -141,8 +145,8 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<string>("Calle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Depto")
-                        .HasColumnType("int");
+                    b.Property<string>("Depto")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Estado")
                         .HasColumnType("int");
@@ -152,6 +156,9 @@ namespace ElRinconDeLaCopa.Migrations
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
+
+                    b.Property<string>("NumeroCelular")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
@@ -175,6 +182,9 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
+                    b.Property<int>("CantidadXPack")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CategoriaID")
                         .HasColumnType("int");
 
@@ -196,7 +206,10 @@ namespace ElRinconDeLaCopa.Migrations
                     b.Property<string>("NombreImagen")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Precio")
+                    b.Property<decimal>("PrecioDeCompra")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PrecioDeVenta")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TipoImagen")
@@ -207,6 +220,52 @@ namespace ElRinconDeLaCopa.Migrations
                     b.HasIndex("CategoriaID");
 
                     b.ToTable("Productos");
+                });
+
+            modelBuilder.Entity("ElRinconDeLaCopa.Models.Usuario", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Calle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Depto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("IdRol")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdUsuario")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Imagen")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreImagen")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NumeroDeTelefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoImagen")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -417,17 +476,13 @@ namespace ElRinconDeLaCopa.Migrations
                         .WithMany("Detalles")
                         .HasForeignKey("CarritoCompraCarritoID");
 
-                    b.HasOne("ElRinconDeLaCopa.Models.PedidoCliente", null)
-                        .WithMany("Detalles")
-                        .HasForeignKey("PedidoClientePedidoID");
-
                     b.Navigation("CarritoCompra");
                 });
 
             modelBuilder.Entity("ElRinconDeLaCopa.Models.DetalleDelPedido", b =>
                 {
                     b.HasOne("ElRinconDeLaCopa.Models.PedidoCliente", "PedidoCliente")
-                        .WithMany()
+                        .WithMany("DetalleDelPedido")
                         .HasForeignKey("PedidoClientePedidoID");
 
                     b.Navigation("PedidoCliente");
@@ -505,7 +560,7 @@ namespace ElRinconDeLaCopa.Migrations
 
             modelBuilder.Entity("ElRinconDeLaCopa.Models.PedidoCliente", b =>
                 {
-                    b.Navigation("Detalles");
+                    b.Navigation("DetalleDelPedido");
                 });
 #pragma warning restore 612, 618
         }

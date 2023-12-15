@@ -152,7 +152,7 @@ function BuscarCategoria(Id) {
 // Esta función guarda una nueva categoría o actualiza una existente
 function GuardarCategoria() {
     let Id = $("#Id").val();
-    let Nombre = $("#form-categoria input[name='Nombre']").val().toUpperCase();
+    let Nombre = $("#textoInput").val().toUpperCase();
     if (Nombre === "") {
         // alert("El campo de nombre está vacío. Por favor, ingrese un nombre válido.");
         Swal.fire({
