@@ -63,6 +63,19 @@ namespace ElRinconDeLaCopa.Controllers
           }
           return Json(resultado);
         }
+
+        [Authorize(Roles = "Administrador,Empleado")]
+        public bool BuscarPedidoEnEsperaRespuesta(){
+          var Pedido = _context.PedidosClientes?.Where(p => p.Estado == EstadoPedido.Completado).ToList();
+          if (Pedido.Count == 0)
+          {
+            return false;
+          }else{
+            return true;
+          }
+        }
+
+
         public async Task<JsonResult>AbrirCarrito(){
           var resultado = new ValidacionError();
           resultado.nonError = false;

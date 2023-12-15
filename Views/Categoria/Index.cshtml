@@ -61,16 +61,16 @@
                 <h1 id="errorTable"></h1>
             </tbody>
 
-              <div class="d-flex align-items-center justify-content-end">
-                <button id="PaginaAnterior" class="mx-2">Anterior</button>
+              <div class="d-flex align-items-center justify-content-end pagination">
+                <button id="PaginaAnterior" class="btn btn-anteriorPag text-white mx-2 px-1"> << </button>
                 <h1 id="PaginaActiva" class="mx-2 text-white"></h1>
-                <button id="PaginaSiguiente" class="mx-2">Siguiente</button>
+                <button id="PaginaSiguiente" class="btn btn-siguientePag text-white mx-2 px-1"> >> </button>
               </div>
-              <div class="d-flex align-items-center mb-3 justify-content-start">
-                <label for="NombreCategoria" class="mx-2 text-white">Buscar por Nombre(minimo 2 caracteres)
-                  <input onchange="BuscarCategoriaPorNombre()" id="NombreCategoria" type="text">
+              <div class="d-flex align-items-center mb-3 justify-content-start input-group">
+                <label for="NombreCategoria" class="input-group-text">Buscar por Nombre(minimo 2 caracteres)
+                  <input class="form-control mx-1" placeholder="" onchange="BuscarCategoriaPorNombre()" id="NombreCategoria" type="text">
                 </label>
-                <button>Buscar</button>
+                <button class="btn btn-outline-secondary paddingBtnBuscador">Buscar</button>
               </div>
         </table>
     </div>

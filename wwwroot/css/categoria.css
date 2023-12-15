@@ -1,5 +1,13 @@
-
-
+.paddingBtnBuscador{
+  padding-top: 0.8rem;
+  padding-bottom: 0.9rem;
+}
+.btn-anteriorPag{
+  background-color: gray;
+}
+.btn-siguientePag{
+  background-color: gray;
+}
 .name{
   color: #000;
   border-bottom-color: snow !important;

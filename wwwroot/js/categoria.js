@@ -22,7 +22,6 @@ function BuscarCategoriaPorNombre(){
     if (Buscador.length >= 2) {
         ArregloEnteroCategorias = ArregloEnteroCategorias.filter(categoria => categoria.nombre.includes(Buscador.toUpperCase()));
         ultimaPagina = Math.ceil(ArregloEnteroCategorias.length / CantidadDeDatos);
-        console.log(ultimaPagina);
         Paginacion(1, ultimaPagina)
     }else{
         ultimaPagina = Math.ceil(ArregloEnteroCategorias.length / CantidadDeDatos);
